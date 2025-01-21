@@ -4,8 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+black = "*"
+kivy = "*"
+kivymd = "*"
 
 [dev-packages]
+black = "*"
 
 [requires]
 python_version = "3.13"

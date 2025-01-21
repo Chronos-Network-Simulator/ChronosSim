@@ -1,0 +1,211 @@
+[
+    {
+        "label": "abc",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "abc",
+        "description": "abc",
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "BaseNode",
+        "importPath": "simulator.node.BaseNode",
+        "description": "simulator.node.BaseNode",
+        "isExtraImport": true,
+        "detail": "simulator.node.BaseNode",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "ast",
+        "description": "ast",
+        "isExtraImport": true,
+        "detail": "ast",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSimulationGrid",
+        "importPath": "simulator.grid",
+        "description": "simulator.grid",
+        "isExtraImport": true,
+        "detail": "simulator.grid",
+        "documentation": {}
+    },
+    {
+        "label": "Builder",
+        "importPath": "kivy.lang",
+        "description": "kivy.lang",
+        "isExtraImport": true,
+        "detail": "kivy.lang",
+        "documentation": {}
+    },
+    {
+        "label": "Screen",
+        "importPath": "kivy.uix.screenmanager",
+        "description": "kivy.uix.screenmanager",
+        "isExtraImport": true,
+        "detail": "kivy.uix.screenmanager",
+        "documentation": {}
+    },
+    {
+        "label": "ScreenManager",
+        "importPath": "kivy.uix.screenmanager",
+        "description": "kivy.uix.screenmanager",
+        "isExtraImport": true,
+        "detail": "kivy.uix.screenmanager",
+        "documentation": {}
+    },
+    {
+        "label": "SimulationScreen",
+        "importPath": "ui.simulation_screen.SimulationScreen",
+        "description": "ui.simulation_screen.SimulationScreen",
+        "isExtraImport": true,
+        "detail": "ui.simulation_screen.SimulationScreen",
+        "documentation": {}
+    },
+    {
+        "label": "SimulationScreen",
+        "importPath": "ui.simulation_screen.SimulationScreen",
+        "description": "ui.simulation_screen.SimulationScreen",
+        "isExtraImport": true,
+        "detail": "ui.simulation_screen.SimulationScreen",
+        "documentation": {}
+    },
+    {
+        "label": "Builder",
+        "importPath": "kivy.lang.builder",
+        "description": "kivy.lang.builder",
+        "isExtraImport": true,
+        "detail": "kivy.lang.builder",
+        "documentation": {}
+    },
+    {
+        "label": "MDScreen",
+        "importPath": "kivymd.uix.screen",
+        "description": "kivymd.uix.screen",
+        "isExtraImport": true,
+        "detail": "kivymd.uix.screen",
+        "documentation": {}
+    },
+    {
+        "label": "Window",
+        "importPath": "kivy.core.window",
+        "description": "kivy.core.window",
+        "isExtraImport": true,
+        "detail": "kivy.core.window",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigureScreen",
+        "importPath": "ui.configure_screen.ConfigureScreen",
+        "description": "ui.configure_screen.ConfigureScreen",
+        "isExtraImport": true,
+        "detail": "ui.configure_screen.ConfigureScreen",
+        "documentation": {}
+    },
+    {
+        "label": "MDApp",
+        "importPath": "kivymd.app",
+        "description": "kivymd.app",
+        "isExtraImport": true,
+        "detail": "kivymd.app",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSimulationGrid",
+        "kind": 6,
+        "importPath": "src.simulator.grid.BaseSimulationGrid",
+        "description": "src.simulator.grid.BaseSimulationGrid",
+        "peekOfCode": "class BaseSimulationGrid(ABC):\n    name: str = None\n    \"\"\"\n    Name of this simulation Grid\n    \"\"\"\n    width: int = None\n    \"\"\"\n    Width in meters of this simulation grid.\n    \"\"\"\n    length: int = None",
+        "detail": "src.simulator.grid.BaseSimulationGrid",
+        "documentation": {}
+    },
+    {
+        "label": "BaseNode",
+        "kind": 6,
+        "importPath": "src.simulator.node.BaseNode",
+        "description": "src.simulator.node.BaseNode",
+        "peekOfCode": "class BaseNode(abc):\n    \"\"\"\n    Represents a node in the simulation network.\n    \"\"\"\n    name: str = None\n    \"\"\"\n    The name of this node type\n    \"\"\"\n    position: Tuple[float, float] = None\n    \"\"\"",
+        "detail": "src.simulator.node.BaseNode",
+        "documentation": {}
+    },
+    {
+        "label": "SimController",
+        "kind": 6,
+        "importPath": "src.simulator.SimController",
+        "description": "src.simulator.SimController",
+        "peekOfCode": "class SimController:\n    \"\"\"\n    Master Controller of th4e simulation. Is responsible for loading nodes\n    into the simulation and starting the simulation\n    \"\"\"\n    starting_num_nodes: int = 0\n    \"\"\"\n    The number of nodes that are in the network at the start of the simulation\n    \"\"\"\n    grid: BaseSimulationGrid = None",
+        "detail": "src.simulator.SimController",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigureScreen",
+        "kind": 6,
+        "importPath": "src.ui.configure_screen.ConfigureScreen",
+        "description": "src.ui.configure_screen.ConfigureScreen",
+        "peekOfCode": "class ConfigureScreen(Screen):\n    def __init__(self, *args, **kwargs):\n        Builder.load_file(\"ui/configure_screen/ConfigureScreen.kv\")\n        super().__init__()\n    def navigate_to_simulation_screen(self):\n        \"\"\"\n        Applies the current simulation properties and navigates the user to the simulation screen\n        \"\"\"\n        self.manager.switch_to(\n            SimulationScreen(name=\"simulation_screen\"), direction=\"left\"",
+        "detail": "src.ui.configure_screen.ConfigureScreen",
+        "documentation": {}
+    },
+    {
+        "label": "SimulationScreen",
+        "kind": 6,
+        "importPath": "src.ui.simulation_screen.SimulationScreen",
+        "description": "src.ui.simulation_screen.SimulationScreen",
+        "peekOfCode": "class SimulationScreen(MDScreen):\n    def __init__(self, *args, **kwargs):\n        Builder.load_file(\"ui/simulation_screen/SimulationScreen.kv\")\n        super().__init__(*args, **kwargs)",
+        "detail": "src.ui.simulation_screen.SimulationScreen",
+        "documentation": {}
+    },
+    {
+        "label": "ChronosSim",
+        "kind": 6,
+        "importPath": "src.main",
+        "description": "src.main",
+        "peekOfCode": "class ChronosSim(MDApp):\n    title = \"Network Simulator\"\n    def build(self):\n        self.theme_cls.theme_style = \"Dark\"\n        self.theme_cls.primary_palette = \"DeepOrange\"\n        sm = ScreenManager()\n        sm.switch_to(ConfigureScreen(name=\"configure_screen\"))\n        return sm\nif __name__ == \"__main__\":\n    ChronosSim().run()",
+        "detail": "src.main",
+        "documentation": {}
+    },
+    {
+        "label": "Window.left",
+        "kind": 5,
+        "importPath": "src.main",
+        "description": "src.main",
+        "peekOfCode": "Window.left = 0  # TODO: Remove this line\nWindow.top = 0  # TODO: Remove this line\nclass ChronosSim(MDApp):\n    title = \"Network Simulator\"\n    def build(self):\n        self.theme_cls.theme_style = \"Dark\"\n        self.theme_cls.primary_palette = \"DeepOrange\"\n        sm = ScreenManager()\n        sm.switch_to(ConfigureScreen(name=\"configure_screen\"))\n        return sm",
+        "detail": "src.main",
+        "documentation": {}
+    },
+    {
+        "label": "Window.top",
+        "kind": 5,
+        "importPath": "src.main",
+        "description": "src.main",
+        "peekOfCode": "Window.top = 0  # TODO: Remove this line\nclass ChronosSim(MDApp):\n    title = \"Network Simulator\"\n    def build(self):\n        self.theme_cls.theme_style = \"Dark\"\n        self.theme_cls.primary_palette = \"DeepOrange\"\n        sm = ScreenManager()\n        sm.switch_to(ConfigureScreen(name=\"configure_screen\"))\n        return sm\nif __name__ == \"__main__\":",
+        "detail": "src.main",
+        "documentation": {}
+    }
+]
