@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
-from simulator.node.BaseNode import BaseNode
+
+from model.node.BaseNode import BaseNode
 
 
 class BaseSimulationGrid(ABC):
@@ -8,6 +9,11 @@ class BaseSimulationGrid(ABC):
     name: str = None
     """
     Name of this simulation Grid
+    """
+
+    description: str = None
+    """
+    Description of this simulation grid
     """
 
     width: int = None
@@ -52,7 +58,7 @@ class BaseSimulationGrid(ABC):
         """
 
     @abstractmethod
-    def detect_collision(self, node: BaseNode) -> bool:
+    def detect_collision(self, node: BaseNode) -> List[BaseNode]:
         """
         Detects if a node is colliding with another node in the grid. A collision
         is determined if a node enters another nodes detection range marked by the

@@ -1,10 +1,74 @@
 [
     {
+        "label": "BaseController",
+        "importPath": "controller.base_controller",
+        "description": "controller.base_controller",
+        "isExtraImport": true,
+        "detail": "controller.base_controller",
+        "documentation": {}
+    },
+    {
+        "label": "BaseController",
+        "importPath": "controller.base_controller",
+        "description": "controller.base_controller",
+        "isExtraImport": true,
+        "detail": "controller.base_controller",
+        "documentation": {}
+    },
+    {
+        "label": "BaseController",
+        "importPath": "controller.base_controller",
+        "description": "controller.base_controller",
+        "isExtraImport": true,
+        "detail": "controller.base_controller",
+        "documentation": {}
+    },
+    {
+        "label": "BaseController",
+        "importPath": "controller.base_controller",
+        "description": "controller.base_controller",
+        "isExtraImport": true,
+        "detail": "controller.base_controller",
+        "documentation": {}
+    },
+    {
+        "label": "SideBarView",
+        "importPath": "view.components.sidebar.sidebar",
+        "description": "view.components.sidebar.sidebar",
+        "isExtraImport": true,
+        "detail": "view.components.sidebar.sidebar",
+        "documentation": {}
+    },
+    {
+        "label": "SideBarController",
+        "importPath": "controller.components.sidebar_controller",
+        "description": "controller.components.sidebar_controller",
+        "isExtraImport": true,
+        "detail": "controller.components.sidebar_controller",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
         "label": "abc",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "abc",
         "description": "abc",
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
         "detail": "abc",
         "documentation": {}
     },
@@ -33,6 +97,183 @@
         "documentation": {}
     },
     {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Type",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TypeVar",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "cast",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "SimulationModel",
+        "importPath": "model.simulation",
+        "description": "model.simulation",
+        "isExtraImport": true,
+        "detail": "model.simulation",
+        "documentation": {}
+    },
+    {
+        "label": "SimulationModel",
+        "importPath": "model.simulation",
+        "description": "model.simulation",
+        "isExtraImport": true,
+        "detail": "model.simulation",
+        "documentation": {}
+    },
+    {
+        "label": "BaseComponentView",
+        "importPath": "view.components.base_component",
+        "description": "view.components.base_component",
+        "isExtraImport": true,
+        "detail": "view.components.base_component",
+        "documentation": {}
+    },
+    {
+        "label": "BaseComponentView",
+        "importPath": "view.components.base_component",
+        "description": "view.components.base_component",
+        "isExtraImport": true,
+        "detail": "view.components.base_component",
+        "documentation": {}
+    },
+    {
+        "label": "BaseComponentView",
+        "importPath": "view.components.base_component",
+        "description": "view.components.base_component",
+        "isExtraImport": true,
+        "detail": "view.components.base_component",
+        "documentation": {}
+    },
+    {
+        "label": "BaseScreenView",
+        "importPath": "view.screens.base_screen",
+        "description": "view.screens.base_screen",
+        "isExtraImport": true,
+        "detail": "view.screens.base_screen",
+        "documentation": {}
+    },
+    {
+        "label": "BaseScreenView",
+        "importPath": "view.screens.base_screen",
+        "description": "view.screens.base_screen",
+        "isExtraImport": true,
+        "detail": "view.screens.base_screen",
+        "documentation": {}
+    },
+    {
+        "label": "BaseScreenView",
+        "importPath": "view.screens.base_screen",
+        "description": "view.screens.base_screen",
+        "isExtraImport": true,
+        "detail": "view.screens.base_screen",
+        "documentation": {}
+    },
+    {
+        "label": "BaseNode",
+        "importPath": "model.node.BaseNode",
+        "description": "model.node.BaseNode",
+        "isExtraImport": true,
+        "detail": "model.node.BaseNode",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSimulationGrid",
+        "importPath": "simulator.grid.BaseSimulationGrid",
+        "description": "simulator.grid.BaseSimulationGrid",
+        "isExtraImport": true,
+        "detail": "simulator.grid.BaseSimulationGrid",
+        "documentation": {}
+    },
+    {
         "label": "BaseNode",
         "importPath": "simulator.node.BaseNode",
         "description": "simulator.node.BaseNode",
@@ -49,11 +290,27 @@
         "documentation": {}
     },
     {
-        "label": "BaseSimulationGrid",
-        "importPath": "simulator.grid",
-        "description": "simulator.grid",
+        "label": "CommonElevationBehavior",
+        "importPath": "kivymd.uix.behaviors",
+        "description": "kivymd.uix.behaviors",
         "isExtraImport": true,
-        "detail": "simulator.grid",
+        "detail": "kivymd.uix.behaviors",
+        "documentation": {}
+    },
+    {
+        "label": "BoxLayout",
+        "importPath": "kivy.uix.boxlayout",
+        "description": "kivy.uix.boxlayout",
+        "isExtraImport": true,
+        "detail": "kivy.uix.boxlayout",
+        "documentation": {}
+    },
+    {
+        "label": "Builder",
+        "importPath": "kivy.lang",
+        "description": "kivy.lang",
+        "isExtraImport": true,
+        "detail": "kivy.lang",
         "documentation": {}
     },
     {
@@ -81,35 +338,12 @@
         "documentation": {}
     },
     {
-        "label": "SimulationScreen",
-        "importPath": "ui.simulation_screen.SimulationScreen",
-        "description": "ui.simulation_screen.SimulationScreen",
+        "label": "os",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "ui.simulation_screen.SimulationScreen",
-        "documentation": {}
-    },
-    {
-        "label": "SimulationScreen",
-        "importPath": "ui.simulation_screen.SimulationScreen",
-        "description": "ui.simulation_screen.SimulationScreen",
-        "isExtraImport": true,
-        "detail": "ui.simulation_screen.SimulationScreen",
-        "documentation": {}
-    },
-    {
-        "label": "Builder",
-        "importPath": "kivy.lang.builder",
-        "description": "kivy.lang.builder",
-        "isExtraImport": true,
-        "detail": "kivy.lang.builder",
-        "documentation": {}
-    },
-    {
-        "label": "MDScreen",
-        "importPath": "kivymd.uix.screen",
-        "description": "kivymd.uix.screen",
-        "isExtraImport": true,
-        "detail": "kivymd.uix.screen",
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
         "documentation": {}
     },
     {
@@ -121,14 +355,6 @@
         "documentation": {}
     },
     {
-        "label": "ConfigureScreen",
-        "importPath": "ui.configure_screen.ConfigureScreen",
-        "description": "ui.configure_screen.ConfigureScreen",
-        "isExtraImport": true,
-        "detail": "ui.configure_screen.ConfigureScreen",
-        "documentation": {}
-    },
-    {
         "label": "MDApp",
         "importPath": "kivymd.app",
         "description": "kivymd.app",
@@ -137,48 +363,184 @@
         "documentation": {}
     },
     {
+        "label": "ControllerRegistry",
+        "importPath": "controller.contoller_registry",
+        "description": "controller.contoller_registry",
+        "isExtraImport": true,
+        "detail": "controller.contoller_registry",
+        "documentation": {}
+    },
+    {
+        "label": "MainScreenController",
+        "importPath": "controller.screens.main_screen_contoller",
+        "description": "controller.screens.main_screen_contoller",
+        "isExtraImport": true,
+        "detail": "controller.screens.main_screen_contoller",
+        "documentation": {}
+    },
+    {
+        "label": "ThemeManager",
+        "importPath": "theme",
+        "description": "theme",
+        "isExtraImport": true,
+        "detail": "theme",
+        "documentation": {}
+    },
+    {
+        "label": "MainScreenView",
+        "importPath": "view.screens.main_screen.main_screen",
+        "description": "view.screens.main_screen.main_screen",
+        "isExtraImport": true,
+        "detail": "view.screens.main_screen.main_screen",
+        "documentation": {}
+    },
+    {
+        "label": "EventDispatcher",
+        "importPath": "kivy.event",
+        "description": "kivy.event",
+        "isExtraImport": true,
+        "detail": "kivy.event",
+        "documentation": {}
+    },
+    {
+        "label": "OptionProperty",
+        "importPath": "kivy.properties",
+        "description": "kivy.properties",
+        "isExtraImport": true,
+        "detail": "kivy.properties",
+        "documentation": {}
+    },
+    {
+        "label": "ColorProperty",
+        "importPath": "kivy.properties",
+        "description": "kivy.properties",
+        "isExtraImport": true,
+        "detail": "kivy.properties",
+        "documentation": {}
+    },
+    {
+        "label": "convert_hex_to_decimal",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "SideBarController",
+        "kind": 6,
+        "importPath": "src.controller.components.sidebar_controller",
+        "description": "src.controller.components.sidebar_controller",
+        "peekOfCode": "class SideBarController(BaseController):\n    def __init__(self, simulation):\n        super().__init__(SideBarView(), \"sidebar\", simulation)",
+        "detail": "src.controller.components.sidebar_controller",
+        "documentation": {}
+    },
+    {
+        "label": "MainScreenController",
+        "kind": 6,
+        "importPath": "src.controller.screens.main_screen_contoller",
+        "description": "src.controller.screens.main_screen_contoller",
+        "peekOfCode": "class MainScreenController(BaseController):\n    sidebar: SideBarController\n    \"\"\"\n    The sidebar controller for the main screen. This is a child controller and just a quick\n    way to access the sidebar controller\n    \"\"\"\n    def __init__(self, view, name, simulation):\n        self.sidebar = SideBarController(simulation)\n        self.child_controllers.append(self.sidebar)\n        super().__init__(view, name, simulation)",
+        "detail": "src.controller.screens.main_screen_contoller",
+        "documentation": {}
+    },
+    {
+        "label": "BaseController",
+        "kind": 6,
+        "importPath": "src.controller.base_controller",
+        "description": "src.controller.base_controller",
+        "peekOfCode": "class BaseController(ABC):\n    name: str\n    \"\"\"\n    The name of the controller. This is used to identify the controller in the controller registry.\n    \"\"\"\n    view: BaseScreenView | BaseComponentView\n    \"\"\"\n    Stores a reference to the view that the controller is controlling.\n    \"\"\"\n    simulation: SimulationModel",
+        "detail": "src.controller.base_controller",
+        "documentation": {}
+    },
+    {
+        "label": "ControllerRegistry",
+        "kind": 6,
+        "importPath": "src.controller.contoller_registry",
+        "description": "src.controller.contoller_registry",
+        "peekOfCode": "class ControllerRegistry:\n    _controllers: Dict[str, BaseController] = {}\n    \"\"\"\n    A dictionary that stores all registered controllers of the application\n    \"\"\"\n    @classmethod\n    def register(cls, controller: BaseController) -> None:\n        \"\"\"\n        Regsiter a controller in the application. This allows the controller to\n        be accessed anywhere in the application.",
+        "detail": "src.controller.contoller_registry",
+        "documentation": {}
+    },
+    {
+        "label": "T",
+        "kind": 5,
+        "importPath": "src.controller.contoller_registry",
+        "description": "src.controller.contoller_registry",
+        "peekOfCode": "T = TypeVar(\"T\", bound=BaseController)\nclass ControllerRegistry:\n    _controllers: Dict[str, BaseController] = {}\n    \"\"\"\n    A dictionary that stores all registered controllers of the application\n    \"\"\"\n    @classmethod\n    def register(cls, controller: BaseController) -> None:\n        \"\"\"\n        Regsiter a controller in the application. This allows the controller to",
+        "detail": "src.controller.contoller_registry",
+        "documentation": {}
+    },
+    {
         "label": "BaseSimulationGrid",
         "kind": 6,
-        "importPath": "src.simulator.grid.BaseSimulationGrid",
-        "description": "src.simulator.grid.BaseSimulationGrid",
-        "peekOfCode": "class BaseSimulationGrid(ABC):\n    name: str = None\n    \"\"\"\n    Name of this simulation Grid\n    \"\"\"\n    width: int = None\n    \"\"\"\n    Width in meters of this simulation grid.\n    \"\"\"\n    length: int = None",
-        "detail": "src.simulator.grid.BaseSimulationGrid",
+        "importPath": "src.model.grid.BaseSimulationGrid",
+        "description": "src.model.grid.BaseSimulationGrid",
+        "peekOfCode": "class BaseSimulationGrid(ABC):\n    name: str = None\n    \"\"\"\n    Name of this simulation Grid\n    \"\"\"\n    description: str = None\n    \"\"\"\n    Description of this simulation grid\n    \"\"\"\n    width: int = None",
+        "detail": "src.model.grid.BaseSimulationGrid",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleRandomGrid",
+        "kind": 6,
+        "importPath": "src.model.grid.SimpleRandomGrid",
+        "description": "src.model.grid.SimpleRandomGrid",
+        "peekOfCode": "class SimpleRandomGrid(BaseSimulationGrid):\n    name: str = \"Simple Random Grid\"\n    description: str = (\n        \"A simple grid that places nodes randomly within the grid. The grid is divided into a number of regions in order to reduce calculations required to detect collisions.\"\n    )\n    region_size: int = 50\n    \"\"\"\n    The size of the regions that the grid is divided into.\n    \"\"\"\n    nodes: List[BaseNode] = []",
+        "detail": "src.model.grid.SimpleRandomGrid",
         "documentation": {}
     },
     {
         "label": "BaseNode",
         "kind": 6,
-        "importPath": "src.simulator.node.BaseNode",
-        "description": "src.simulator.node.BaseNode",
+        "importPath": "src.model.node.BaseNode",
+        "description": "src.model.node.BaseNode",
         "peekOfCode": "class BaseNode(abc):\n    \"\"\"\n    Represents a node in the simulation network.\n    \"\"\"\n    name: str = None\n    \"\"\"\n    The name of this node type\n    \"\"\"\n    position: Tuple[float, float] = None\n    \"\"\"",
-        "detail": "src.simulator.node.BaseNode",
+        "detail": "src.model.node.BaseNode",
         "documentation": {}
     },
     {
-        "label": "SimController",
+        "label": "SimulationModel",
         "kind": 6,
-        "importPath": "src.simulator.SimController",
-        "description": "src.simulator.SimController",
-        "peekOfCode": "class SimController:\n    \"\"\"\n    Master Controller of th4e simulation. Is responsible for loading nodes\n    into the simulation and starting the simulation\n    \"\"\"\n    starting_num_nodes: int = 0\n    \"\"\"\n    The number of nodes that are in the network at the start of the simulation\n    \"\"\"\n    grid: BaseSimulationGrid = None",
-        "detail": "src.simulator.SimController",
+        "importPath": "src.model.simulation",
+        "description": "src.model.simulation",
+        "peekOfCode": "class SimulationModel:\n    pass",
+        "detail": "src.model.simulation",
         "documentation": {}
     },
     {
-        "label": "ConfigureScreen",
+        "label": "SideBarView",
         "kind": 6,
-        "importPath": "src.ui.configure_screen.ConfigureScreen",
-        "description": "src.ui.configure_screen.ConfigureScreen",
-        "peekOfCode": "class ConfigureScreen(Screen):\n    def __init__(self, *args, **kwargs):\n        Builder.load_file(\"ui/configure_screen/ConfigureScreen.kv\")\n        super().__init__()\n    def navigate_to_simulation_screen(self):\n        \"\"\"\n        Applies the current simulation properties and navigates the user to the simulation screen\n        \"\"\"\n        self.manager.switch_to(\n            SimulationScreen(name=\"simulation_screen\"), direction=\"left\"",
-        "detail": "src.ui.configure_screen.ConfigureScreen",
+        "importPath": "src.view.components.sidebar.sidebar",
+        "description": "src.view.components.sidebar.sidebar",
+        "peekOfCode": "class SideBarView(BaseComponentView, CommonElevationBehavior):\n    kv_file = \"view/components/sidebar/sidebar.kv\"\n    elevation_level = 4\n    shadow_radius = [20, 20, 20, 20]\n    shadow_softness = 5\n    # shadow_offset = [5, 0]",
+        "detail": "src.view.components.sidebar.sidebar",
         "documentation": {}
     },
     {
-        "label": "SimulationScreen",
+        "label": "BaseComponentView",
         "kind": 6,
-        "importPath": "src.ui.simulation_screen.SimulationScreen",
-        "description": "src.ui.simulation_screen.SimulationScreen",
-        "peekOfCode": "class SimulationScreen(MDScreen):\n    def __init__(self, *args, **kwargs):\n        Builder.load_file(\"ui/simulation_screen/SimulationScreen.kv\")\n        super().__init__(*args, **kwargs)",
-        "detail": "src.ui.simulation_screen.SimulationScreen",
+        "importPath": "src.view.components.base_component",
+        "description": "src.view.components.base_component",
+        "peekOfCode": "class BaseComponentView(BoxLayout):\n    kv_file: str = \"\"\n    \"\"\"\n    The kv file for the component. This must be defined in the subclass.\n    \"\"\"\n    def __init__(self):\n        Builder.load_file(self.kv_file)\n        super().__init__()",
+        "detail": "src.view.components.base_component",
+        "documentation": {}
+    },
+    {
+        "label": "MainScreenView",
+        "kind": 6,
+        "importPath": "src.view.screens.main_screen.main_screen",
+        "description": "src.view.screens.main_screen.main_screen",
+        "peekOfCode": "class MainScreenView(BaseScreenView):\n    name: str = \"main_screen\"\n    kv_file: str = \"view/screens/main_screen/main_screen.kv\"",
+        "detail": "src.view.screens.main_screen.main_screen",
+        "documentation": {}
+    },
+    {
+        "label": "BaseScreenView",
+        "kind": 6,
+        "importPath": "src.view.screens.base_screen",
+        "description": "src.view.screens.base_screen",
+        "peekOfCode": "class BaseScreenView(Screen):\n    kv_file: str = \"\"\n    \"\"\"\n    All screens must define a basekv file. In development mode these KV files\n    are auto hot reloaded\n    \"\"\"\n    def __init__(self):\n        Builder.load_file(self.kv_file)\n        super().__init__()",
+        "detail": "src.view.screens.base_screen",
         "documentation": {}
     },
     {
@@ -186,7 +548,16 @@
         "kind": 6,
         "importPath": "src.main",
         "description": "src.main",
-        "peekOfCode": "class ChronosSim(MDApp):\n    title = \"Network Simulator\"\n    def build(self):\n        self.theme_cls.theme_style = \"Dark\"\n        self.theme_cls.primary_palette = \"DeepOrange\"\n        sm = ScreenManager()\n        sm.switch_to(ConfigureScreen(name=\"configure_screen\"))\n        return sm\nif __name__ == \"__main__\":\n    ChronosSim().run()",
+        "peekOfCode": "class ChronosSim(MDApp):\n    title: str = \"Network Simulator\"\n    screen_manager: ScreenManager\n    simulation_model: SimulationModel\n    theme_manager: ThemeManager\n    KV_FILES: List[str] = get_all_kv_files(\"view\")\n    def build(self, first: bool = False) -> ScreenManager:\n        Window.maximize()\n        self.theme_manager = ThemeManager()\n        self.simulation_model = SimulationModel()",
+        "detail": "src.main",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_kv_files",
+        "kind": 2,
+        "importPath": "src.main",
+        "description": "src.main",
+        "peekOfCode": "def get_all_kv_files(base_directory: str) -> list:\n    \"\"\"\n    Recursively collects all .kv files within the screens and components directories.\n    :param base_directory: The root directory (e.g., 'views')\n    :return: A list of .kv file paths relative to the base directory.\n    \"\"\"\n    kv_files = []\n    for subdir in [\"screens\", \"components\"]:\n        target_dir = os.path.join(os.getcwd() + \"/src\", base_directory, subdir)\n        for root, _, files in os.walk(target_dir):",
         "detail": "src.main",
         "documentation": {}
     },
@@ -195,7 +566,7 @@
         "kind": 5,
         "importPath": "src.main",
         "description": "src.main",
-        "peekOfCode": "Window.left = 0  # TODO: Remove this line\nWindow.top = 0  # TODO: Remove this line\nclass ChronosSim(MDApp):\n    title = \"Network Simulator\"\n    def build(self):\n        self.theme_cls.theme_style = \"Dark\"\n        self.theme_cls.primary_palette = \"DeepOrange\"\n        sm = ScreenManager()\n        sm.switch_to(ConfigureScreen(name=\"configure_screen\"))\n        return sm",
+        "peekOfCode": "Window.left = 0  # TODO: Remove this line\nWindow.top = 0  # TODO: Remove this line\ndef get_all_kv_files(base_directory: str) -> list:\n    \"\"\"\n    Recursively collects all .kv files within the screens and components directories.\n    :param base_directory: The root directory (e.g., 'views')\n    :return: A list of .kv file paths relative to the base directory.\n    \"\"\"\n    kv_files = []\n    for subdir in [\"screens\", \"components\"]:",
         "detail": "src.main",
         "documentation": {}
     },
@@ -204,8 +575,26 @@
         "kind": 5,
         "importPath": "src.main",
         "description": "src.main",
-        "peekOfCode": "Window.top = 0  # TODO: Remove this line\nclass ChronosSim(MDApp):\n    title = \"Network Simulator\"\n    def build(self):\n        self.theme_cls.theme_style = \"Dark\"\n        self.theme_cls.primary_palette = \"DeepOrange\"\n        sm = ScreenManager()\n        sm.switch_to(ConfigureScreen(name=\"configure_screen\"))\n        return sm\nif __name__ == \"__main__\":",
+        "peekOfCode": "Window.top = 0  # TODO: Remove this line\ndef get_all_kv_files(base_directory: str) -> list:\n    \"\"\"\n    Recursively collects all .kv files within the screens and components directories.\n    :param base_directory: The root directory (e.g., 'views')\n    :return: A list of .kv file paths relative to the base directory.\n    \"\"\"\n    kv_files = []\n    for subdir in [\"screens\", \"components\"]:\n        target_dir = os.path.join(os.getcwd() + \"/src\", base_directory, subdir)",
         "detail": "src.main",
+        "documentation": {}
+    },
+    {
+        "label": "ThemeManager",
+        "kind": 6,
+        "importPath": "src.theme",
+        "description": "src.theme",
+        "peekOfCode": "class ThemeManager(EventDispatcher):\n    current_theme = OptionProperty(\"dark\", options=[\"light\", \"dark\"])\n    bg_color = ColorProperty()\n    secondary_bg_color = ColorProperty()\n    text_color = ColorProperty()\n    secondary_text_color = ColorProperty()\n    def __init__(self, **kwargs):\n        super().__init__(**kwargs)\n        self._initialize_defaults()\n        self.bind(current_theme=self.on_theme_change)",
+        "detail": "src.theme",
+        "documentation": {}
+    },
+    {
+        "label": "convert_hex_to_decimal",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def convert_hex_to_decimal(hex_color: str) -> List[float]:\n    \"\"\"\n    Helper function to convert a color string into a list of decimals\n    :param hex_color: Hex color string\n    :type hex_color: str\n    \"\"\"\n    return [int(hex_color[i : i + 2], 16) / 255 for i in (0, 2, 4)]",
+        "detail": "src.utils",
         "documentation": {}
     }
 ]

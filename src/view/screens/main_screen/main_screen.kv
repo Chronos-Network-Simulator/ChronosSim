@@ -1,0 +1,23 @@
+<MainScreenView>:
+    canvas.before:
+        Color:
+            rgba: app.theme_manager.bg_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        id: master_layout
+        orientation: 'horizontal'
+        padding: "15dp"
+        spacing: "10dp"
+
+        RelativeLayout:
+            id: sidebar
+            size_hint: (0.2,1)
+
+        RelativeLayout:
+            id: sim_grid
+        
+            
+            
+

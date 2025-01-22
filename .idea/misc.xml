@@ -5,4 +5,5 @@
     <option name="enabledOnSave" value="true" />
     <option name="sdkName" value="Pipenv (NetworkSim)" />
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (ChronosSim)" project-jdk-type="Python SDK" />
 </project>
