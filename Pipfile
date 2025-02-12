@@ -8,6 +8,8 @@ black = "*"
 kivy = "*"
 kivymd = {file = "https://github.com/kivymd/KivyMD/archive/master.zip"}
 watchdog = "*"
+pypubsub = "*"
+pubsub = "*"
 
 [dev-packages]
 black = "*"

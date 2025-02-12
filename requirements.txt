@@ -14,3 +14,5 @@ urllib3~=2.3.0
 idna~=3.10
 charset-normalizer~=3.4.1
 asyncgui~=0.6.3
+pubsub~=0.1.2
+Pypubsub~=4.0.3

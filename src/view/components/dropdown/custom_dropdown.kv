@@ -1,0 +1,116 @@
+#:import dp kivy.metrics.dp
+
+<CustomDropDown>:
+    padding: "0dp", "0dp", "0dp", "10dp"
+    size_hint: (1,None)
+    height: self.minimum_height
+
+    CustomDropDownContainer:
+        selected_option: root.selected_option
+        open: root.open
+        
+
+
+<CustomDropDownContainer>:
+    canvas:
+        Color:
+            rgba: app.theme_manager.bg_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [15,15,15,15]
+
+    canvas.after:
+        Color:
+            rgba: app.theme_manager.bg_border_color if not root.open else app.theme_manager.primary_color
+        Line:
+            width: dp(1.1)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 15, 15, 15, 15)
+
+    orientation: 'horizontal'
+    size_hint: (1,None)
+    height: self.minimum_height
+    padding: "10dp"
+    spacing: "10dp"
+                
+    Label:
+        id: selected_option
+        text: root.selected_option
+        color: app.theme_manager.text_color
+        font_size: 18
+        text_size: self.size
+        halign: 'left'
+        size_hint_y: None
+        height: self.texture_size[1]
+        font_name: 'Inter-Medium'
+        pos_hint: {"center_y":.5}
+
+    MDIcon:
+        icon: "chevron-down"
+        theme_icon_color: "Custom"
+        icon_color: app.theme_manager.secondary_text_color
+        theme_font_size: "Custom"
+        font_size: "30sp"
+        size_hint: None, None
+        size: "48dp", "48dp"
+        pos_hint: {"right":1}
+
+<CustomDropDownInternal>:
+    canvas:
+        Color:
+            rgba: app.theme_manager.secondary_bg_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [15,15,15,15]
+    canvas.after:
+        Color:
+            rgba: app.theme_manager.bg_border_color
+        Line:
+            width: dp(1.1)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 15, 15, 15, 15)
+
+
+        
+                
+<CustomDropDownItem>:
+    orientation: 'horizontal'
+    size_hint: (1,None)
+    height: self.minimum_height
+    spacing: "10dp"
+    padding: "10dp"
+
+    MDIcon:
+        icon: root.icon
+        theme_icon_color: "Custom"
+        icon_color: app.theme_manager.secondary_text_color
+        theme_font_size: "Custom"
+        font_size: "22sp"
+        size_hint: None, None
+        size: "32dp", "32dp"
+        pos_hint: {"center_y":.5}
+
+    Label:
+        text: root.text
+        color: app.theme_manager.secondary_text_color
+        font_size: 18
+        text_size: self.size
+        halign: 'left'
+        size_hint_y: None
+        height: self.texture_size[1]
+        font_name: 'Inter-Medium'
+        pos_hint: {"center_y":.5}
+    
+
+        
+<MainScreen>:
+    canvas.before:
+        Color:
+            rgba: app.theme_manager.bg_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    CustomDropDown:
+        id: dropdown
+        size_hint: (.3,None) 
+        pos_hint: {'center_x':.5,'center_y':.5}

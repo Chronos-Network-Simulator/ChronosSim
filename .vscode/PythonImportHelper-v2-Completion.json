@@ -56,15 +56,6 @@
         "documentation": {}
     },
     {
-        "label": "abc",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "abc",
-        "description": "abc",
-        "detail": "abc",
-        "documentation": {}
-    },
-    {
         "label": "ABC",
         "importPath": "abc",
         "description": "abc",
@@ -82,6 +73,14 @@
     },
     {
         "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
         "importPath": "abc",
         "description": "abc",
         "isExtraImport": true,
@@ -129,7 +128,23 @@
         "documentation": {}
     },
     {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -146,6 +161,14 @@
     },
     {
         "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -257,6 +280,14 @@
         "documentation": {}
     },
     {
+        "label": "BaseNode",
+        "importPath": "model.node.BaseNode",
+        "description": "model.node.BaseNode",
+        "isExtraImport": true,
+        "detail": "model.node.BaseNode",
+        "documentation": {}
+    },
+    {
         "label": "random",
         "kind": 6,
         "isExtraImport": true,
@@ -267,26 +298,90 @@
     },
     {
         "label": "BaseSimulationGrid",
-        "importPath": "simulator.grid.BaseSimulationGrid",
-        "description": "simulator.grid.BaseSimulationGrid",
+        "importPath": "model.grid.BaseSimulationGrid",
+        "description": "model.grid.BaseSimulationGrid",
         "isExtraImport": true,
-        "detail": "simulator.grid.BaseSimulationGrid",
+        "detail": "model.grid.BaseSimulationGrid",
         "documentation": {}
     },
     {
-        "label": "BaseNode",
-        "importPath": "simulator.node.BaseNode",
-        "description": "simulator.node.BaseNode",
+        "label": "BaseSimulationGrid",
+        "importPath": "model.grid.BaseSimulationGrid",
+        "description": "model.grid.BaseSimulationGrid",
         "isExtraImport": true,
-        "detail": "simulator.node.BaseNode",
+        "detail": "model.grid.BaseSimulationGrid",
         "documentation": {}
     },
     {
-        "label": "Tuple",
-        "importPath": "ast",
-        "description": "ast",
+        "label": "Widget",
+        "importPath": "kivy.uix.widget",
+        "description": "kivy.uix.widget",
         "isExtraImport": true,
-        "detail": "ast",
+        "detail": "kivy.uix.widget",
+        "documentation": {}
+    },
+    {
+        "label": "ButtonBehavior",
+        "importPath": "kivy.uix.behaviors",
+        "description": "kivy.uix.behaviors",
+        "isExtraImport": true,
+        "detail": "kivy.uix.behaviors",
+        "documentation": {}
+    },
+    {
+        "label": "ColorProperty",
+        "importPath": "kivy.properties",
+        "description": "kivy.properties",
+        "isExtraImport": true,
+        "detail": "kivy.properties",
+        "documentation": {}
+    },
+    {
+        "label": "ListProperty",
+        "importPath": "kivy.properties",
+        "description": "kivy.properties",
+        "isExtraImport": true,
+        "detail": "kivy.properties",
+        "documentation": {}
+    },
+    {
+        "label": "OptionProperty",
+        "importPath": "kivy.properties",
+        "description": "kivy.properties",
+        "isExtraImport": true,
+        "detail": "kivy.properties",
+        "documentation": {}
+    },
+    {
+        "label": "ColorProperty",
+        "importPath": "kivy.properties",
+        "description": "kivy.properties",
+        "isExtraImport": true,
+        "detail": "kivy.properties",
+        "documentation": {}
+    },
+    {
+        "label": "MDIconButton",
+        "importPath": "kivymd.uix.button",
+        "description": "kivymd.uix.button",
+        "isExtraImport": true,
+        "detail": "kivymd.uix.button",
+        "documentation": {}
+    },
+    {
+        "label": "MDIconButton",
+        "importPath": "kivymd.uix.button",
+        "description": "kivymd.uix.button",
+        "isExtraImport": true,
+        "detail": "kivymd.uix.button",
+        "documentation": {}
+    },
+    {
+        "label": "MDExpansionPanel",
+        "importPath": "kivymd.uix.expansionpanel",
+        "description": "kivymd.uix.expansionpanel",
+        "isExtraImport": true,
+        "detail": "kivymd.uix.expansionpanel",
         "documentation": {}
     },
     {
@@ -295,6 +390,54 @@
         "description": "kivymd.uix.behaviors",
         "isExtraImport": true,
         "detail": "kivymd.uix.behaviors",
+        "documentation": {}
+    },
+    {
+        "label": "RotateBehavior",
+        "importPath": "kivymd.uix.behaviors",
+        "description": "kivymd.uix.behaviors",
+        "isExtraImport": true,
+        "detail": "kivymd.uix.behaviors",
+        "documentation": {}
+    },
+    {
+        "label": "MDDropdownMenu",
+        "importPath": "kivymd.uix.menu",
+        "description": "kivymd.uix.menu",
+        "isExtraImport": true,
+        "detail": "kivymd.uix.menu",
+        "documentation": {}
+    },
+    {
+        "label": "MDTextField",
+        "importPath": "kivymd.uix.textfield",
+        "description": "kivymd.uix.textfield",
+        "isExtraImport": true,
+        "detail": "kivymd.uix.textfield",
+        "documentation": {}
+    },
+    {
+        "label": "AVAILABLE_GRIDS",
+        "importPath": "model.grid",
+        "description": "model.grid",
+        "isExtraImport": true,
+        "detail": "model.grid",
+        "documentation": {}
+    },
+    {
+        "label": "ThemeManager",
+        "importPath": "theme",
+        "description": "theme",
+        "isExtraImport": true,
+        "detail": "theme",
+        "documentation": {}
+    },
+    {
+        "label": "ThemeManager",
+        "importPath": "theme",
+        "description": "theme",
+        "isExtraImport": true,
+        "detail": "theme",
         "documentation": {}
     },
     {
@@ -347,6 +490,22 @@
         "documentation": {}
     },
     {
+        "label": "W",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "Label",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
         "label": "Window",
         "importPath": "kivy.core.window",
         "description": "kivy.core.window",
@@ -356,10 +515,10 @@
     },
     {
         "label": "MDApp",
-        "importPath": "kivymd.app",
-        "description": "kivymd.app",
+        "importPath": "kivymd.tools.hotreload.app",
+        "description": "kivymd.tools.hotreload.app",
         "isExtraImport": true,
-        "detail": "kivymd.app",
+        "detail": "kivymd.tools.hotreload.app",
         "documentation": {}
     },
     {
@@ -379,14 +538,6 @@
         "documentation": {}
     },
     {
-        "label": "ThemeManager",
-        "importPath": "theme",
-        "description": "theme",
-        "isExtraImport": true,
-        "detail": "theme",
-        "documentation": {}
-    },
-    {
         "label": "MainScreenView",
         "importPath": "view.screens.main_screen.main_screen",
         "description": "view.screens.main_screen.main_screen",
@@ -403,27 +554,27 @@
         "documentation": {}
     },
     {
-        "label": "OptionProperty",
-        "importPath": "kivy.properties",
-        "description": "kivy.properties",
-        "isExtraImport": true,
-        "detail": "kivy.properties",
-        "documentation": {}
-    },
-    {
-        "label": "ColorProperty",
-        "importPath": "kivy.properties",
-        "description": "kivy.properties",
-        "isExtraImport": true,
-        "detail": "kivy.properties",
-        "documentation": {}
-    },
-    {
         "label": "convert_hex_to_decimal",
         "importPath": "utils",
         "description": "utils",
         "isExtraImport": true,
         "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "LabelBase",
+        "importPath": "kivy.core.text",
+        "description": "kivy.core.text",
+        "isExtraImport": true,
+        "detail": "kivy.core.text",
+        "documentation": {}
+    },
+    {
+        "label": "Lock",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
         "documentation": {}
     },
     {
@@ -476,7 +627,7 @@
         "kind": 6,
         "importPath": "src.model.grid.BaseSimulationGrid",
         "description": "src.model.grid.BaseSimulationGrid",
-        "peekOfCode": "class BaseSimulationGrid(ABC):\n    name: str = None\n    \"\"\"\n    Name of this simulation Grid\n    \"\"\"\n    description: str = None\n    \"\"\"\n    Description of this simulation grid\n    \"\"\"\n    width: int = None",
+        "peekOfCode": "class BaseSimulationGrid(ABC):\n    name: str\n    \"\"\"\n    Name of this simulation Grid\n    \"\"\"\n    description: str\n    \"\"\"\n    Description of this simulation grid\n    \"\"\"\n    icon: str",
         "detail": "src.model.grid.BaseSimulationGrid",
         "documentation": {}
     },
@@ -485,7 +636,7 @@
         "kind": 6,
         "importPath": "src.model.grid.SimpleRandomGrid",
         "description": "src.model.grid.SimpleRandomGrid",
-        "peekOfCode": "class SimpleRandomGrid(BaseSimulationGrid):\n    name: str = \"Simple Random Grid\"\n    description: str = (\n        \"A simple grid that places nodes randomly within the grid. The grid is divided into a number of regions in order to reduce calculations required to detect collisions.\"\n    )\n    region_size: int = 50\n    \"\"\"\n    The size of the regions that the grid is divided into.\n    \"\"\"\n    nodes: List[BaseNode] = []",
+        "peekOfCode": "class SimpleRandomGrid(BaseSimulationGrid):\n    name: str = \"Simple Random Grid\"\n    description: str = (\n        \"A simple grid that places nodes randomly within the grid. The grid is divided into a number of regions in order to reduce calculations required to detect collisions.\"\n    )\n    icon: str = \"dots-grid\"\n    def __init__(self, width: int, length: int, region_size: int):\n        self.width = width\n        self.length = length\n        self.region_size = region_size",
         "detail": "src.model.grid.SimpleRandomGrid",
         "documentation": {}
     },
@@ -494,7 +645,7 @@
         "kind": 6,
         "importPath": "src.model.node.BaseNode",
         "description": "src.model.node.BaseNode",
-        "peekOfCode": "class BaseNode(abc):\n    \"\"\"\n    Represents a node in the simulation network.\n    \"\"\"\n    name: str = None\n    \"\"\"\n    The name of this node type\n    \"\"\"\n    position: Tuple[float, float] = None\n    \"\"\"",
+        "peekOfCode": "class BaseNode(ABC):\n    \"\"\"\n    Represents a node in the simulation network.\n    \"\"\"\n    name: str\n    \"\"\"\n    The name of this node type\n    \"\"\"\n    position: Tuple[float, float]\n    \"\"\"",
         "detail": "src.model.node.BaseNode",
         "documentation": {}
     },
@@ -503,7 +654,7 @@
         "kind": 6,
         "importPath": "src.model.simulation",
         "description": "src.model.simulation",
-        "peekOfCode": "class SimulationModel:\n    pass",
+        "peekOfCode": "class SimulationModel:\n    grid: BaseSimulationGrid | None\n    \"\"\"\n    The grid that the simulation is running on.\n    \"\"\"\n    def __init__(self):\n        self.grid = None",
         "detail": "src.model.simulation",
         "documentation": {}
     },
@@ -512,7 +663,25 @@
         "kind": 6,
         "importPath": "src.view.components.sidebar.sidebar",
         "description": "src.view.components.sidebar.sidebar",
-        "peekOfCode": "class SideBarView(BaseComponentView, CommonElevationBehavior):\n    kv_file = \"view/components/sidebar/sidebar.kv\"\n    elevation_level = 4\n    shadow_radius = [20, 20, 20, 20]\n    shadow_softness = 5\n    # shadow_offset = [5, 0]",
+        "peekOfCode": "class SideBarView(BaseComponentView, CommonElevationBehavior):\n    kv_file = \"view/components/sidebar/sidebar.kv\"\n    elevation_level = 4\n    shadow_radius = [20, 20, 20, 20]\n    shadow_softness = 5\n    # shadow_offset = [5, 0]\nclass GridSettingsExpansionView(  # type: ignore\n    ButtonBehavior,\n    MDExpansionPanel,\n):",
+        "detail": "src.view.components.sidebar.sidebar",
+        "documentation": {}
+    },
+    {
+        "label": "GridSettingsExpansionView",
+        "kind": 6,
+        "importPath": "src.view.components.sidebar.sidebar",
+        "description": "src.view.components.sidebar.sidebar",
+        "peekOfCode": "class GridSettingsExpansionView(  # type: ignore\n    ButtonBehavior,\n    MDExpansionPanel,\n):\n    background_color = ColorProperty(ThemeManager().secondary_bg_color)\n    \"\"\"\n    Controls the background color of the expansion panel when swityching between open and closed states\n    \"\"\"\n    border_radius = ListProperty()\n    \"\"\"",
+        "detail": "src.view.components.sidebar.sidebar",
+        "documentation": {}
+    },
+    {
+        "label": "GridTypeSelector",
+        "kind": 6,
+        "importPath": "src.view.components.sidebar.sidebar",
+        "description": "src.view.components.sidebar.sidebar",
+        "peekOfCode": "class GridTypeSelector(MDTextField):\n    menu: MDDropdownMenu\n    \"\"\"\n    The dropdown menu that is displayed when the text field is focused\n    \"\"\"\n    def __init__(self, *args, **kwargs):\n        super().__init__(*args, **kwargs)\n        self.bind(text=self.on_text_changed)\n    def on_text_changed(self, text, *args) -> None:\n        \"\"\"",
         "detail": "src.view.components.sidebar.sidebar",
         "documentation": {}
     },
@@ -523,6 +692,15 @@
         "description": "src.view.components.base_component",
         "peekOfCode": "class BaseComponentView(BoxLayout):\n    kv_file: str = \"\"\n    \"\"\"\n    The kv file for the component. This must be defined in the subclass.\n    \"\"\"\n    def __init__(self):\n        Builder.load_file(self.kv_file)\n        super().__init__()",
         "detail": "src.view.components.base_component",
+        "documentation": {}
+    },
+    {
+        "label": "Chevron",
+        "kind": 6,
+        "importPath": "src.view.components.chevron",
+        "description": "src.view.components.chevron",
+        "peekOfCode": "class Chevron(MDIconButton, RotateBehavior): ...",
+        "detail": "src.view.components.chevron",
         "documentation": {}
     },
     {
@@ -548,7 +726,7 @@
         "kind": 6,
         "importPath": "src.main",
         "description": "src.main",
-        "peekOfCode": "class ChronosSim(MDApp):\n    title: str = \"Network Simulator\"\n    screen_manager: ScreenManager\n    simulation_model: SimulationModel\n    theme_manager: ThemeManager\n    KV_FILES: List[str] = get_all_kv_files(\"view\")\n    def build(self, first: bool = False) -> ScreenManager:\n        Window.maximize()\n        self.theme_manager = ThemeManager()\n        self.simulation_model = SimulationModel()",
+        "peekOfCode": "class ChronosSim(MDApp):\n    title: str = \"Network Simulator\"\n    screen_manager: ScreenManager\n    simulation_model: SimulationModel\n    theme_manager: ThemeManager\n    KV_FILES: List[str] = get_all_kv_files(\"view\")\n    def build_app(self, first: bool = False) -> ScreenManager:\n        Window.maximize()\n        Window.bind(on_keyboard=self.on_keyboard_down)\n        self.theme_manager = ThemeManager()",
         "detail": "src.main",
         "documentation": {}
     },
@@ -584,7 +762,7 @@
         "kind": 6,
         "importPath": "src.theme",
         "description": "src.theme",
-        "peekOfCode": "class ThemeManager(EventDispatcher):\n    current_theme = OptionProperty(\"dark\", options=[\"light\", \"dark\"])\n    bg_color = ColorProperty()\n    secondary_bg_color = ColorProperty()\n    text_color = ColorProperty()\n    secondary_text_color = ColorProperty()\n    def __init__(self, **kwargs):\n        super().__init__(**kwargs)\n        self._initialize_defaults()\n        self.bind(current_theme=self.on_theme_change)",
+        "peekOfCode": "class ThemeManager(EventDispatcher):\n    \"\"\"\n    Manages the theme of the application.\n    This is a singleton class\n    \"\"\"\n    current_theme = OptionProperty(\"dark\", options=[\"light\", \"dark\"])\n    bg_color = ColorProperty()\n    secondary_bg_color = ColorProperty()\n    text_color = ColorProperty()\n    secondary_text_color = ColorProperty()",
         "detail": "src.theme",
         "documentation": {}
     },

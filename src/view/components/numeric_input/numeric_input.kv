@@ -1,0 +1,95 @@
+#:import dp kivy.metrics.dp
+<NumericInput>:
+    canvas:
+        Color:
+            rgba: app.theme_manager.secondary_bg_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [15,15,15,15]
+
+    canvas.after:
+        Color:
+            rgba: app.theme_manager.primary_color if self.focused else app.theme_manager.sec_bg_border_color
+        Line:
+            width: dp(1.1)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 15, 15, 15, 15)
+
+    orientation: 'horizontal'
+    size_hint: (.4,None)
+    height: self.minimum_height
+    padding: "10dp"
+    spacing: "10dp"
+    pos_hint: {'center_x':.5, 'center_y':.5}
+
+    AnchorLayout:
+        size_hint: (.6, None)
+        height: input.minimum_height
+        anchor_x: 'left'
+        anchor_y: 'center'
+        TextInput:
+            id:input
+            size_hint: (.6,None)
+            height: self.minimum_height
+            multiline: False
+            background_color:app.theme_manager.secondary_bg_color
+            foreground_color: app.theme_manager.secondary_text_color
+            background_normal: ''
+            background_active: ""
+            border: 0,0,0,0
+            cursor_color: app.theme_manager.primary_color
+            input_filter: 'float'
+            font_size: '16sp'
+            text: str(root.stored_value)
+            font_name: 'Inter-Medium'
+            hint_text_color: app.theme_manager.secondary_text_color
+            on_focus: root.update_focus(self.focus)
+            on_text_validate: root.set_value(self.text)
+
+    AnchorLayout:
+        size_hint: (None, None)
+        height: input.minimum_height
+        width: buttons.minimum_width
+        anchor_x: 'right'
+        anchor_y: 'center'
+
+        BoxLayout:
+            id: buttons
+            spacing: "10dp"
+            orientation: 'horizontal'
+
+            ValueAdjustButton:
+                icon: "plus"
+                on_release: root.update_value(1)
+
+            ValueAdjustButton:
+                icon: "minus"
+                on_release: root.update_value(-1)
+
+<ValueAdjustButton>:
+    canvas:
+        Color:
+            rgba: app.theme_manager.bg_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [8,8,8,8]
+
+    canvas.after:
+        Color:
+            rgba: app.theme_manager.bg_border_color
+        Line:
+            width: dp(1.1)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 8, 8, 8, 8)
+
+    orientation: 'horizontal'
+    size_hint_x: None
+    width: self.height
+
+    MDIcon:
+        icon: root.icon
+        theme_icon_color: "Custom"
+        text_color: app.theme_manager.text_color
+        pos_hint: {"center_y":.5, "center_x":.5}
+        size_hint: 1,1
+

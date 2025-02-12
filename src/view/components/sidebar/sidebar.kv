@@ -6,3 +6,120 @@
             size: self.size
             pos: self.pos
             radius: [20,20,20,20]
+    orientation: 'vertical'
+    
+    spacing: "30dp"
+
+    ScrollView:
+        size_hint: 1, 1
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: "20dp"
+            padding: "12dp"
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_x: 1
+                size_hint_y: None
+                height: self.minimum_height 
+                spacing: "10dp"
+
+                FloatLayout:
+                    canvas:
+                        Color: 
+                            rgba: 1,1,1,1
+                        RoundedRectangle:
+                            source: 'assets/logo.jpg'
+                            size: self.size
+                            pos: self.pos
+                            radius: [15,15,15,15]
+                    size_hint: (.25, None)
+                    height: self.width
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    pos_hint: {'center_y': .5}
+
+                    Label:
+                        text: "Chronos Simulator"
+                        font_size: 18
+                        text_size: self.size
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        halign: 'left'
+                        font_name: 'Inter-Bold'
+
+                    Label:
+                        text: "Version 1.0"
+                        font_size: 13
+                        text_size: self.size
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        halign: 'left'
+                        font_name: 'Inter'
+            MDDivider:
+                size_hint_x: 1
+                pos_hint: {'center_x': .5}
+                color: app.theme_manager.bg_border_color
+                divider_width:2
+
+            GridSettingsGroup:
+                id: grid_settings_group
+                
+<GridSettingsGroup>:
+    orientation: 'vertical'
+    size_hint: 1, None
+    height: self.minimum_height
+    spacing: "10dp"
+
+    Label:
+        text: "Grid settings"
+        font_size: 20
+        text_size: self.size
+        size_hint: 1, None
+        height: self.texture_size[1]
+        halign: 'left'
+        font_name: 'Inter-Bold'
+        color: app.theme_manager.text_color
+
+    Label:
+        text: "Grid type :"
+        font_size: 16
+        text_size: self.size
+        size_hint: 1,None
+        height: self.texture_size[1]
+        halign: 'left'
+        font_name: 'Inter-Medium'
+        color: app.theme_manager.text_color
+        padding: "0dp", "10dp", "0dp", "5dp"
+
+    CustomDropDown:
+        id: grid_type_selector
+        size_hint: 1, None
+
+    Label:
+        id: grid_type_description
+        text: ""
+        font_size: 13
+        halign: 'left'
+        font_name: 'Inter'
+        color: app.theme_manager.secondary_text_color
+        text_size: self.parent.size[0], None
+        size_hint: 1, None
+        height: self.texture_size[1]
+
+    BoxLayout:
+        id: settings_view
+        orientation: "vertical"
+        spacing: "5dp"
+        size_hint: 1, None
+        height: self.minimum_height
+            
+
+
+
+        

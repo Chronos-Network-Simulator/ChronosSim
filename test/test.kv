@@ -1,0 +1,11 @@
+#:import dp kivy.metrics.dp
+
+
+
+<MainScreen>:
+    canvas.before:
+        Color:
+            rgba: app.theme_manager.bg_color
+        Rectangle:
+            size: self.size
+            pos: self.pos

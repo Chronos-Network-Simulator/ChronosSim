@@ -1,0 +1,53 @@
+#:import dp kivy.metrics.dp
+
+
+<CustomTextField>:
+    canvas:
+        Color:
+            rgba: app.theme_manager.secondary_bg_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [15,15,15,15]
+
+    canvas.after:
+        Color:
+            rgba: app.theme_manager.primary_color if self.focused else app.theme_manager.sec_bg_border_color
+        Line:
+            width: dp(1.1)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 15, 15, 15, 15)
+
+    orientation: 'horizontal'
+    size_hint: (.4,None)
+    height: self.minimum_height
+    padding: "10dp"
+    spacing: "10dp"
+    pos_hint: {'center_x':.5, 'center_y':.5}
+    TextInput:
+        id:input
+        size_hint: (1,None)
+        height: self.minimum_height
+        multiline: False
+        background_color:app.theme_manager.secondary_bg_color
+        foreground_color: app.theme_manager.secondary_text_color
+        background_normal: ''
+        background_active: ""
+        border: 0,0,0,0
+        cursor_color: app.theme_manager.primary_color
+        font_size: '16sp'
+        text: str(root.stored_value)
+        font_name: 'Inter-Medium'
+        hint_text_color: app.theme_manager.secondary_text_color
+        on_focus: root.update_focus(self.focus)
+        on_text_validate: root.set_value(self.text)
+
+
+
+
+<MainScreen>:
+    canvas.before:
+        Color:
+            rgba: app.theme_manager.bg_color
+        Rectangle:
+            size: self.size
+            pos: self.pos

@@ -1,12 +1,12 @@
 import os
-from typing import List, cast
+from typing import cast
 
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.app import MDApp
 
-from controller.contoller_registry import ControllerRegistry
 from controller.base_controller import BaseController
+from controller.contoller_registry import ControllerRegistry
 from controller.screens.main_screen_contoller import MainScreenController
 from model.simulation import SimulationModel
 from theme import ThemeManager
@@ -14,7 +14,7 @@ from view.components.base_component import BaseComponentView
 from view.screens.base_screen import BaseScreenView
 from view.screens.main_screen.main_screen import MainScreenView
 
-Window.left = 0  # TODO: Remove this line
+Window.left = 2160  # TODO: Remove this line
 Window.top = 0  # TODO: Remove this line
 
 
@@ -36,7 +36,6 @@ def get_all_kv_files(base_directory: str) -> list:
 
 
 class ChronosSim(MDApp):
-
     title: str = "Network Simulator"
 
     screen_manager: ScreenManager
@@ -45,7 +44,7 @@ class ChronosSim(MDApp):
 
     theme_manager: ThemeManager
 
-    KV_FILES: List[str] = get_all_kv_files("view")
+    # KV_FILES: List[str] = get_all_kv_files("view")
 
     def build(self, first: bool = False) -> ScreenManager:
         Window.maximize()
@@ -53,7 +52,7 @@ class ChronosSim(MDApp):
         self.simulation_model = SimulationModel()
         self.screen_manager = ScreenManager()
         self.add_screen(MainScreenController, MainScreenView(), "main_screen")
-        print(self.screen_manager.screen_names)
+        self.simulation_model.initialize()  # only initialize the simulation model once the Views are ready to handle it
         return self.screen_manager
 
     def add_screen(
@@ -65,18 +64,14 @@ class ChronosSim(MDApp):
         """
         Instantiates the controller and passes it the simulation model.
         Adds the controller to the list of controllers and the view to the screen manager.
+        :param name:
+        :param view:
         :param controller: the controller to be added to the app
         :return: None
         """
         controller_instance = controller(view, name, self.simulation_model)
         ControllerRegistry.register(controller_instance)
         self.screen_manager.add_widget(controller_instance.view)
-
-    # def on_keyboard_down(self, window, keyboard, keycode, text, modifiers) -> None:
-    #     if "meta" in modifiers or "ctrl" in modifiers and text == "r":
-    #         # clear the ControllerRegistry
-    #         ControllerRegistry.clear()
-    #         self.rebuild()
 
     def get_theme_manager(self) -> ThemeManager:
         """

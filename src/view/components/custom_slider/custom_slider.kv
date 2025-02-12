@@ -1,0 +1,16 @@
+<CustomSlider>:
+    orientation: 'horizontal'
+
+    MDSlider:
+        step: root.step
+        min:root.min
+        max:root.max
+        value: root.stored_value
+        track_active_color: app.theme_manager.primary_color
+        track_inactive_color: app.theme_manager.sec_bg_border_color
+
+        MDSliderHandle:
+            theme_bg_color: "Custom"
+            md_bg_color: app.theme_manager.primary_color
+
+        MDSliderValueLabel:
