@@ -101,7 +101,6 @@ class BaseModelSetting(ABC, Generic[T]):
         Publishes an event when the setting's value is changed.
         """
         if self.channel:
-            print(self.channel)
             pub.sendMessage(
                 self.channel,
                 attributes=self.attributes,

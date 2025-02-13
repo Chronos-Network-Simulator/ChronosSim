@@ -15,9 +15,17 @@
             id: sidebar
             size_hint: (0.15,1)
 
-        RelativeLayout:
+        BoxLayout:
             id: grid
-            size_hint: (0.8,1)
+            canvas.before:
+                StencilPush
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                StencilUse
+            canvas.after:
+                StencilUnUse
+                StencilPop
         
             
             

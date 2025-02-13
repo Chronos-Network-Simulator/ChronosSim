@@ -33,7 +33,6 @@ class SideBarController(BaseController):
                 self.simulation.set_grid(None)
                 return
             self.simulation.set_grid(get_grid_by_name(grid_type))
-            print(self.simulation.grid)
         except ConfigError as e:
             pub.sendMessage("ui.error", message=str(e))
         except ValueError as e:

@@ -19,27 +19,27 @@ class SimpleRandomGrid(BaseSimulationGrid):
     settings = [
         NumericSetting(
             name="Grid Size",
-            description="The size of the grid in Kilometers",
-            min_value=1,
-            max_value=20,
-            default_value=5,
+            description="The size of the grid in meters",
+            min_value=2000,
+            max_value=20000,
+            default_value=2000,
             attributes=["width", "length"],
             entity_type=SupportedEntity.GRID,
         ),
         NumericSetting(
             name="Region Size",
             description="The size of the regions in meters",
-            min_value=10,
-            max_value=100,
-            default_value=100,
+            min_value=500,
+            max_value=1000,
+            default_value=500,
             attributes=["region_size"],
             entity_type=SupportedEntity.GRID,
         ),
     ]
 
-    width: int = 5
-    length: int = 5
-    region_size: int = 100
+    width: int = 5000
+    length: int = 5000
+    region_size: int = 500
 
     def __init__(self):
         super().__init__()

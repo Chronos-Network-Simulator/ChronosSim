@@ -49,7 +49,7 @@ class BaseSimulationGrid(ABC):
     region_size: int
     """
     Every Grid must be divided into regions to reduce the number of calculations required to detect collisions.
-    This is the size of the regions that the grid is divided into. Regions are square.
+    This is the size of the regions that the grid is divided into. Regions are square. Region size is in meters
     """
 
     nodes: List[BaseNode]
@@ -92,7 +92,8 @@ class BaseSimulationGrid(ABC):
                 setattr(self, attribute, new_value)
             else:
                 raise ValueError(f"Attribute {attribute} not found in {self}")
-        print(f"Setting Changed: {attributes} to {new_value}")
+        # send a pub event that the model's values have been changed
+        pub.sendMessage("simulation.grid_updated", grid_type=self.name)
 
     @abstractmethod
     def place_node(self, node: BaseNode):

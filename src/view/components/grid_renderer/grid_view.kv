@@ -1,1 +1,19 @@
-<GridView>
+<GridCell>
+    canvas:
+        Color:
+            rgba: app.theme_manager.bg_border_color
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+
+<GridView>:
+    CustomScatterLayout:
+        id: scatter
+        auto_bring_to_front: False
+        do_rotation: False
+        do_scale: True
+        do_translation: True
+        GridLayout:
+            id: grid
+            size_hint: None, None
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
