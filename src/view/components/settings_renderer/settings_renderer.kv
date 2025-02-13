@@ -36,14 +36,25 @@
     orientation: 'vertical'
     spacing: "15dp"
 
-    Label:
-        text: root.title
-        font_size: 16
-        text_size: self.size
-        size_hint: None,None
-        halign: 'left'
-        font_name: 'Inter-Medium'
-        color: app.theme_manager.text_color
+    BoxLayout:
+        size_hint: 1, None
+        height:self.minimum_height
+        spacing: "10dp"
+        orientation: "horizontal"
+
+        Label:
+            text: root.title + ":"
+            font_size: 16
+            text_size: None, None
+            size_hint: None, None
+            size: self.texture_size
+            halign: 'left'
+            font_name: 'Inter-Medium'
+            color: app.theme_manager.text_color
+
+        HelpIndicator:
+            help_text: root.description
+            pos_hint: {"center_y":.5}
 
     CustomTextField:
         id: input
@@ -53,14 +64,25 @@
     orientation: 'vertical'
     spacing: "15dp"
 
-    Label:
-        text: root.title
-        font_size: 16
-        text_size: self.size
-        size_hint: None,None
-        halign: 'left'
-        font_name: 'Inter-Medium'
-        color: app.theme_manager.text_color
+    BoxLayout:
+        size_hint: 1, None
+        height:self.minimum_height
+        spacing: "10dp"
+        orientation: "horizontal"
+
+        Label:
+            text: root.title + ":"
+            font_size: 16
+            text_size: None, None
+            size_hint: None, None
+            size: self.texture_size
+            halign: 'left'
+            font_name: 'Inter-Medium'
+            color: app.theme_manager.text_color
+
+        HelpIndicator:
+            help_text: root.description
+            pos_hint: {"center_y":.5}
 
     CustomSlider:
         id: input
@@ -69,21 +91,34 @@
 <OptionSettingView>:
     orientation: 'vertical'
     spacing: "15dp"
+    size_hint: 1, None
+    height: self.minimum_height
 
-    Label:
-        text: root.title
-        font_size: 16
-        text_size: self.size
-        size_hint: None,None
-        halign: 'left'
-        font_name: 'Inter-Medium'
-        color: app.theme_manager.text_color
+    BoxLayout:
+        size_hint: 1, None
+        height:self.minimum_height
+        spacing: "10dp"
+        orientation: "horizontal"
+
+        Label:
+            text: root.title + ":"
+            font_size: 16
+            text_size: None, None
+            size_hint: None, None
+            size: self.texture_size
+            halign: 'left'
+            font_name: 'Inter-Medium'
+            color: app.theme_manager.text_color
+
+        HelpIndicator:
+            help_text: root.description
+            pos_hint: {"center_y":.5}
 
     CustomDropDown:
         id: input
         options: root.options
         selected_option: root.value
-        on_select_callback: root.set_value(self.selected_option)
+
 
 
 

@@ -199,6 +199,7 @@ class OptionSettingView(BaseSettingView):
         self.selected_option = default_value
         self.options = options
         super().__init__(setting, **kwargs)
+        self.ids.input.on_select_callback = self.set_value
 
     def set_value(self, value: str):
         self.value = value

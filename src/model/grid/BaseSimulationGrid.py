@@ -29,6 +29,7 @@ class BaseSimulationGrid(ABC):
     icon: str
     """
     The material Design Icon to display to represent this grid type
+    https://pictogrammers.com/library/mdi/
     """
 
     settings: List[BaseModelSetting]
