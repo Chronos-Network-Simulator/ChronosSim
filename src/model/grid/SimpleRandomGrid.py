@@ -1,9 +1,9 @@
 import random
-from typing import List, Tuple
+from typing import Tuple, List
 
-from model.grid.BaseSimulationGrid import BaseSimulationGrid
+from model.grid import BaseSimulationGrid
 from model.node.BaseNode import BaseNode
-from model.setting.model_settings import NumericSetting
+from model.setting.model_settings import NumericSetting, SupportedEntity
 
 
 class SimpleRandomGrid(BaseSimulationGrid):
@@ -19,13 +19,31 @@ class SimpleRandomGrid(BaseSimulationGrid):
     settings = [
         NumericSetting(
             name="Grid Size",
-            description = "The size of the grid in Kilometers",
+            description="The size of the grid in Kilometers",
             min_value=1,
             max_value=20,
             default_value=5,
-            callback= lambda x, y: print(f"Grid size was changed by {x} to {y}")
+            attributes=["width", "length"],
+            entity_type=SupportedEntity.GRID,
+        ),
+        NumericSetting(
+            name="Region Size",
+            description="The size of the regions in meters",
+            min_value=10,
+            max_value=100,
+            default_value=100,
+            attributes=["region_size"],
+            entity_type=SupportedEntity.GRID,
         ),
     ]
+
+    width: int = 5
+    length: int = 5
+    region_size: int = 100
+
+    def __init__(self):
+        super().__init__()
+        self.grid = {}
 
     def _get_region(self, x: float, y: float) -> Tuple[int, int]:
         return int(x // self.region_size), int(y // self.region_size)
@@ -65,7 +83,8 @@ class SimpleRandomGrid(BaseSimulationGrid):
                     if other_node == node:
                         continue  # ignore self collisions
                     distance = (
-                        (node.x - other_node.x) ** 2 + (node.y - other_node.y) ** 2
+                        (node.position[0] - other_node.position[0]) ** 2
+                        + (node.position[1] - other_node.position[1]) ** 2
                     ) ** 0.5
                     if distance <= node.detection_range:
                         colliding_nodes.append(other_node)

@@ -1,9 +1,15 @@
-from typing import List
+from typing import List, cast
 
 from kivy.properties import NumericProperty, StringProperty, ListProperty
 from kivy.uix.boxlayout import BoxLayout
 
-from model.setting.model_settings import BaseModelSetting, NumericSetting
+from model.setting.model_settings import (
+    BaseModelSetting,
+    NumericSetting,
+    RangeSetting,
+    OptionSetting,
+    StringSetting,
+)
 
 
 class SettingRenderer:
@@ -30,9 +36,40 @@ class SettingRenderer:
         for setting in settings:
             # Based on the base setting type render the appropriate setting view
             if isinstance(setting, NumericSetting):
+                num_setting = cast(NumericSetting, setting)
                 setting_view = NumericSettingView(
-                    min_value=setting.min_value,
-                    max_value=setting.max_value,
+                    min_value=num_setting.min_value,
+                    max_value=num_setting.max_value,
+                    default_value=num_setting.default_value,
+                    setting=num_setting,
+                    title=num_setting.name,
+                    description=num_setting.description,
+                )
+                self.settings_view.add_widget(setting_view)
+            elif isinstance(setting, RangeSetting):
+                range_setting = cast(RangeSetting, setting)
+                setting_view = RangeSettingView(
+                    min_value=range_setting.min_range,
+                    max_value=range_setting.max_range,
+                    step=range_setting.step,
+                    default_value=range_setting.default_value,
+                    setting=range_setting,
+                    title=range_setting.name,
+                    description=range_setting.description,
+                )
+                self.settings_view.add_widget(setting_view)
+            elif isinstance(setting, OptionSetting):
+                option_setting = cast(OptionSetting, setting)
+                setting_view = OptionSettingView(
+                    default_value=option_setting.default_value,
+                    options=option_setting.options,
+                    setting=option_setting,
+                    title=option_setting.name,
+                    description=option_setting.description,
+                )
+                self.settings_view.add_widget(setting_view)
+            elif isinstance(setting, StringSetting):
+                setting_view = StringSettingView(
                     default_value=setting.default_value,
                     setting=setting,
                     title=setting.name,
@@ -64,9 +101,10 @@ class BaseSettingView(BoxLayout):
     def __init__(self, setting: BaseModelSetting, **kwargs):
         super().__init__(**kwargs)
         self.setting = setting
-        self.bind(value=self.setting.callback)
+        self.bind(value=self._on_value_changed)
 
-
+    def _on_value_changed(self, instance, value):
+        self.setting.value = value
 
 
 class NumericSettingView(BaseSettingView):
@@ -82,11 +120,19 @@ class NumericSettingView(BaseSettingView):
 
     max_value = NumericProperty(100)
 
-    def __init__(self,default_value: float, min_value: float, max_value: float, setting: NumericSetting, **kwargs):
+    def __init__(
+        self,
+        default_value: float,
+        min_value: float,
+        max_value: float,
+        setting: NumericSetting,
+        **kwargs,
+    ):
         self.value = default_value
         self.min_value = min_value
         self.max_value = max_value
         super().__init__(setting, **kwargs)
+
 
 class StringSettingView(BaseSettingView):
     """
@@ -95,9 +141,10 @@ class StringSettingView(BaseSettingView):
 
     value = StringProperty("")
 
-    def __init__(self,default_value: str, setting: BaseModelSetting, **kwargs):
+    def __init__(self, default_value: str, setting: StringSetting, **kwargs):
         self.value = default_value
         super().__init__(setting, **kwargs)
+
 
 class RangeSettingView(BaseSettingView):
     """
@@ -112,12 +159,21 @@ class RangeSettingView(BaseSettingView):
 
     step = NumericProperty(1)
 
-    def __init__(self,default_value: float, min_value: float, max_value: float, step:int, setting: NumericSetting, **kwargs):
+    def __init__(
+        self,
+        default_value: float,
+        min_value: float,
+        max_value: float,
+        step: int,
+        setting: RangeSetting,
+        **kwargs,
+    ):
         self.value = default_value
         self.min_value = min_value
         self.max_value = max_value
         self.step = step
         super().__init__(setting, **kwargs)
+
 
 class OptionSettingView(BaseSettingView):
     """
@@ -133,12 +189,16 @@ class OptionSettingView(BaseSettingView):
 
     options = ListProperty([])
 
-    def __init__(self,default_value: str, options: List[dict], setting: BaseModelSetting, **kwargs):
+    def __init__(
+        self,
+        default_value: str,
+        options: List[dict],
+        setting: OptionSetting,
+        **kwargs,
+    ):
         self.selected_option = default_value
         self.options = options
         super().__init__(setting, **kwargs)
 
     def set_value(self, value: str):
         self.value = value
-
-

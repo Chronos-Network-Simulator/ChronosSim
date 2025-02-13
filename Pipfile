@@ -4,12 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-black = "*"
 kivy = "*"
 kivymd = {file = "https://github.com/kivymd/KivyMD/archive/master.zip"}
 watchdog = "*"
 pypubsub = "*"
 pubsub = "*"
+python-slugify = "*"
 
 [dev-packages]
 black = "*"

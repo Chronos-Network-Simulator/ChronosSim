@@ -1,7 +1,7 @@
 from __future__ import annotations
+
 from abc import ABC
 from typing import List
-
 
 from model.simulation import SimulationModel
 from view.components.base_component import BaseComponentView
@@ -42,6 +42,7 @@ class BaseController(ABC):
         self.name = name
         self.simulation = simulation
         self._auto_add_child_controllers()
+        self._init_subscribers()
 
     def _auto_add_child_controllers(self) -> None:
         from controller.contoller_registry import ControllerRegistry
@@ -60,3 +61,9 @@ class BaseController(ABC):
         """
         self.child_controllers.append(controller)
         ControllerRegistry.register(controller)
+
+    def _init_subscribers(self) -> None:
+        """
+        Initialize all subscribers for the controller for listening to any UI events.
+        """
+        pass

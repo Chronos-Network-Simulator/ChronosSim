@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Any
+
+from pubsub import pub
+from slugify import slugify
 
 from model.node.BaseNode import BaseNode
 from model.setting.model_settings import BaseModelSetting
@@ -12,6 +15,12 @@ class BaseSimulationGrid(ABC):
     Name of this simulation Grid
     """
 
+    slug: str
+    """
+    An Auto generated slug name for the Grid that is used to identify
+    it in pub sub events
+    """
+
     description: str
     """
     Description of this simulation grid
@@ -22,7 +31,7 @@ class BaseSimulationGrid(ABC):
     The material Design Icon to display to represent this grid type
     """
 
-    settings: [BaseModelSetting]
+    settings: List[BaseModelSetting]
     """
     A list of settings that should be exposed to configure this model.
     """
@@ -54,6 +63,36 @@ class BaseSimulationGrid(ABC):
     Region codes are calculated by dividing the grid into regions of size region_size and assigning a code to each region
     from (0, 0) to (width // region_size, length // region_size)
     """
+
+    def __init__(self):
+        self.nodes = []
+        self.grid = {}
+        if self.name:
+            self.slug = slugify(self.name)
+            self._register_settings()
+
+    def _register_settings(self) -> None:
+        """
+        Registers this model to receive setting chane events from the settings
+        that it defines.
+        :return: None
+        """
+        for setting in self.settings:
+            pub.subscribe(self._handle_setting_change_event, setting.channel)
+
+    def _handle_setting_change_event(
+        self, attributes: [str], new_value: Any, old_value: Any
+    ):
+        """
+        Handles setting change events and updates the grid model's properties. Receives the exact attribute name
+        that was changed in string format
+        """
+        for attribute in attributes:
+            if hasattr(self, attribute):
+                setattr(self, attribute, new_value)
+            else:
+                raise ValueError(f"Attribute {attribute} not found in {self}")
+        print(f"Setting Changed: {attributes} to {new_value}")
 
     @abstractmethod
     def place_node(self, node: BaseNode):

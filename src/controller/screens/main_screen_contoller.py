@@ -1,4 +1,5 @@
 from controller.base_controller import BaseController
+from controller.components.grid_controller import GridController
 from controller.components.sidebar_controller import SideBarController
 
 
@@ -10,9 +11,17 @@ class MainScreenController(BaseController):
     way to access the sidebar controller
     """
 
+    grid: GridController
+    """
+    The grid controller for the main screen. This is a child controller and just a quick
+    way to access the grid controller
+    """
+
     def __init__(self, view, name, simulation):
         self.sidebar = SideBarController(simulation)
-        self.child_controllers.append(self.sidebar)
+        self.grid = GridController(simulation)
+        self.add_child_controller(self.sidebar)
+        self.add_child_controller(self.grid)
         super().__init__(view, name, simulation)
         self._init_views()
 
@@ -21,3 +30,4 @@ class MainScreenController(BaseController):
         Initializes and adds all views to the Main Screen
         """
         self.view.ids.sidebar.add_widget(self.sidebar.view)
+        self.view.ids.grid.add_widget(self.grid.view)

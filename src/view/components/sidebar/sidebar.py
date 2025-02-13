@@ -1,3 +1,5 @@
+from typing import cast
+
 from kivy.clock import Clock
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.behaviors import CommonElevationBehavior
@@ -25,6 +27,8 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
             return
         self.ids.grid_settings_group.ids.grid_type_selector.selected_option = grid.name
         self.ids.grid_settings_group.ids.grid_type_description.text = grid.description
+        # Render the grid settings
+        cast(GridSettingsGroup, self.ids.grid_settings_group).render_settings(grid.settings)
 
 
 class GridSettingsGroup(  # type: ignore
@@ -49,9 +53,3 @@ class GridSettingsGroup(  # type: ignore
 
     def on_grid_type_selected(self, grid_type: str) -> None:
         pub.sendMessage(topicName="ui.grid_type_changed", grid_type=grid_type)
-        # Render the respective Grid's settings
-        grid = None if grid_type == "None" else get_grid_by_name(grid_type)
-        if grid is None:
-            self.ids.grid_type_description.text = ""
-            return
-        self.render_settings(grid.settings)

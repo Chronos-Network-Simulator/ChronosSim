@@ -16,3 +16,4 @@ charset-normalizer~=3.4.1
 asyncgui~=0.6.3
 pubsub~=0.1.2
 Pypubsub~=4.0.3
+python-slugify~=8.0.4
