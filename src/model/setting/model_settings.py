@@ -17,6 +17,7 @@ class SupportedEntity(Enum):
 
     GRID = "grid"
     NODE = "node"
+    MESSAGE = "message"
 
 
 class BaseModelSetting(ABC, Generic[T]):

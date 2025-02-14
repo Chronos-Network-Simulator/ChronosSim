@@ -1,5 +1,6 @@
 from typing import cast
 
+from kivy.clock import Clock
 from pubsub import pub
 
 from controller.base_controller import BaseController
@@ -13,6 +14,11 @@ class SideBarController(BaseController):
 
     def __init__(self, simulation):
         super().__init__(SideBarView(), "sidebar", simulation)
+        Clock.schedule_once(lambda dt: self.temp(), 10)
+
+    def temp(self):
+        print("Starting simulation")
+        self.simulation.run_simulation(1)
 
     def _init_subscribers(self) -> None:
         # simulation
@@ -25,6 +31,13 @@ class SideBarController(BaseController):
         # UI Updates
         pub.subscribe(self.grid_type_changed, "ui.grid_type_changed")
         pub.subscribe(self.node_type_changed, "ui.node_type_changed")
+        Clock.schedule_once(lambda dt: self._render_static_settings(), 0)
+
+    def _render_static_settings(self) -> None:
+        # render the message settings instantly
+        cast(SideBarView, self.view).render_message_template_settings(
+            self.simulation.message_template
+        )
 
     def grid_type_changed(self, grid_type: str) -> None:
         """

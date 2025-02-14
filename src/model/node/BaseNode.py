@@ -80,7 +80,7 @@ class BaseNode(ABC):
     Position of the node in the simulation grid
     """
 
-    detection_range: float = 0
+    detection_range: float = 10
     """
     The range in meters a node can detect another node
     """
@@ -90,7 +90,7 @@ class BaseNode(ABC):
     The maximum range in each direction the node can move in each step.
     """
 
-    messages: Dict[str, List[BaseMessage, int]] | None = None
+    messages: Dict[BaseMessage, int] = {}
     """
     A dictionary of messages that this node is currently holding.
     The key is the ID of the node that sent the message and the value is a list
@@ -128,7 +128,7 @@ class BaseNode(ABC):
             else:
                 raise ValueError(f"Attribute {attribute} not found in {self}")
         # send a pub event that the model's values have been changed
-        pub.sendMessage("simulation.grid_updated", grid_type=self.name)
+        pub.sendMessage("simulation.grid_updated", grid=self)
 
     @abstractmethod
     def send_message(self, receiving_node: BaseNode) -> List[BaseMessage] | None:

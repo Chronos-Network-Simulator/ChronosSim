@@ -5,8 +5,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.behaviors import CommonElevationBehavior
 from pubsub import pub
 
-from model.grid import AVAILABLE_GRIDS, get_grid_by_name
-from model.node import AVAILABLE_NODES, get_node_by_name
+from model.grid import AVAILABLE_GRIDS, BaseSimulationGrid
+from model.message.BaseMessage import BaseMessage
+from model.node import AVAILABLE_NODES, BaseNode
 from view.components.base_component import BaseComponentView
 from view.components.settings_renderer.settings_renderer import SettingRenderer
 
@@ -20,8 +21,7 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
 
     shadow_softness = 5
 
-    def update_grid_type(self, grid_type: str) -> None:
-        grid = None if grid_type == "None" else get_grid_by_name(grid_type)
+    def update_grid_type(self, grid: BaseSimulationGrid) -> None:
         if grid is None:
             self.ids.grid_settings_group.ids.grid_type_selector.selected_option = "None"
             self.ids.grid_settings_group.ids.grid_type_description.text = ""
@@ -33,8 +33,7 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
             grid.settings
         )
 
-    def update_node_type(self, node_type: str) -> None:
-        node = None if node_type == "None" else get_node_by_name(node_type)
+    def update_node_type(self, node: BaseNode) -> None:
         if node is None:
             self.ids.node_settings_group.ids.node_type_selector.selected_option = "None"
             self.ids.node_settings_group.ids.node_type_description.text = ""
@@ -44,6 +43,11 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
         # Render the node settings
         cast(NodeSettingsGroup, self.ids.node_settings_group).render_settings(
             node.settings
+        )
+
+    def render_message_template_settings(self, message_template: BaseMessage) -> None:
+        cast(MessageSettingsGroup, self.ids.message_settings_group).render_settings(
+            message_template.settings
         )
 
 
@@ -92,3 +96,18 @@ class NodeSettingsGroup(BoxLayout, SettingRenderer):
 
     def on_node_type_selected(self, node_type: str) -> None:
         pub.sendMessage(topicName="ui.node_type_changed", node_type=node_type)
+
+
+class MessageSettingsGroup(BoxLayout, SettingRenderer):
+    """
+    Settings related to the messages that are sent between the nodes.
+    Only controls settings related to individual messages and not message
+    spawn rates and message transfer rates.
+    """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Clock.schedule_once(self.init_options)
+
+    def init_options(self, *args):
+        self.settings_view = self.ids.settings_view

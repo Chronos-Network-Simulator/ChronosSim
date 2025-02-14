@@ -35,6 +35,8 @@
 <StringSettingView>:
     orientation: 'vertical'
     spacing: "15dp"
+    size_hint: 1, None
+    height: self.minimum_height
 
     BoxLayout:
         size_hint: 1, None
@@ -59,10 +61,13 @@
     CustomTextField:
         id: input
         stored_value: root.value
+        size_hint: 1, None
 
 <RangeSettingView>:
     orientation: 'vertical'
     spacing: "15dp"
+    size_hint: 1, None
+    height: self.minimum_height
 
     BoxLayout:
         size_hint: 1, None

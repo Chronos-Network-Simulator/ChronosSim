@@ -78,6 +78,15 @@
 
             NodeSettingsGroup:
                 id: node_settings_group
+
+            MDDivider:
+                size_hint_x: 1
+                pos_hint: {'center_x': .5}
+                color: app.theme_manager.bg_border_color
+                divider_width:2
+
+            MessageSettingsGroup:
+                id: message_settings_group
                 
 <GridSettingsGroup>:
     orientation: 'vertical'
@@ -169,6 +178,29 @@
         text_size: self.parent.size[0], None
         size_hint: 1, None
         height: self.texture_size[1]
+
+    BoxLayout:
+        id: settings_view
+        orientation: "vertical"
+        spacing: "5dp"
+        size_hint: 1, None
+        height: self.minimum_height
+
+<MessageSettingsGroup>:
+    orientation: 'vertical'
+    size_hint: 1, None
+    height: self.minimum_height
+    spacing: "10dp"
+
+    Label:
+        text: "Message settings"
+        font_size: 20
+        text_size: self.size
+        size_hint: 1, None
+        height: self.texture_size[1]
+        halign: 'left'
+        font_name: 'Inter-Bold'
+        color: app.theme_manager.text_color
 
     BoxLayout:
         id: settings_view

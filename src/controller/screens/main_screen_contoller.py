@@ -1,3 +1,5 @@
+from kivy.clock import Clock
+
 from controller.base_controller import BaseController
 from controller.components.grid_controller import GridController
 from controller.components.sidebar_controller import SideBarController
@@ -23,7 +25,7 @@ class MainScreenController(BaseController):
         self.add_child_controller(self.sidebar)
         self.add_child_controller(self.grid)
         super().__init__(view, name, simulation)
-        self._init_views()
+        Clock.schedule_once(lambda dt: self._init_views(), 0)
 
     def _init_views(self) -> None:
         """

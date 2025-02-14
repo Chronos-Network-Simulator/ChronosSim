@@ -1,8 +1,13 @@
+from typing import List
+
+from kivy.graphics import Ellipse, Color
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scatterlayout import ScatterLayout
 from kivy.uix.widget import Widget
+
+from model.node import BaseNode
 
 
 class GridCell(ButtonBehavior, Widget):
@@ -49,7 +54,24 @@ class CustomScatterLayout(ScatterLayout):
         self.touch_mode = None
         self.last_touch_pos = None
 
+    def _is_touch_in_sidebar(self, touch_pos):
+        # Get reference to sidebar through widget tree
+        # parent is GridView (BoxLayout), parent.parent is MainScreenView
+        try:
+            sidebar = self.parent.parent.ids.sidebar
+            return sidebar.collide_point(*touch_pos)
+        except AttributeError:
+            return False
+
     def on_touch_down(self, touch):
+        # First check if touch is in sidebar
+        if self._is_touch_in_sidebar(touch.pos):
+            return False
+
+        # If touch is outside scatter bounds, ignore it completely
+        if not self.collide_point(*touch.pos):
+            return False
+
         if touch.is_mouse_scrolling:
             current_scale = self.scale
             if touch.button == "scrolldown":
@@ -80,13 +102,15 @@ class CustomScatterLayout(ScatterLayout):
             return True
 
         # For regular touches, always allow panning
-        if self.collide_point(*touch.pos):
-            self.touch_mode = "pan"
-            self.last_touch_pos = touch.pos
-            return True
-        return super().on_touch_down(touch)
+        self.touch_mode = "pan"
+        self.last_touch_pos = touch.pos
+        return False
 
     def on_touch_move(self, touch):
+        # Check if touch is in sidebar
+        if self._is_touch_in_sidebar(touch.pos):
+            return False
+
         if self.touch_mode == "pan" and self.last_touch_pos:
             dx = touch.pos[0] - self.last_touch_pos[0]
             dy = touch.pos[1] - self.last_touch_pos[1]
@@ -96,6 +120,10 @@ class CustomScatterLayout(ScatterLayout):
         return super().on_touch_move(touch)
 
     def on_touch_up(self, touch):
+        # Check if touch is in sidebar
+        if self._is_touch_in_sidebar(touch.pos):
+            return False
+
         if self.touch_mode == "pan":
             self.touch_mode = None
             self.last_touch_pos = None
@@ -113,6 +141,7 @@ class GridView(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.grid_layout = self.ids.grid
+        self.node_circles = {}
 
     def draw_grid(
         self,
@@ -143,3 +172,25 @@ class GridView(BoxLayout):
                 cell_id = f"{row},{col}"
                 cell = GridCell(cell_id, size=(region_size, region_size))
                 self.grid_layout.add_widget(cell)
+
+    def update_grid(self, nodes: List[BaseNode], scale_factor: float):
+        """
+        Updates the grid by drawing nodes as circles.
+        """
+        # Clear previous node drawings
+        for circle in self.node_circles.values():
+            self.grid_layout.canvas.remove(circle)  # Remove from canvas
+        self.node_circles.clear()
+
+        if nodes:
+            for node in nodes:
+                x = node.position[0] * scale_factor + self.grid_layout.x
+                y = node.position[1] * scale_factor + self.grid_layout.y
+                size = 10  # Adjust node size as needed (in pixels)
+                circle = Ellipse(pos=(x - size / 2, y - size / 2), size=(size, size))
+                color = Color(1, 0, 0)
+                self.grid_layout.canvas.add(color)
+                self.grid_layout.canvas.add(circle)
+                self.node_circles[node.id] = circle
+
+        self.grid_layout.canvas.ask_update()
