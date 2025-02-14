@@ -87,6 +87,17 @@
 
             MessageSettingsGroup:
                 id: message_settings_group
+
+            MDDivider:
+                size_hint_x: 1
+                pos_hint: {'center_x': .5}
+                color: app.theme_manager.bg_border_color
+                divider_width:2
+
+            MessageSpawnerSettingsGroup:
+                id: message_spawner_settings_group
+
+
                 
 <GridSettingsGroup>:
     orientation: 'vertical'
@@ -201,6 +212,55 @@
         halign: 'left'
         font_name: 'Inter-Bold'
         color: app.theme_manager.text_color
+
+    BoxLayout:
+        id: settings_view
+        orientation: "vertical"
+        spacing: "5dp"
+        size_hint: 1, None
+        height: self.minimum_height
+
+<MessageSpawnerSettingsGroup>:
+    orientation: 'vertical'
+    size_hint: 1, None
+    height: self.minimum_height
+    spacing: "10dp"
+
+    Label:
+        text: "Message spawner settings"
+        font_size: 20
+        text_size: self.size
+        size_hint: 1, None
+        height: self.texture_size[1]
+        halign: 'left'
+        font_name: 'Inter-Bold'
+        color: app.theme_manager.text_color
+
+    Label:
+        text: "Message spawner type :"
+        font_size: 16
+        text_size: self.size
+        size_hint: 1,None
+        height: self.texture_size[1]
+        halign: 'left'
+        font_name: 'Inter-Medium'
+        color: app.theme_manager.text_color
+        padding: "0dp", "10dp", "0dp", "5dp"
+
+    CustomDropDown:
+        id: message_spawner_type_selector
+        size_hint: 1, None
+
+    Label:
+        id: message_spawner_type_description
+        text: ""
+        font_size: 13
+        halign: 'left'
+        font_name: 'Inter'
+        color: app.theme_manager.secondary_text_color
+        text_size: self.parent.size[0], None
+        size_hint: 1, None
+        height: self.texture_size[1]
 
     BoxLayout:
         id: settings_view

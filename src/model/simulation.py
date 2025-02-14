@@ -6,6 +6,7 @@ from pubsub import pub
 from exception.exception import ConfigError
 from model.grid.BaseSimulationGrid import BaseSimulationGrid
 from model.message.BaseMessage import BaseMessage
+from model.message_spawner.base_message_spawner import BaseMessageSpawner
 from model.node import BaseNode
 
 
@@ -31,11 +32,13 @@ class SimulationModel:
     """
 
     message_template: BaseMessage | None = BaseMessage(
-        original_content="Demo Message", creator_id="0"
+        original_content="Demo Message", creator_id="0", created_time=0
     )
     """
     Stores a template on the message that will be generated at random throughout the network.
     """
+
+    message_spawner: BaseMessageSpawner | None = None
 
     def initialize(self) -> None:
         """
@@ -44,6 +47,7 @@ class SimulationModel:
         self.status = "empty"
         self.set_grid(None)
         self.set_node(None)
+        self.set_message_spawner(None)
 
     def set_grid(self, grid: BaseSimulationGrid | None) -> None:
         """
@@ -78,6 +82,24 @@ class SimulationModel:
         elif self.status == "paused":
             raise ConfigError("Stop the simulation before changing the node")
 
+    def set_message_spawner(self, message_spawner: BaseMessageSpawner | None) -> None:
+        """
+        Sets the message spawner for the simulation to run with and notifies all subscribers
+
+        :param message_spawner: The message spawner to set the simulation to run with
+        :type message_spawner: BaseMessageSpawner
+        """
+        if (self.status == "empty") or (self.status == "stopped"):
+            self.message_spawner = message_spawner
+            pub.sendMessage(
+                topicName="simulation.message_spawner_changed",
+                message_spawner=message_spawner,
+            )
+        elif self.status == "running":
+            raise ConfigError("Cannot set message spawner while simulation is running")
+        elif self.status == "paused":
+            raise ConfigError("Stop the simulation before changing the message spawner")
+
     def run_simulation(self, steps: int) -> None:
         """
         Runs the simulation for a specified number of steps.
@@ -88,14 +110,12 @@ class SimulationModel:
             raise ConfigError("Cannot run simulation without a node type")
 
         self.status = "running"
-        num_nodes = 400
+        num_nodes = 10000
         placed_count = self.grid.auto_place_nodes(num_nodes, self.node)
-
         if placed_count != num_nodes:
             raise ConfigError(
                 f"Only {placed_count} nodes were placed out of {num_nodes}"
             )
-
         try:
             for _ in range(steps):
                 if self.status != "running":
@@ -103,12 +123,14 @@ class SimulationModel:
                 self._simulate_step()
                 for node in self.grid.nodes:
                     node.on_simulation_step_end()
+                    node.move()
                 pub.sendMessage("simulation.step_complete")
                 print("Simulation step completed")
         finally:
             self.status = "stopped"
             for node in self.grid.nodes:
-                pprint(node.messages)
+                if (node.messages is not None) and (len(node.messages) > 0):
+                    pprint(node.messages)
 
     def _simulate_step(self) -> None:
         """
@@ -150,6 +172,9 @@ class SimulationModel:
             message_B_to_A = node_b.send_message(node_a)
             if message_B_to_A is not None:
                 node_a.receive_message(message_B_to_A, node_b)
+
+            if (message_A_to_B is not None) or (message_B_to_A is not None):
+                print(f"Collision between {node_a.id} and {node_b.id}")
 
             node_a.on_collision_complete()
             node_b.on_collision_complete()

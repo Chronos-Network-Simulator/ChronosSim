@@ -1,4 +1,5 @@
-from typing import List, Optional, Literal
+from collections import defaultdict
+from typing import List, Optional, Literal, Dict
 
 from model.message.BaseMessage import BaseMessage
 from model.node import BaseNode
@@ -37,14 +38,12 @@ class SprayAndWaitNode(BaseNode):
         )
     ]
 
-    messages = {BaseMessage(original_content="Demo Message", creator_id="0"): 1}
+    messages = {}
 
     def __init__(self):
         super().__init__()
         self._recent_senders = set()
-        # self.messages: Dict[BaseMessage, int] = defaultdict(
-        #     int
-        # )  # Improved message storage
+        self.messages: Dict[BaseMessage, int] = defaultdict(int)
 
     def send_message(self, receiving_node: BaseNode) -> Optional[List[BaseMessage]]:
         if receiving_node.id in self._recent_senders:
@@ -78,9 +77,11 @@ class SprayAndWaitNode(BaseNode):
 
     def receive_message(self, messages: List[BaseMessage], sending_node: BaseNode):
         self._recent_senders.add(sending_node.id)
-
+        print(f"{self.id} received {len(messages)} messages from {sending_node.id}")
         for message in messages:
-            self.messages[message] += 1  # Simplified count update
+            self.messages[message] = (
+                1  # we only store one copy of each message that we get
+            )
 
         self._recent_senders = set()
 
@@ -89,3 +90,6 @@ class SprayAndWaitNode(BaseNode):
 
     def on_simulation_step_end(self):
         pass
+
+    def on_message_create(self, message: BaseMessage):
+        self.messages[message] = 1  # only store one copy of each message

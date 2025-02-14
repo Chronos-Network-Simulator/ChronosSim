@@ -1,7 +1,7 @@
-import time
 import uuid
 from typing import List
 
+from model.setting.model_setting_mixin import ModelSettingMixin
 from model.setting.model_settings import (
     SupportedEntity,
     BaseModelSetting,
@@ -9,11 +9,13 @@ from model.setting.model_settings import (
 )
 
 
-class BaseMessage:
+class BaseMessage(ModelSettingMixin):
     """
     Represents a message in the network.
     Each message now has a unique ID.
     """
+
+    name: str = "Base Message"
 
     id: str
     """
@@ -39,7 +41,7 @@ class BaseMessage:
 
     created_time: float
     """
-    The time at which the message was created
+    The Simulation step at which the message was created
     """
 
     settings: List[BaseModelSetting] = [
@@ -48,16 +50,17 @@ class BaseMessage:
             description="The original content of the message. This will be preserved even if the message content is modified by nodes.",
             default_value="Demo Message",
             entity_type=SupportedEntity.MESSAGE,
-            attributes=["original_content"],
+            attributes=["original_content", "content"],
         ),
     ]
 
-    def __init__(self, original_content: str, creator_id: str):
+    def __init__(self, original_content: str, creator_id: str, created_time: int):
+        super().__init__()
         self.id = uuid.uuid4().hex
         self.original_content = original_content
-        self._content = ""
+        self._content = original_content
         self.creator_id = creator_id
-        self.created_time = time.time()
+        self.created_time = created_time
         self._update_size()
 
     @property
@@ -68,6 +71,16 @@ class BaseMessage:
     def content(self, value):
         self._content = value
         self._update_size()
+
+    def duplicate(self, creator_id: str, copy_time: bool = False) -> "BaseMessage":
+        """
+        Creates and returns a new message instance that is a copy of the current message,
+        except for message_id and creation_time which will be new.
+        """
+        new_message = BaseMessage(self.original_content, creator_id)
+        if copy_time:
+            new_message.created_time = self.created_time
+        return new_message
 
     def _update_size(self):
         self.size = len(self._content.encode())

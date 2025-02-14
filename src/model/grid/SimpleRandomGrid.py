@@ -22,7 +22,7 @@ class SimpleRandomGrid(BaseSimulationGrid):
             description="The size of the grid in meters",
             min_value=2000,
             max_value=20000,
-            default_value=2000,
+            default_value=5000,
             attributes=["width", "length"],
             entity_type=SupportedEntity.GRID,
         ),
@@ -81,7 +81,5 @@ class SimpleRandomGrid(BaseSimulationGrid):
                     )  # Use math.dist
                     if distance <= node.detection_range:
                         colliding_nodes.append(other_node)
-        if colliding_nodes:
-            print(colliding_nodes)
 
         return colliding_nodes

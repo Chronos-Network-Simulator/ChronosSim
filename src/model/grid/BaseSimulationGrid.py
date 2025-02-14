@@ -1,25 +1,16 @@
 import math
 from abc import ABC, abstractmethod
-from typing import Dict, List, Tuple, Any, Optional
-
-from pubsub import pub
-from slugify import slugify
+from typing import Dict, List, Tuple, Optional
 
 from model.node.BaseNode import BaseNode
-from model.setting.model_settings import BaseModelSetting
+from model.setting.model_setting_mixin import ModelSettingMixin
 
 
-class BaseSimulationGrid(ABC):
+class BaseSimulationGrid(ModelSettingMixin, ABC):
 
     name: str
     """
-    Name of this simulation Grid
-    """
-
-    slug: str
-    """
-    An Auto generated slug name for the Grid that is used to identify
-    it in pub sub events
+    The name of this simulation grid
     """
 
     description: str
@@ -31,11 +22,6 @@ class BaseSimulationGrid(ABC):
     """
     The material Design Icon to display to represent this grid type
     https://pictogrammers.com/library/mdi/
-    """
-
-    settings: List[BaseModelSetting]
-    """
-    A list of settings that should be exposed to configure this model.
     """
 
     width: int
@@ -67,35 +53,9 @@ class BaseSimulationGrid(ABC):
     """
 
     def __init__(self):
+        super().__init__()
         self.nodes = []
         self.grid: Dict[Tuple[int, int], List[BaseNode]] = {}
-        if self.name:
-            self.slug = slugify(self.name)
-            self._register_settings()
-
-    def _register_settings(self) -> None:
-        """
-        Registers this model to receive setting chane events from the settings
-        that it defines.
-        :return: None
-        """
-        for setting in self.settings:
-            pub.subscribe(self._handle_setting_change_event, setting.channel)
-
-    def _handle_setting_change_event(
-        self, attributes: [str], new_value: Any, old_value: Any
-    ):
-        """
-        Handles setting change events and updates the grid model's properties. Receives the exact attribute name
-        that was changed in string format
-        """
-        for attribute in attributes:
-            if hasattr(self, attribute):
-                setattr(self, attribute, new_value)
-            else:
-                raise ValueError(f"Attribute {attribute} not found in {self}")
-        # send a pub event that the model's values have been changed
-        pub.sendMessage("simulation.grid_updated", grid=self)
 
     def get_node(self, node_id: str) -> Optional[BaseNode]:
         for node in self.nodes:

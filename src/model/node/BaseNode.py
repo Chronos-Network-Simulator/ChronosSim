@@ -2,12 +2,10 @@ from __future__ import annotations
 
 import random
 from abc import ABC, abstractmethod
-from typing import Tuple, List, Any, Dict
-
-from pubsub import pub
-from slugify import slugify
+from typing import Tuple, List, Dict
 
 from model.message.BaseMessage import BaseMessage
+from model.setting.model_setting_mixin import ModelSettingMixin
 from model.setting.model_settings import (
     BaseModelSetting,
     NumericSetting,
@@ -15,7 +13,7 @@ from model.setting.model_settings import (
 )
 
 
-class BaseNode(ABC):
+class BaseNode(ModelSettingMixin, ABC):
     """
     Represents a node in the simulation network.
     Extends the base node with message processing, queues, movement capabilities and message ID tracking.
@@ -99,36 +97,8 @@ class BaseNode(ABC):
     """
 
     def __init__(self):
-        if not self.name:
-            raise NotImplementedError(
-                f"Node class {self.__class__.__name__} must define a name."
-            )
-        self.slug = slugify(self.name)
+        super().__init__()
         self.id = f"{self.slug}-{random.randint(1000, 9999)}"
-        self.settings = list(self.__class__.settings)
-        self._register_settings()
-
-    def _register_settings(self):
-        """
-        Register the settings of the node
-        """
-        for setting in self.settings:
-            pub.subscribe(self._handle_setting_change_event, setting.channel)
-
-    def _handle_setting_change_event(
-        self, attributes: [str], new_value: Any, old_value: Any
-    ):
-        """
-        Handles setting change events and updates the grid model's properties. Receives the exact attribute name
-        that was changed in string format
-        """
-        for attribute in attributes:
-            if hasattr(self, attribute):
-                setattr(self, attribute, new_value)
-            else:
-                raise ValueError(f"Attribute {attribute} not found in {self}")
-        # send a pub event that the model's values have been changed
-        pub.sendMessage("simulation.grid_updated", grid=self)
 
     @abstractmethod
     def send_message(self, receiving_node: BaseNode) -> List[BaseMessage] | None:
@@ -154,16 +124,6 @@ class BaseNode(ABC):
         :return: None
         """
 
-    def move(self):
-        """
-        Moves the node randomly within its movement range.
-        """
-        delta_x = random.uniform(-self.movement_range, self.movement_range)
-        delta_y = random.uniform(-self.movement_range, self.movement_range)
-        new_x = self.position[0] + delta_x
-        new_y = self.position[1] + delta_y
-        self.position = (new_x, new_y)
-
     @abstractmethod
     def on_collision_complete(self):
         """
@@ -177,3 +137,25 @@ class BaseNode(ABC):
         Called when the simulation step ends
         """
         pass
+
+    @abstractmethod
+    def on_message_create(self, message: BaseMessage):
+        """
+        Called when a message is created. Use this function to apply any initial processing to a message
+        before it is stored in the internal nodes message array. MessageSpawners will call this function
+        when they create a message.
+        """
+        pass
+
+    def move(self):
+        """
+        Moves the node randomly within its movement range.
+        """
+        delta_x = random.uniform(-self.movement_range, self.movement_range)
+        delta_y = random.uniform(-self.movement_range, self.movement_range)
+        new_x = self.position[0] + delta_x
+        new_y = self.position[1] + delta_y
+        self.position = (new_x, new_y)
+
+    def __repr__(self):
+        return f"{self.name} - {self.id} at {self.position}"

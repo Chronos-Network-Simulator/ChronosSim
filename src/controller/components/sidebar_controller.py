@@ -6,6 +6,7 @@ from pubsub import pub
 from controller.base_controller import BaseController
 from exception.exception import ConfigError
 from model.grid import get_grid_by_name
+from model.message_spawner import get_message_spawner_by_name
 from model.node import get_node_by_name
 from view.components.sidebar.sidebar import SideBarView
 
@@ -14,11 +15,6 @@ class SideBarController(BaseController):
 
     def __init__(self, simulation):
         super().__init__(SideBarView(), "sidebar", simulation)
-        Clock.schedule_once(lambda dt: self.temp(), 10)
-
-    def temp(self):
-        print("Starting simulation")
-        self.simulation.run_simulation(1)
 
     def _init_subscribers(self) -> None:
         # simulation
@@ -28,9 +24,17 @@ class SideBarController(BaseController):
         pub.subscribe(
             cast(SideBarView, self.view).update_node_type, "simulation.node_changed"
         )
+        pub.subscribe(
+            cast(SideBarView, self.view).render_message_spawner_settings,
+            "simulation.message_spawner_changed",
+        )
+
         # UI Updates
-        pub.subscribe(self.grid_type_changed, "ui.grid_type_changed")
+    pub.subscribe(self.grid_type_changed, "ui.grid_type_changed")
         pub.subscribe(self.node_type_changed, "ui.node_type_changed")
+        pub.subscribe(
+            self.message_spawner_type_changed, "ui.message_spawner_type_changed"
+        )
         Clock.schedule_once(lambda dt: self._render_static_settings(), 0)
 
     def _render_static_settings(self) -> None:
@@ -68,6 +72,25 @@ class SideBarController(BaseController):
                 self.simulation.set_node(None)
                 return
             self.simulation.set_node(get_node_by_name(node_type))
+        except ConfigError as e:
+            pub.sendMessage("ui.error", message=str(e))
+        except ValueError as e:
+            pub.sendMessage("ui.error", message=str(e))
+
+    def message_spawner_type_changed(self, message_spawner_type: str) -> None:
+        """
+        Change the message spawner type of the simulation to the specified message spawner name.
+
+        Args:
+            :param message_spawner_type: The name of the message spawner to change to.
+        """
+        try:
+            if message_spawner_type == "None":
+                self.simulation.set_message_spawner(None)
+                return
+            self.simulation.set_message_spawner(
+                get_message_spawner_by_name(message_spawner_type)
+            )
         except ConfigError as e:
             pub.sendMessage("ui.error", message=str(e))
         except ValueError as e:

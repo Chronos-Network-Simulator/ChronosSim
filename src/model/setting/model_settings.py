@@ -18,6 +18,7 @@ class SupportedEntity(Enum):
     GRID = "grid"
     NODE = "node"
     MESSAGE = "message"
+    MESSAGE_SPAWNER = "message_spawner"
 
 
 class BaseModelSetting(ABC, Generic[T]):
@@ -176,7 +177,7 @@ class RangeSetting(BaseModelSetting[float]):
         step: int,
         attributes: List[str],
         entity_type: SupportedEntity,
-    ):
+    ) -> None:
         super().__init__(name, description, default_value, attributes, entity_type)
         self.min_range = min_range
         self.max_range = max_range
