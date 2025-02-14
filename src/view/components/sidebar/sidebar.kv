@@ -61,6 +61,16 @@
                         height: self.texture_size[1]
                         halign: 'left'
                         font_name: 'Inter'
+
+            MDDivider:
+                size_hint_x: 1
+                pos_hint: {'center_x': .5}
+                color: app.theme_manager.bg_border_color
+                divider_width:2
+
+            SimulationSettingsGroup:
+                id: grid_settings_group
+
             MDDivider:
                 size_hint_x: 1
                 pos_hint: {'center_x': .5}
@@ -96,6 +106,79 @@
 
             MessageSpawnerSettingsGroup:
                 id: message_spawner_settings_group
+
+
+<SimulationSettingsGroup>:
+    orientation: 'vertical'
+    size_hint: 1, None
+    height: self.minimum_height
+    spacing: "10dp"
+
+    Label:
+        text: "Simulation Settings"
+        font_size: 20
+        text_size: self.size
+        size_hint: 1, None
+        height: self.texture_size[1]
+        halign: 'left'
+        font_name: 'Inter-Bold'
+        color: app.theme_manager.text_color
+
+    BoxLayout:
+        size_hint: 1, None
+        height:self.minimum_height
+        spacing: "10dp"
+        orientation: "horizontal"
+
+        Label:
+            text: "Node count :"
+            font_size: 16
+            text_size: None, None
+            size_hint: None, None
+            size: self.texture_size
+            halign: 'left'
+            font_name: 'Inter-Medium'
+            color: app.theme_manager.text_color
+
+        HelpIndicator:
+            help_text: "Number of nodes in the simulation"
+            pos_hint: {"center_y":.5}
+
+    NumericInput:
+        id: input
+        stored_value: root.node_count
+        min_value: 1
+        max_value: 1000000000
+        size_hint: 1, None
+        on_stored_value: root.update_node_count(self.stored_value)
+
+    BoxLayout:
+        size_hint: 1, None
+        height:self.minimum_height
+        spacing: "10dp"
+        orientation: "horizontal"
+
+        Label:
+            text: "Step count :"
+            font_size: 16
+            text_size: None, None
+            size_hint: None, None
+            size: self.texture_size
+            halign: 'left'
+            font_name: 'Inter-Medium'
+            color: app.theme_manager.text_color
+
+        HelpIndicator:
+            help_text: "Number of steps in the simulation"
+            pos_hint: {"center_y":.5}
+
+    NumericInput:
+        id: input
+        stored_value: root.step_count
+        min_value: 1
+        max_value: 1000000000
+        size_hint: 1, None
+        on_stored_value: root.update_step_count(self.stored_value)
 
 
                 

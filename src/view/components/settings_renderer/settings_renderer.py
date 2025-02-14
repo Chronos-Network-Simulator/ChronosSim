@@ -20,7 +20,7 @@ class SettingRenderer:
     rendered settings.
     """
 
-    settings_view: BoxLayout
+    settings_view: BoxLayout | None = None
     """
     The kivy widget that contains the settings view to which settings are to be added
     """
@@ -76,6 +76,13 @@ class SettingRenderer:
                     description=setting.description,
                 )
                 self.settings_view.add_widget(setting_view)
+
+    def clear_settings(self) -> None:
+        """
+        Clear all the settings from the view
+        """
+        if self.settings_view is not None:
+            self.settings_view.clear_widgets()
 
 
 class BaseSettingView(BoxLayout):

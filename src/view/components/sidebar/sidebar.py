@@ -1,6 +1,7 @@
 from typing import cast
 
 from kivy.clock import Clock
+from kivy.properties import NumericProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.behaviors import CommonElevationBehavior
 from pubsub import pub
@@ -26,6 +27,7 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
         if grid is None:
             self.ids.grid_settings_group.ids.grid_type_selector.selected_option = "None"
             self.ids.grid_settings_group.ids.grid_type_description.text = ""
+            cast(GridSettingsGroup, self.ids.grid_settings_group).clear_settings()
             return
         self.ids.grid_settings_group.ids.grid_type_selector.selected_option = grid.name
         self.ids.grid_settings_group.ids.grid_type_description.text = grid.description
@@ -38,6 +40,7 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
         if node is None:
             self.ids.node_settings_group.ids.node_type_selector.selected_option = "None"
             self.ids.node_settings_group.ids.node_type_description.text = ""
+            cast(NodeSettingsGroup, self.ids.node_settings_group).clear_settings()
             return
         self.ids.node_settings_group.ids.node_type_selector.selected_option = node.name
         self.ids.node_settings_group.ids.node_type_description.text = node.description
@@ -61,6 +64,9 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
             self.ids.message_spawner_settings_group.ids.message_spawner_type_description.text = (
                 ""
             )
+            cast(
+                MessageSpawnerSettingsGroup, self.ids.message_spawner_settings_group
+            ).clear_settings()
             return
         self.ids.message_spawner_settings_group.ids.message_spawner_type_selector.selected_option = (
             message_spawner.name
@@ -72,6 +78,27 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
         cast(
             MessageSpawnerSettingsGroup, self.ids.message_spawner_settings_group
         ).render_settings(message_spawner.settings)
+
+
+class SimulationSettingsGroup(BoxLayout):
+
+    node_count = NumericProperty(1)
+
+    step_count = NumericProperty(1)
+
+    def update_node_count(self, node_count: float) -> None:
+        self.node_count = node_count
+        pub.sendMessage("ui.update_node_count", node_count=int(node_count))
+        # This value are one way in that they update the simulation and the
+        # local values without needing to listen to an event from the simulation
+        # to confirm the value update
+
+    def update_step_count(self, step_count: float) -> None:
+        self.step_count = step_count
+        pub.sendMessage("ui.update_step_count", step_count=int(step_count))
+        # This value are one way in that they update the simulation and the
+        # local values without needing to listen to an event from the simulation
+        # to confirm the value update
 
 
 class GridSettingsGroup(BoxLayout, SettingRenderer):  # type: ignore

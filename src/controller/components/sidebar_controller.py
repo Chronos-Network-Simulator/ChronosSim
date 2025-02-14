@@ -30,11 +30,13 @@ class SideBarController(BaseController):
         )
 
         # UI Updates
-    pub.subscribe(self.grid_type_changed, "ui.grid_type_changed")
+        pub.subscribe(self.grid_type_changed, "ui.grid_type_changed")
         pub.subscribe(self.node_type_changed, "ui.node_type_changed")
         pub.subscribe(
             self.message_spawner_type_changed, "ui.message_spawner_type_changed"
         )
+        pub.subscribe(self.simulation.set_node_count, "ui.update_node_count")
+        pub.subscribe(self.update_step_count, "ui.update_step_count")
         Clock.schedule_once(lambda dt: self._render_static_settings(), 0)
 
     def _render_static_settings(self) -> None:
@@ -95,3 +97,11 @@ class SideBarController(BaseController):
             pub.sendMessage("ui.error", message=str(e))
         except ValueError as e:
             pub.sendMessage("ui.error", message=str(e))
+
+    def update_step_count(self, step_count: int) -> None:
+        """
+        Update the step count of the simulation to the specified step count.
+        :param step_count:
+        :return:
+        """
+        self.simulation.step_count = step_count

@@ -141,7 +141,6 @@ class GridView(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.grid_layout = self.ids.grid
-        self.node_circles = {}
 
     def draw_grid(
         self,
@@ -158,6 +157,7 @@ class GridView(BoxLayout):
         :param scale_factor: Pixels per km for real-world rendering.
         """
         self.grid_layout.clear_widgets()
+        self.grid_layout.canvas.after.clear()
 
         length = int(length_km * scale_factor)
         width = int(width_km * scale_factor)
@@ -178,9 +178,7 @@ class GridView(BoxLayout):
         Updates the grid by drawing nodes as circles.
         """
         # Clear previous node drawings
-        for circle in self.node_circles.values():
-            self.grid_layout.canvas.remove(circle)  # Remove from canvas
-        self.node_circles.clear()
+        self.grid_layout.canvas.after.clear()
 
         if nodes:
             for node in nodes:
@@ -189,8 +187,11 @@ class GridView(BoxLayout):
                 size = 10  # Adjust node size as needed (in pixels)
                 circle = Ellipse(pos=(x - size / 2, y - size / 2), size=(size, size))
                 color = Color(1, 0, 0)
-                self.grid_layout.canvas.add(color)
-                self.grid_layout.canvas.add(circle)
-                self.node_circles[node.id] = circle
+                self.grid_layout.canvas.after.add(color)
+                self.grid_layout.canvas.after.add(circle)
 
         self.grid_layout.canvas.ask_update()
+
+    def clear_grid(self):
+        self.grid_layout.clear_widgets()
+        self.grid_layout.canvas.after.clear()

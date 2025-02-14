@@ -21,6 +21,16 @@ class SimulationModel:
     - stopped: The simulation has been stopped and needs to be cleared
     """
 
+    node_count: int
+    """
+    The number of nodes to place on the grid
+    """
+
+    step_count: int
+    """
+    The number of steps to run the simulation.
+    """
+
     grid: BaseSimulationGrid | None
     """
     The grid that the simulation is running on.
@@ -48,6 +58,36 @@ class SimulationModel:
         self.set_grid(None)
         self.set_node(None)
         self.set_message_spawner(None)
+        self.set_node_count(1)
+        self.step_count = 1
+
+    def set_node_count(self, node_count: int) -> None:
+        """
+        Internal method to set the node count and update the grid if necessary
+
+        :param node_count: The number of nodes to set
+        :type node_count: int
+        """
+        self.node_count = node_count
+        self._update_grid_nodes()
+
+    def _update_grid_nodes(self) -> None:
+        """
+        Updates the grid with the current number of nodes if conditions are met
+        """
+        if (
+            self.grid is not None
+            and self.node is not None
+            and (self.status == "empty" or self.status == "stopped")
+        ):
+            self.grid.clear_grid()
+            placed_count = self.grid.auto_place_nodes(self.node_count, self.node)
+            if placed_count != self.node_count:
+                raise ConfigError(
+                    f"Only {placed_count} nodes were placed out of {self.node_count}"
+                )
+            print(f"Placed {placed_count} nodes on the grid")
+            pub.sendMessage("simulation.grid_updated")
 
     def set_grid(self, grid: BaseSimulationGrid | None) -> None:
         """
@@ -58,6 +98,7 @@ class SimulationModel:
         """
         if (self.status == "empty") or (self.status == "stopped"):
             self.grid = grid
+            self._update_grid_nodes()  # Try to place nodes if possible
             pub.sendMessage(topicName="simulation.grid_changed", grid=grid)
         elif self.status == "running":
             raise ConfigError("Cannot set grid while simulation is running")
@@ -77,6 +118,7 @@ class SimulationModel:
                 topicName="simulation.node_changed",
                 node=node,
             )
+            self._update_grid_nodes()  # Try to place nodes if possible
         elif self.status == "running":
             raise ConfigError("Cannot set node while simulation is running")
         elif self.status == "paused":
@@ -100,7 +142,7 @@ class SimulationModel:
         elif self.status == "paused":
             raise ConfigError("Stop the simulation before changing the message spawner")
 
-    def run_simulation(self, steps: int) -> None:
+    def run_simulation(self) -> None:
         """
         Runs the simulation for a specified number of steps.
         """
@@ -110,14 +152,8 @@ class SimulationModel:
             raise ConfigError("Cannot run simulation without a node type")
 
         self.status = "running"
-        num_nodes = 10000
-        placed_count = self.grid.auto_place_nodes(num_nodes, self.node)
-        if placed_count != num_nodes:
-            raise ConfigError(
-                f"Only {placed_count} nodes were placed out of {num_nodes}"
-            )
         try:
-            for _ in range(steps):
+            for _ in range(self.step_count):
                 if self.status != "running":
                     break
                 self._simulate_step()

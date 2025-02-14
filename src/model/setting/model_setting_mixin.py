@@ -53,4 +53,4 @@ class ModelSettingMixin:
             else:
                 raise ValueError(f"Attribute {attribute} not found in {self}")
         # send a pub event that the model's values have been changed
-        pub.sendMessage("simulation.grid_updated", grid=self)
+        pub.sendMessage("simulation.grid_changed", grid=self)
