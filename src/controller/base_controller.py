@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC
 from typing import List
 
-from model.simulation import SimulationModel
+from model.simulation.simulation_handler import SimulationManager
 from view.components.base_component import BaseComponentView
 from view.screens.base_screen import BaseScreenView
 
@@ -20,7 +20,7 @@ class BaseController(ABC):
     Stores a reference to the view that the controller is controlling.
     """
 
-    simulation: SimulationModel
+    simulation: SimulationManager
     """
     Stores a reference to the simulation model as most controllers will need to
     access the simulation model.
@@ -36,7 +36,7 @@ class BaseController(ABC):
         self,
         view: BaseScreenView | BaseComponentView,
         name: str,
-        simulation: SimulationModel,
+        simulation: SimulationManager,
     ):
         self.view = view
         self.name = name

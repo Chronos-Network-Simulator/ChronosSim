@@ -1,3 +1,4 @@
+from kivy.clock import Clock
 from kivy.properties import NumericProperty
 from kivy.uix.boxlayout import BoxLayout
 
@@ -25,3 +26,20 @@ class CustomSlider(BoxLayout):
     """
     The step size that the value can be adjusted by.
     """
+
+    callback = None
+    """
+    Called when the  value of the slider changes
+    """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Clock.schedule_once(self._on_init)
+
+    def _on_init(self, *args):
+        self.ids.internal_slider.bind(value=self.on_slider_value_change)
+
+    def on_slider_value_change(self, instance, value):
+        self.stored_value = value
+        if self.callback:
+            self.callback(value)

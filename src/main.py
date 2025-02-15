@@ -1,6 +1,7 @@
 import os
 from typing import cast
 
+from kivy.base import ExceptionManager
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.app import MDApp
@@ -8,7 +9,8 @@ from kivymd.app import MDApp
 from controller.base_controller import BaseController
 from controller.contoller_registry import ControllerRegistry
 from controller.screens.main_screen_contoller import MainScreenController
-from model.simulation import SimulationModel
+from exception.exception_handler import CustomExceptionHandler
+from model.simulation.simulation_handler import SimulationManager
 from theme import ThemeManager
 from view.components.base_component import BaseComponentView
 from view.screens.base_screen import BaseScreenView
@@ -16,6 +18,7 @@ from view.screens.main_screen.main_screen import MainScreenView
 
 Window.left = 2160  # TODO: Remove this line
 Window.top = 0  # TODO: Remove this line
+ExceptionManager.add_handler(CustomExceptionHandler())
 
 
 def get_all_kv_files(base_directory: str) -> list:
@@ -40,7 +43,7 @@ class ChronosSim(MDApp):
 
     screen_manager: ScreenManager
 
-    simulation_model: SimulationModel
+    simulation_model: SimulationManager
 
     theme_manager: ThemeManager
 
@@ -49,10 +52,10 @@ class ChronosSim(MDApp):
     def build(self, first: bool = False) -> ScreenManager:
         Window.maximize()
         self.theme_manager = ThemeManager()
-        self.simulation_model = SimulationModel()
+        self.simulation_model = SimulationManager()
         self.screen_manager = ScreenManager()
         self.add_screen(MainScreenController, MainScreenView(), "main_screen")
-        self.simulation_model.initialize()  # only initialize the simulation model once the Views are ready to handle it
+        self.simulation_model.reset_user_configs()  # only initialize the simulation model once the Views are ready to handle it
         return self.screen_manager
 
     def add_screen(

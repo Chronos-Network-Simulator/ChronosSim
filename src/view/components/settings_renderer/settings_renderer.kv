@@ -26,11 +26,14 @@
 
     NumericInput:
         id: input
-        stored_value: root.value
+        default_value: root.value
+        stored_value: 0.0
         min_value: root.min_value
         max_value: root.max_value
         size_hint: 1, None
-        on_stored_value: root.value = self.stored_value
+        callback: root.set_value
+
+
 
 <StringSettingView>:
     orientation: 'vertical'
@@ -62,6 +65,7 @@
         id: input
         stored_value: root.value
         size_hint: 1, None
+        callback: root.set_value
 
 <RangeSettingView>:
     orientation: 'vertical'
@@ -92,6 +96,7 @@
     CustomSlider:
         id: input
         stored_value: root.value
+        callback: root.set_value
 
 <OptionSettingView>:
     orientation: 'vertical'

@@ -5,28 +5,37 @@
         Rectangle:
             size: self.size
             pos: self.pos
-    BoxLayout:
-        id: master_layout
-        orientation: 'horizontal'
-        padding: "15dp"
-        spacing: "10dp"
 
-        RelativeLayout:
-            id: sidebar
-            size_hint: (0.15,1)
-
+    FloatLayout:
+        # Master layout containing the grid and sidebar.
         BoxLayout:
-            id: grid
-            canvas.before:
-                StencilPush
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-                StencilUse
-            canvas.after:
-                StencilUnUse
-                StencilPop
-        
-            
-            
+            id: master_layout
+            orientation: 'horizontal'
+            padding: "15dp"
+            spacing: "10dp"
+            size_hint: 1, 1
+            pos_hint: {'x': 0, 'y': 0}
 
+            RelativeLayout:
+                id: sidebar
+                size_hint: (0.15, 1)
+
+            FloatLayout:
+                id: grid
+                canvas.before:
+                    StencilPush
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                    StencilUse
+                canvas.after:
+                    StencilUnUse
+                    StencilPop
+                size_hint: (0.85, 1)
+
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'bottom'
+                    padding: (0, "10dp", 0, "10dp")
+                    pos_hint: {'center_x': 0.5, "center_y": 0.5 }
+                    id: bottom_bar

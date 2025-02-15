@@ -1,3 +1,4 @@
+import time
 import uuid
 from typing import List
 
@@ -39,10 +40,12 @@ class BaseMessage(ModelSettingMixin):
     The ID of the creator of the message. Typically the ID of the node that created this message
     """
 
-    created_time: float
+    created_time: int
     """
     The Simulation step at which the message was created
     """
+
+    entity_type = SupportedEntity.MESSAGE
 
     settings: List[BaseModelSetting] = [
         StringSetting(
@@ -77,9 +80,15 @@ class BaseMessage(ModelSettingMixin):
         Creates and returns a new message instance that is a copy of the current message,
         except for message_id and creation_time which will be new.
         """
-        new_message = BaseMessage(self.original_content, creator_id)
+
         if copy_time:
-            new_message.created_time = self.created_time
+            new_message = BaseMessage(
+                self.original_content, creator_id, self.created_time
+            )
+        else:
+            new_message = BaseMessage(
+                self.original_content, creator_id, int(time.time())
+            )
         return new_message
 
     def _update_size(self):

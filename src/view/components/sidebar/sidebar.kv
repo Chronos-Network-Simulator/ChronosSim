@@ -147,6 +147,7 @@
     NumericInput:
         id: input
         stored_value: root.node_count
+        default_value: 1
         min_value: 1
         max_value: 1000000000
         size_hint: 1, None
@@ -175,10 +176,70 @@
     NumericInput:
         id: input
         stored_value: root.step_count
+        default_value: 1
         min_value: 1
         max_value: 1000000000
         size_hint: 1, None
         on_stored_value: root.update_step_count(self.stored_value)
+
+    BoxLayout:
+        size_hint: 1, None
+        height:self.minimum_height
+        spacing: "10dp"
+        orientation: "horizontal"
+
+        Label:
+            text: "Simulation Count:"
+            font_size: 16
+            text_size: None, None
+            size_hint: None, None
+            size: self.texture_size
+            halign: 'left'
+            font_name: 'Inter-Medium'
+            color: app.theme_manager.text_color
+
+        HelpIndicator:
+            help_text: "The number of simulations to run in parallel. This is used if you want to reduce the amount of bias and variance introduced in the system."
+            pos_hint: {"center_y":.5}
+
+    NumericInput:
+        id: input
+        stored_value: root.simulation_count
+        default_value: 1
+        min_value: 1
+        max_value: 100
+        size_hint: 1, None
+        on_stored_value: root.update_simulation_count(self.stored_value)
+
+
+    BoxLayout:
+        size_hint: 1, None
+        height:self.minimum_height
+        spacing: "10dp"
+        orientation: "horizontal"
+
+        Label:
+            text: "Simulation Delay:"
+            font_size: 16
+            text_size: None, None
+            size_hint: None, None
+            size: self.texture_size
+            halign: 'left'
+            font_name: 'Inter-Medium'
+            color: app.theme_manager.text_color
+
+        HelpIndicator:
+            help_text: "The delay between each simulation step in seconds"
+            pos_hint: {"center_y":.5}
+
+    NumericInput:
+        id: input
+        stored_value: root.simulation_delay
+        default_value: 1
+        min_value: 1
+        max_value: 100
+        size_hint: 1, None
+        on_stored_value: root.update_simulation_delay(self.stored_value)
 
 
                 

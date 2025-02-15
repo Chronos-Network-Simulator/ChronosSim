@@ -15,7 +15,7 @@ class GridController(BaseController):
     def _init_subscribers(self) -> None:
         # simulation
         pub.subscribe(self.on_grid_changed, "simulation.grid_changed")
-        pub.subscribe(self.on_grid_update, "simulation.step_complete")
+        pub.subscribe(self.on_grid_changed, "simulation.grid_type_changed")
         pub.subscribe(
             self.on_grid_update, "simulation.grid_updated"
         )  # just re-render only the nodes
@@ -26,7 +26,7 @@ class GridController(BaseController):
         This method updates the grid view to reflect the new state of the simulation.
         :return: None
         """
-        cast(GridView, self.view).update_grid(self.simulation.grid.nodes, 0.2)
+        cast(GridView, self.view).draw_grid_nodes(self.simulation.grid.nodes, 0.2)
 
     def on_grid_changed(self, grid: BaseSimulationGrid) -> None:
         """
@@ -36,12 +36,12 @@ class GridController(BaseController):
         :return: The type of grid to draw.
         """
         if self.simulation.grid is not None:
-            cast(GridView, self.view).draw_grid(
+            cast(GridView, self.view).draw_grid_outline(
                 self.simulation.grid.length,
                 self.simulation.grid.width,
                 self.simulation.grid.region_size,
                 0.2,
             )
-            cast(GridView, self.view).update_grid(self.simulation.grid.nodes, 0.2)
+            cast(GridView, self.view).draw_grid_nodes(self.simulation.grid.nodes, 0.2)
         else:
-            cast(GridView, self.view).clear_grid()
+            cast(GridView, self.view).clear()

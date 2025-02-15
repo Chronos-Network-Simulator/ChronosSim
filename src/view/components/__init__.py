@@ -6,6 +6,7 @@ import os
 from kivy.lang import Builder
 
 from .chevron import Chevron
+from .custom_button.custom_button import CustomButton
 from .custom_slider.custom_slider import CustomSlider
 from .dropdown.custom_dropdown import CustomDropDown
 from .help_indicator.help_indicator import HelpIndicator

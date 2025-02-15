@@ -142,7 +142,7 @@ class GridView(BoxLayout):
         super().__init__(**kwargs)
         self.grid_layout = self.ids.grid
 
-    def draw_grid(
+    def draw_grid_outline(
         self,
         length_km: float,
         width_km: float,
@@ -156,8 +156,7 @@ class GridView(BoxLayout):
         :param region_size_km: Size of each region in km.
         :param scale_factor: Pixels per km for real-world rendering.
         """
-        self.grid_layout.clear_widgets()
-        self.grid_layout.canvas.after.clear()
+        self.clear()
 
         length = int(length_km * scale_factor)
         width = int(width_km * scale_factor)
@@ -173,7 +172,7 @@ class GridView(BoxLayout):
                 cell = GridCell(cell_id, size=(region_size, region_size))
                 self.grid_layout.add_widget(cell)
 
-    def update_grid(self, nodes: List[BaseNode], scale_factor: float):
+    def draw_grid_nodes(self, nodes: List[BaseNode], scale_factor: float):
         """
         Updates the grid by drawing nodes as circles.
         """
@@ -192,6 +191,6 @@ class GridView(BoxLayout):
 
         self.grid_layout.canvas.ask_update()
 
-    def clear_grid(self):
+    def clear(self):
         self.grid_layout.clear_widgets()
         self.grid_layout.canvas.after.clear()

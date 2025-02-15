@@ -1,0 +1,32 @@
+<BottomBarView>:
+    canvas:
+        Color:
+            rgba: app.theme_manager.secondary_bg_color
+        RoundedRectangle:
+            radius: 20,20,20,20
+            pos: self.pos
+            size:self.size
+    size_hint: None,None
+    size:self.minimum_size
+    padding: "10dp"
+    spacing: "10dp"
+
+    CustomButton:
+        text: "Step Forward"
+        icon: "fast-forward"
+        on_release:root.handle_button_clicks("step")
+
+    CustomButton:
+        text: "Pause"
+        icon: "pause"
+        on_release:root.handle_button_clicks("pause")
+
+    CustomButton:
+        text: "play"
+        icon: "play"
+        on_release:root.handle_button_clicks("play")
+
+    CustomButton:
+        text: "Stop"
+        icon: "stop"
+        on_release:root.handle_button_clicks("stop")

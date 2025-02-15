@@ -1,4 +1,5 @@
 #:import dp kivy.metrics.dp
+
 <NumericInput>:
     canvas:
         Color:
@@ -28,11 +29,11 @@
         anchor_x: 'left'
         anchor_y: 'center'
         TextInput:
-            id:input
+            id: input
             size_hint: (.6,None)
             height: self.minimum_height
             multiline: False
-            background_color:app.theme_manager.secondary_bg_color
+            background_color: app.theme_manager.secondary_bg_color
             foreground_color: app.theme_manager.secondary_text_color
             background_normal: ''
             background_active: ""
@@ -40,7 +41,7 @@
             cursor_color: app.theme_manager.primary_color
             input_filter: 'float'
             font_size: '16sp'
-            text: str(root.stored_value)
+            text: str(root.stored_value)  # Reflects stored_value but is not bound
             font_name: 'Inter-Medium'
             hint_text_color: app.theme_manager.secondary_text_color
             on_focus: root.update_focus(self.focus)
@@ -92,4 +93,3 @@
         text_color: app.theme_manager.text_color
         pos_hint: {"center_y":.5, "center_x":.5}
         size_hint: 1,1
-

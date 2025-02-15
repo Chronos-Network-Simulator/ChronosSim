@@ -77,7 +77,6 @@ class SprayAndWaitNode(BaseNode):
 
     def receive_message(self, messages: List[BaseMessage], sending_node: BaseNode):
         self._recent_senders.add(sending_node.id)
-        print(f"{self.id} received {len(messages)} messages from {sending_node.id}")
         for message in messages:
             self.messages[message] = (
                 1  # we only store one copy of each message that we get

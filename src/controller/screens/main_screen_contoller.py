@@ -1,6 +1,7 @@
 from kivy.clock import Clock
 
 from controller.base_controller import BaseController
+from controller.components.bottombar_controller import BottomBarController
 from controller.components.grid_controller import GridController
 from controller.components.sidebar_controller import SideBarController
 
@@ -19,11 +20,19 @@ class MainScreenController(BaseController):
     way to access the grid controller
     """
 
+    bottom_bar: BottomBarController
+    """
+    Controller for the bottom bar. This is a child controller and just a quick way to access
+    the bottom bar controller
+    """
+
     def __init__(self, view, name, simulation):
         self.sidebar = SideBarController(simulation)
         self.grid = GridController(simulation)
+        self.bottom_bar = BottomBarController(simulation)
         self.add_child_controller(self.sidebar)
         self.add_child_controller(self.grid)
+        self.add_child_controller(self.bottom_bar)
         super().__init__(view, name, simulation)
         Clock.schedule_once(lambda dt: self._init_views(), 0)
 
@@ -33,3 +42,4 @@ class MainScreenController(BaseController):
         """
         self.view.ids.sidebar.add_widget(self.sidebar.view)
         self.view.ids.grid.add_widget(self.grid.view)
+        self.view.ids.bottom_bar.add_widget(self.bottom_bar.view)

@@ -103,6 +103,8 @@ class BaseMessageSpawner(ModelSettingMixin, ABC):
     Random number generator used to introduce randomness in the spawning behavior.
     """
 
+    entity_type = SupportedEntity.MESSAGE_SPAWNER
+
     settings = [
         NumericSetting(
             name="Seed",

@@ -22,7 +22,8 @@ class BasicRandomMessageSpawner(BaseMessageSpawner):
     ) -> None:
         if not nodes or not message_template:
             return
-
+        # recreate the rng for each simulation step
+        self._rng = random.Random(self.random_seed)
         target_spawn_count = (self.spawn_rate / 100.0) * len(nodes)
         num_initial_spawns = self._calculate_spawn_count(
             target_spawn_count, self.spawn_rate_variance
@@ -41,7 +42,8 @@ class BasicRandomMessageSpawner(BaseMessageSpawner):
     ) -> None:
         if not nodes or not message_template:
             return
-
+        # recreate the rng for each simulation step
+        self._rng = random.Random(self.random_seed)
         # Calculate spawn count for this step
         spawn_rate_percentage = self.spawn_rate
         spawn_rate_variance_percentage = self.spawn_rate_variance
@@ -51,7 +53,6 @@ class BasicRandomMessageSpawner(BaseMessageSpawner):
         )
 
         num_spawns = min(num_spawns, len(nodes))
-
         if num_spawns > 0:
             nodes_to_spawn_in = random.sample(nodes, num_spawns)
             self._spawn_messages_in_nodes(nodes_to_spawn_in, message_template, step)

@@ -81,24 +81,36 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
 
 
 class SimulationSettingsGroup(BoxLayout):
-
     node_count = NumericProperty(1)
-
     step_count = NumericProperty(1)
+    simulation_count = NumericProperty(1)
+    simulation_delay = NumericProperty(1)
+
+    """
+    Note: All these events are one way as they are directly lined with the simulation handler
+    rather than a controller and thus does not need to wait for the simulation handler to 
+    respond with the updated value.
+    """
+
+    def _update_property(self, prop_name: str, value: float, event_name: str) -> None:
+        setattr(self, prop_name, value)
+        pub.sendMessage(event_name, **{prop_name: int(value)})
 
     def update_node_count(self, node_count: float) -> None:
-        self.node_count = node_count
-        pub.sendMessage("ui.update_node_count", node_count=int(node_count))
-        # This value are one way in that they update the simulation and the
-        # local values without needing to listen to an event from the simulation
-        # to confirm the value update
+        self._update_property("node_count", node_count, "ui.update_node_count")
 
     def update_step_count(self, step_count: float) -> None:
-        self.step_count = step_count
-        pub.sendMessage("ui.update_step_count", step_count=int(step_count))
-        # This value are one way in that they update the simulation and the
-        # local values without needing to listen to an event from the simulation
-        # to confirm the value update
+        self._update_property("step_count", step_count, "ui.update_step_count")
+
+    def update_simulation_count(self, simulation_count: float) -> None:
+        self._update_property(
+            "simulation_count", simulation_count, "ui.update_simulation_count"
+        )
+
+    def update_simulation_delay(self, simulation_delay: float) -> None:
+        self._update_property(
+            "simulation_delay", simulation_delay, "ui.update_simulation_delay"
+        )
 
 
 class GridSettingsGroup(BoxLayout, SettingRenderer):  # type: ignore

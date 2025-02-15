@@ -11,6 +11,11 @@ class CustomTextField(BoxLayout):
     read this value always.
     """
 
+    callback = None
+    """
+    Called when the  value of the text field changes
+    """
+
     focused = BooleanProperty(False)
 
     def update_focus(self, focus):
@@ -18,3 +23,5 @@ class CustomTextField(BoxLayout):
 
     def set_value(self, value: str):
         self.stored_value = value
+        if self.callback:
+            self.callback(value)

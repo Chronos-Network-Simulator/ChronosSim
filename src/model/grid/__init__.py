@@ -1,4 +1,5 @@
 from typing import List
+
 from model.grid.BaseSimulationGrid import BaseSimulationGrid
 from model.grid.SimpleRandomGrid import SimpleRandomGrid
 

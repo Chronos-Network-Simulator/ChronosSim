@@ -4,6 +4,7 @@ from typing import Dict, List, Tuple, Optional
 
 from model.node.BaseNode import BaseNode
 from model.setting.model_setting_mixin import ModelSettingMixin
+from model.setting.model_settings import SupportedEntity
 
 
 class BaseSimulationGrid(ModelSettingMixin, ABC):
@@ -51,6 +52,8 @@ class BaseSimulationGrid(ModelSettingMixin, ABC):
     Region codes are calculated by dividing the grid into regions of size region_size and assigning a code to each region
     from (0, 0) to (width // region_size, length // region_size)
     """
+
+    entity_type = SupportedEntity.GRID
 
     def __init__(self):
         super().__init__()

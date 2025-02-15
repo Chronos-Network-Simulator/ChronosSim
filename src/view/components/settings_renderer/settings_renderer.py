@@ -140,6 +140,9 @@ class NumericSettingView(BaseSettingView):
         self.max_value = max_value
         super().__init__(setting, **kwargs)
 
+    def set_value(self, value: float):
+        self.value = value
+
 
 class StringSettingView(BaseSettingView):
     """
@@ -151,6 +154,9 @@ class StringSettingView(BaseSettingView):
     def __init__(self, default_value: str, setting: StringSetting, **kwargs):
         self.value = default_value
         super().__init__(setting, **kwargs)
+
+    def set_value(self, value: str):
+        self.value = value
 
 
 class RangeSettingView(BaseSettingView):
@@ -180,6 +186,9 @@ class RangeSettingView(BaseSettingView):
         self.max_value = max_value
         self.step = step
         super().__init__(setting, **kwargs)
+
+    def set_value(self, value: float):
+        self.value = value
 
 
 class OptionSettingView(BaseSettingView):

@@ -3,7 +3,7 @@ from typing import List, Any
 from pubsub import pub
 from slugify import slugify
 
-from model.setting.model_settings import BaseModelSetting
+from model.setting.model_settings import BaseModelSetting, SupportedEntity
 
 
 class ModelSettingMixin:
@@ -24,6 +24,12 @@ class ModelSettingMixin:
     settings: List[BaseModelSetting]
     """
     A list of settings that should be exposed to configure this model.
+    """
+
+    entity_type: SupportedEntity
+    """
+    The entity type this obejct is. Based on this, the settings pub and sub channels are set
+    for settings updates.
     """
 
     def __init__(self):
@@ -52,5 +58,5 @@ class ModelSettingMixin:
                 setattr(self, attribute, new_value)
             else:
                 raise ValueError(f"Attribute {attribute} not found in {self}")
-        # send a pub event that the model's values have been changed
-        pub.sendMessage("simulation.grid_changed", grid=self)
+        if self.entity_type == SupportedEntity.GRID:
+            pub.sendMessage(topicName="simulation.grid_changed", grid=self)

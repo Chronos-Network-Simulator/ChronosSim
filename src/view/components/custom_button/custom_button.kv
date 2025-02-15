@@ -1,0 +1,46 @@
+#:import dp kivy.metrics.dp
+
+<CustomButton>:
+    size_hint: (None, None)
+    height: "48dp"
+    width: self.minimum_width + dp(10)  # Add padding to the text width
+    padding: "10dp"
+    spacing: "10dp"
+
+    canvas.before:
+        Color:
+            rgba: app.theme_manager.bg_color if not self.hover else app.theme_manager.secondary_bg_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [15]
+
+    canvas.after:
+        Color:
+            rgba: app.theme_manager.primary_color if self.state == 'down' else (app.theme_manager.bg_border_color if not self.hover else app.theme_manager.primary_color)
+        Line:
+            width: dp(1.1)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 15, 15, 15, 15)
+
+    MDIcon:
+        id: button_icon
+        icon: root.icon if root.icon else ""
+        theme_icon_color: "Custom"
+        icon_color: app.theme_manager.primary_color if root.state == 'down' else app.theme_manager.secondary_text_color
+        theme_font_size: "Custom"
+        font_size: "22sp"
+        size_hint: None, None
+        size: ("32dp", "32dp") if root.icon else (0, 0)
+        pos_hint: {"center_y": .5}
+        opacity: 1 if root.icon else 0
+
+    Label:
+        id: label
+        text: root.text
+        color: app.theme_manager.primary_color if root.state == 'down' else app.theme_manager.text_color
+        font_size: 18
+        text_size: None, None
+        size_hint: None, None
+        size: self.texture_size
+        font_name: 'Inter-Medium'
+        pos_hint: {"center_y": .5}

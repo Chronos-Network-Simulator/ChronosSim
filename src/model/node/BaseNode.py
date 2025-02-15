@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+import uuid
 from abc import ABC, abstractmethod
 from typing import Tuple, List, Dict
 
@@ -61,7 +62,7 @@ class BaseNode(ModelSettingMixin, ABC):
             name="Movement Range:",
             description="The maximum range in each direction the node can move in each step. For normal use choose values between 1-10 meters",
             min_value=1,
-            max_value=10,
+            max_value=1000,
             default_value=5,
             entity_type=SupportedEntity.NODE,
             attributes=["movement_range"],
@@ -83,7 +84,7 @@ class BaseNode(ModelSettingMixin, ABC):
     The range in meters a node can detect another node
     """
 
-    movement_range: float = 1.0
+    movement_range: float = 5.0
     """
     The maximum range in each direction the node can move in each step.
     """
@@ -95,10 +96,11 @@ class BaseNode(ModelSettingMixin, ABC):
     where the first element is the message and the second element is the number of copies of
     that message that the node is holding.
     """
+    entity_type = SupportedEntity.NODE
 
     def __init__(self):
         super().__init__()
-        self.id = f"{self.slug}-{random.randint(1000, 9999)}"
+        self.id = f"{self.slug}-{uuid.uuid4().hex}"
 
     @abstractmethod
     def send_message(self, receiving_node: BaseNode) -> List[BaseMessage] | None:
