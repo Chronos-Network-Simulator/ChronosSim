@@ -1,23 +1,13 @@
 import json
 from collections import defaultdict
-from dataclasses import dataclass
-from datetime import datetime
 from pathlib import Path
 from threading import Lock
 from typing import Dict, List, Optional
 
 from pubsub import pub
 
+from model.monitoring.DataTypes import SimulationState, DataclassJSONEncoder
 from model.monitoring.SimulationSession import SimulationSession, SimulationProperties
-
-
-@dataclass
-class SimulationState:
-    simulation_id: str
-    step: int
-    node_states: dict
-    messages: dict
-    status: str
 
 
 class SimulationDataHandler:
@@ -59,17 +49,10 @@ class SimulationDataHandler:
         Process incoming simulation state and write to disk.
         Ensures a session exists before processing.
         """
-        state = SimulationState(
-            simulation_id=state_data["simulation_id"],
-            step=state_data["step"],
-            node_states=state_data["node_states"],
-            messages=state_data["messages"],
-            status=state_data["status"],
-        )
+        state = SimulationState.__json_decode__(state_data)
         self.simulations[state.simulation_id].append(state)
         self._write_state_to_disk(state)
 
-        # Publish event with just the ID so we dont overlaod the pub sub with the actual data
         pub.sendMessage(
             "simulation.state_updated",
             simulation_id=state.simulation_id,
@@ -87,14 +70,4 @@ class SimulationDataHandler:
             file_path = sim_dir / f"step_{state.step}.json"
 
             with open(file_path, "w") as f:
-                json.dump(
-                    {
-                        "simulation_id": state.simulation_id,
-                        "step": state.step,
-                        "node_states": state.node_states,
-                        "messages": state.messages,
-                        "status": state.status,
-                        "timestamp": datetime.now().isoformat(),
-                    },
-                    f,
-                )
+                json.dump(state, f, cls=DataclassJSONEncoder)

@@ -37,7 +37,7 @@ class BasicRandomMessageSpawner(BaseMessageSpawner):
                 valid_nodes, min(num_initial_spawns, len(valid_nodes))
             )
             self._spawn_messages_in_nodes(
-                nodes_to_spawn_in, message_template=message_template
+                nodes_to_spawn_in, message_template=message_template, step=0
             )
 
     def spawn_messages(
@@ -83,7 +83,9 @@ class BasicRandomMessageSpawner(BaseMessageSpawner):
     ) -> None:
         """Helper method to spawn messages in the provided nodes."""
         for node in nodes:
-            new_message = message_template.duplicate(node.id, copy_time=False)
+            new_message = message_template.duplicate(
+                node.id, step=step, copy_time=False
+            )
             if step is not None:
                 new_message.created_time = step  # Set timestamp to current step
             node.on_message_create(new_message)

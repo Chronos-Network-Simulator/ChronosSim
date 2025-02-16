@@ -7,6 +7,7 @@ from time import sleep
 from typing import List
 
 from model.grid import BaseSimulationGrid
+from model.message.BaseMessage import BaseMessage
 from model.message_spawner import BaseMessageSpawner
 from model.node import BaseNode
 
@@ -34,7 +35,8 @@ def _capture_messages(nodes: List[BaseNode]):
                     {
                         "content": msg.original_content,
                         "creator": msg.creator_id,
-                        "time": msg.created_time,
+                        "created_time": msg.created_time,
+                        "hops": msg.hops,
                     }
                     for msg in node.messages
                 ]
@@ -152,6 +154,7 @@ class SimulationWorker:
                 message_A_to_B = node_a.on_target_send(node_b)
                 if message_A_to_B is not None:
                     node_b.on_target_received(message_A_to_B, node_a)
+                    increment_hops(message_A_to_B)
             else:
                 message_A_to_B = node_a.send_message(node_b)
                 if message_A_to_B is not None:
@@ -159,12 +162,14 @@ class SimulationWorker:
                         node_b.on_target_received(message_A_to_B, node_a)
                     else:
                         node_b.receive_message(message_A_to_B, node_a)
+                    increment_hops(message_A_to_B)
 
             # Handle node_b sending to node_a
             if node_b.target:
                 message_B_to_A = node_b.on_target_send(node_a)
                 if message_B_to_A is not None:
                     node_a.on_target_received(message_B_to_A, node_b)
+                    increment_hops(message_B_to_A)
             else:
                 message_B_to_A = node_b.send_message(node_a)
                 if message_B_to_A is not None:
@@ -172,6 +177,14 @@ class SimulationWorker:
                         node_a.on_target_received(message_B_to_A, node_b)
                     else:
                         node_a.receive_message(message_B_to_A, node_b)
+                    increment_hops(message_B_to_A)
 
             node_a.on_collision_complete()
             node_b.on_collision_complete()
+
+
+def increment_hops(messages: List[BaseMessage]) -> List[BaseMessage]:
+    """Increment the hops of all messages."""
+    for message in messages:
+        message.hops += 1
+    return messages

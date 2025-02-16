@@ -1,4 +1,3 @@
-import time
 import uuid
 from typing import List
 
@@ -45,6 +44,11 @@ class BaseMessage(ModelSettingMixin):
     The Simulation step at which the message was created
     """
 
+    hops: int = 0
+    """
+    The number of hops the message has taken in the network
+    """
+
     entity_type = SupportedEntity.MESSAGE
 
     settings: List[BaseModelSetting] = [
@@ -75,7 +79,12 @@ class BaseMessage(ModelSettingMixin):
         self._content = value
         self._update_size()
 
-    def duplicate(self, creator_id: str, copy_time: bool = False) -> "BaseMessage":
+    def duplicate(
+        self,
+        creator_id: str,
+        step: int,
+        copy_time: bool = False,
+    ) -> "BaseMessage":
         """
         Creates and returns a new message instance that is a copy of the current message,
         except for message_id and creation_time which will be new.
@@ -86,9 +95,7 @@ class BaseMessage(ModelSettingMixin):
                 self.original_content, creator_id, self.created_time
             )
         else:
-            new_message = BaseMessage(
-                self.original_content, creator_id, int(time.time())
-            )
+            new_message = BaseMessage(self.original_content, creator_id, step)
         return new_message
 
     def _update_size(self):

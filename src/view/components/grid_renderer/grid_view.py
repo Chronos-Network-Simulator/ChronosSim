@@ -9,6 +9,7 @@ from kivy.uix.scatterlayout import ScatterLayout
 from kivy.uix.widget import Widget
 from pubsub import pub
 
+from model.monitoring.DataTypes import NodeState
 from model.node import BaseNode
 
 
@@ -166,13 +167,15 @@ class GridView(FloatLayout):
                 self.grid_layout.canvas.after.add(circle)
         self.grid_layout.canvas.ask_update()
 
-    def draw_grid_nodes_from_live_simulation(self, nodes: List, scale_factor: float):
+    def draw_grid_nodes_from_live_simulation(
+        self, nodes: List[NodeState], scale_factor: float
+    ):
         self.grid_layout.canvas.after.clear()
         if not nodes:
             return
 
         # Find min and max message counts
-        message_counts = [node["message_count"] for node in nodes]
+        message_counts = [node.message_count for node in nodes]
         min_messages = min(message_counts)
         max_messages = max(message_counts)
 
@@ -197,14 +200,14 @@ class GridView(FloatLayout):
             return r, g, b
 
         for node in nodes:
-            x = node["position"][0] * scale_factor + self.grid_layout.x
-            y = node["position"][1] * scale_factor + self.grid_layout.y
+            x = node.position[0] * scale_factor + self.grid_layout.x
+            y = node.position[1] * scale_factor + self.grid_layout.y
             size = 4
             circle = Ellipse(pos=(x - size / 2, y - size / 2), size=(size, size))
 
             # Get color based on message count
-            r, g, b = get_color_for_message_count(node["message_count"])
-            if node["target"]:
+            r, g, b = get_color_for_message_count(node.message_count)
+            if node.target:
                 r, g, b = 0, 1, 0  # Green color for target nodes
             color = Color(r, g, b)
 
