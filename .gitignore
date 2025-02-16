@@ -174,4 +174,4 @@ cython_debug/
 .pypirc
 
 # ChronosSim Related
-simulation_outputs/
+outputs/

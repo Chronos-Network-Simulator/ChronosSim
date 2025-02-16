@@ -7,14 +7,17 @@ from typing import Dict, List, Optional
 from pubsub import pub
 
 from model.monitoring.DataTypes import SimulationState, DataclassJSONEncoder
+from model.monitoring.SimulationGraphGenerator import SimulationGraphGenerator
 from model.monitoring.SimulationSession import SimulationSession, SimulationProperties
 
 
 class SimulationDataHandler:
-    def __init__(self, base_output_dir: str = "simulation_outputs"):
+
+    graph_generator: "SimulationGraphGenerator" = None
+
+    def __init__(self, base_output_dir: str = "outputs"):
         self.base_output_dir = Path(base_output_dir)
         self.base_output_dir.mkdir(parents=True, exist_ok=True)
-
         self.current_session: Optional[SimulationSession] = None
         self.simulations: Dict[str, List[SimulationState]] = defaultdict(list)
         self.write_lock = Lock()
@@ -30,6 +33,7 @@ class SimulationDataHandler:
         self.current_session = SimulationSession(
             self.base_output_dir, properties=simulation_properties
         )
+        self.graph_generator = SimulationGraphGenerator(self)
         return self.current_session
 
     def load_session(self, session_id: str) -> Optional[SimulationSession]:

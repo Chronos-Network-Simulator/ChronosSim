@@ -226,3 +226,6 @@ class GridView(FloatLayout):
 
     def navigate_page(self, direction: str):
         pub.sendMessage("ui.simulation_selected", direction=direction)
+
+    def export_graphs(self):
+        pub.sendMessage("ui.export_graphs")

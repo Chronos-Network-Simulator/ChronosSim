@@ -41,6 +41,7 @@ class GridController(BaseController):
         pub.subscribe(self.on_grid_update, "simulation.grid_updated")
         pub.subscribe(self.on_simulation_selected, "ui.simulation_selected")
         pub.subscribe(self.on_simulation_state_update, "simulation.state_updated")
+        pub.subscribe(self.export_graphs, "ui.export_graphs")
 
     def on_simulation_selected(self, direction: str) -> None:
         """
@@ -113,3 +114,11 @@ class GridController(BaseController):
             cast(GridView, self.view).draw_grid_nodes(self.simulation.grid.nodes, 0.2)
         else:
             cast(GridView, self.view).clear()
+
+    def export_graphs(self) -> None:
+        """
+        Export all graphs for the current simulation to the specified directory.
+        :param output_dir: The directory to save the graphs to.
+        :return: None
+        """
+        self.simulation.data_handler.graph_generator.generate_all_graphs()

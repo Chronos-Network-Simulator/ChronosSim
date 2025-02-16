@@ -61,6 +61,7 @@ class SimulationState:
     node_states: List[NodeState]
     messages: List[Message]
     status: str
+    success_messages: List[Message]
 
     def __json_encode__(self) -> dict:
         return {
@@ -70,6 +71,9 @@ class SimulationState:
             "messages": [msg.__json_encode__() for msg in self.messages],
             "status": self.status,
             "timestamp": datetime.now().isoformat(),
+            "success_messages": [
+                msg.__json_encode__() for msg in self.success_messages
+            ],
         }
 
     @classmethod
@@ -82,6 +86,9 @@ class SimulationState:
             ],
             messages=[Message.__json_decode__(msg) for msg in data["messages"]],
             status=data["status"],
+            success_messages=[
+                Message.__json_decode__(msg) for msg in data["success_messages"]
+            ],
         )
 
 

@@ -81,6 +81,23 @@ class SimulationWorker:
         self.step = 0
         self.results = []
         self.step_delay = step_delay
+        self.success_messages = []
+
+    def _capture_success_messages(self):
+        """Captures all messages in the system."""
+        messages = []
+        messages.extend(
+            [
+                {
+                    "content": msg.original_content,
+                    "creator": msg.creator_id,
+                    "created_time": msg.created_time,
+                    "hops": msg.hops,
+                }
+                for msg in self.success_messages
+            ]
+        )
+        return messages
 
     def _get_current_state(self):
         """Get current simulation state."""
@@ -90,6 +107,7 @@ class SimulationWorker:
             "node_states": _capture_node_states(self.grid.nodes),
             "messages": _capture_messages(self.grid.nodes),
             "status": self.status,
+            "success_messages": self._capture_success_messages(),
         }
 
     def simulate(self):
@@ -160,6 +178,7 @@ class SimulationWorker:
                 if message_A_to_B is not None:
                     if node_b.target:
                         node_b.on_target_received(message_A_to_B, node_a)
+                        self.success_messages.extend(message_A_to_B)
                     else:
                         node_b.receive_message(message_A_to_B, node_a)
                     increment_hops(message_A_to_B)
@@ -175,6 +194,7 @@ class SimulationWorker:
                 if message_B_to_A is not None:
                     if node_a.target:
                         node_a.on_target_received(message_B_to_A, node_b)
+                        self.success_messages.extend(message_B_to_A)
                     else:
                         node_a.receive_message(message_B_to_A, node_b)
                     increment_hops(message_B_to_A)

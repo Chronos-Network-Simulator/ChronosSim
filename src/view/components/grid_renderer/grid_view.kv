@@ -67,6 +67,10 @@
             CustomButton:
                 id: step_count
                 text: "Step: " + str(root.current_step) + "/" + str(root.total_steps)
-                
+
+            CustomButton:
+                id: export_graphs
+                text: "Export Graphs"
+                on_release: root.export_graphs()
 
 
