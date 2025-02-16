@@ -326,7 +326,6 @@ class SimulationManager:
 
     def _collect_results(self, dt):
         """Collect results method for Kivy Clock scheduler."""
-        print("Collecting results")
         if self.status != SimulationState.RUNNING:
             # Cancel the scheduled event if simulation is not running
             if self._collector_event:

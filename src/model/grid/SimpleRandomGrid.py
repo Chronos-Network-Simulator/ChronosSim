@@ -1,4 +1,3 @@
-import copy
 import math
 import random
 from typing import List
@@ -59,7 +58,7 @@ class SimpleRandomGrid(BaseSimulationGrid):
             y = random.uniform(0, self.length)
 
             # Create a deep copy of the simulation's node prototype
-            new_node = copy.deepcopy(node)
+            new_node = node.duplicate()
 
             new_node.position = (x, y)
             if self.place_node(new_node):

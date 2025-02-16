@@ -6,6 +6,8 @@ from pathlib import Path
 from threading import Lock
 from typing import Dict, List, Optional
 
+from pubsub import pub
+
 from model.monitoring.SimulationSession import SimulationSession, SimulationProperties
 
 
@@ -57,9 +59,6 @@ class SimulationDataHandler:
         Process incoming simulation state and write to disk.
         Ensures a session exists before processing.
         """
-        if not self.current_session:
-            self.create_session()
-
         state = SimulationState(
             simulation_id=state_data["simulation_id"],
             step=state_data["step"],
@@ -69,6 +68,13 @@ class SimulationDataHandler:
         )
         self.simulations[state.simulation_id].append(state)
         self._write_state_to_disk(state)
+
+        # Publish event with just the ID so we dont overlaod the pub sub with the actual data
+        pub.sendMessage(
+            "simulation.state_updated",
+            simulation_id=state.simulation_id,
+        )
+
         return state
 
     def _write_state_to_disk(self, state: SimulationState):

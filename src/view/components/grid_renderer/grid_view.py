@@ -2,7 +2,7 @@ from typing import List
 
 from kivy.graphics import Ellipse, Color
 from kivy.uix.behaviors import ButtonBehavior
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scatterlayout import ScatterLayout
 from kivy.uix.widget import Widget
@@ -56,7 +56,6 @@ class CustomScatterLayout(ScatterLayout):
 
     def _is_touch_in_sidebar(self, touch_pos):
         # Get reference to sidebar through widget tree
-        # parent is GridView (BoxLayout), parent.parent is MainScreenView
         try:
             sidebar = self.parent.parent.ids.sidebar
             return sidebar.collide_point(*touch_pos)
@@ -131,7 +130,7 @@ class CustomScatterLayout(ScatterLayout):
         return super().on_touch_up(touch)
 
 
-class GridView(BoxLayout):
+class GridView(FloatLayout):
     """
     A scatter view containing a grid layout. Each grid cell represents a region.
     """
@@ -183,11 +182,56 @@ class GridView(BoxLayout):
             for node in nodes:
                 x = node.position[0] * scale_factor + self.grid_layout.x
                 y = node.position[1] * scale_factor + self.grid_layout.y
-                size = 10  # Adjust node size as needed (in pixels)
+                size = 4
                 circle = Ellipse(pos=(x - size / 2, y - size / 2), size=(size, size))
                 color = Color(1, 0, 0)
                 self.grid_layout.canvas.after.add(color)
                 self.grid_layout.canvas.after.add(circle)
+
+        self.grid_layout.canvas.ask_update()
+
+    def draw_grid_nodes_from_live_simulation(self, nodes: List, scale_factor: float):
+        self.grid_layout.canvas.after.clear()
+        if not nodes:
+            return
+
+        # Find min and max message counts
+        message_counts = [node["message_count"] for node in nodes]
+        min_messages = min(message_counts)
+        max_messages = max(message_counts)
+
+        # Avoid division by zero if all nodes have same message count
+        message_range = max_messages - min_messages
+        if message_range == 0:
+            message_range = 1
+
+        def get_color_for_message_count(count):
+            # Calculate percentage between min and max (0 to 1)
+            if message_range == 0:
+                percentage = 1
+            else:
+                percentage = (count - min_messages) / message_range
+
+            # Red color (1, 0, 0)
+            # Dark grey color (0.2, 0.2, 0.2)
+            r = 0.2 + (percentage * 0.8)  # From 0.2 to 1.0
+            g = 0.2 - (percentage * 0.2)  # From 0.2 to 0.0
+            b = 0.2 - (percentage * 0.2)  # From 0.2 to 0.0
+
+            return r, g, b
+
+        for node in nodes:
+            x = node["position"][0] * scale_factor + self.grid_layout.x
+            y = node["position"][1] * scale_factor + self.grid_layout.y
+            size = 4
+            circle = Ellipse(pos=(x - size / 2, y - size / 2), size=(size, size))
+
+            # Get color based on message count
+            r, g, b = get_color_for_message_count(node["message_count"])
+            color = Color(r, g, b)
+
+            self.grid_layout.canvas.after.add(color)
+            self.grid_layout.canvas.after.add(circle)
 
         self.grid_layout.canvas.ask_update()
 

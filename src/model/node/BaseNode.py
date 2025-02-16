@@ -3,6 +3,7 @@ from __future__ import annotations
 import random
 import uuid
 from abc import ABC, abstractmethod
+from copy import deepcopy
 from typing import Tuple, List, Dict
 
 from model.message.BaseMessage import BaseMessage
@@ -161,3 +162,14 @@ class BaseNode(ModelSettingMixin, ABC):
 
     def __repr__(self):
         return f"{self.name} - {self.id} at {self.position}"
+
+    def duplicate(self):
+        """
+        Creates a deep copy of the node instance without copying the messages and assigning a new ID
+        :return:
+        """
+        new_node = deepcopy(self)
+        new_node.id = f"{self.slug}-{uuid.uuid4().hex}"
+        new_node.messages = {}
+
+        return new_node

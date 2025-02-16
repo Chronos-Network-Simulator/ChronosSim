@@ -8,6 +8,7 @@
 
 <GridView>:
     pos_hint: {'center_x': 0.5, "center_y": 0.5 }
+
     CustomScatterLayout:
         id: scatter
         auto_bring_to_front: False
@@ -18,3 +19,47 @@
             id: grid
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    AnchorLayout:
+        id: bottom_bar
+        anchor_x: 'center'
+        anchor_y: 'bottom'
+        padding: (0, "10dp", 0, "10dp")
+        pos_hint: {'center_x': 0.5, "center_y": 0.5 }
+
+    AnchorLayout:
+        id: top_bar
+        anchor_x: 'center'
+        anchor_y: 'top'
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        BoxLayout:
+            canvas:
+                Color:
+                    rgba: app.theme_manager.secondary_bg_color
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [10, 10, 10, 10]
+            orientation: "horizontal"
+            size_hint: None, None
+            size: self.minimum_size
+            padding: 10
+            spacing: 10
+
+            MDIconButton:
+                icon: "arrow-left"
+
+            Label:
+                id: page_label
+                text: "Page 1 of 10"
+                halign: "center"
+                valign: "middle"
+                size_hint: None, None
+                size: self.texture_size
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDIconButton:
+                icon: "arrow-right"
+
+

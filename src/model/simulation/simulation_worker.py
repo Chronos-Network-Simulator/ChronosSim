@@ -122,7 +122,6 @@ class SimulationWorker:
         """Send current state through queue."""
         current_state = self._get_current_state()
         self.results.append(current_state)
-        print("capturing current satte")
         self.results_queue.put(current_state)
 
     def _simulate_step(self) -> None:

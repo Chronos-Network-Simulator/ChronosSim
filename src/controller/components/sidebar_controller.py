@@ -78,4 +78,4 @@ class SideBarController(BaseController):
 
     def update_simulation_delay(self, simulation_delay: int) -> None:
         """Update the simulation delay."""
-        self.simulation.simulation_delay = simulation_delay
+        self.simulation.step_delay = simulation_delay
