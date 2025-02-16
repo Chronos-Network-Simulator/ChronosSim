@@ -18,6 +18,7 @@ def _capture_node_states(nodes: List[BaseNode]):
             "id": node.id,
             "position": node.position,
             "message_count": len(node.messages) if node.messages else 0,
+            "target": node.target,
         }
         for node in nodes
     ]
@@ -105,6 +106,7 @@ class SimulationWorker:
                     self.status = "stopped"
             except Empty:
                 pass
+
             # let the message spawner create messages
             self.message_spawner.spawn_messages(
                 self.grid.nodes, self.step, self.message_template
@@ -125,7 +127,6 @@ class SimulationWorker:
         self.results_queue.put(current_state)
 
     def _simulate_step(self) -> None:
-        """Simulation step logic remains unchanged."""
         collision_pairs = set()
 
         # Phase 1: Collect unique collision pairs
@@ -146,13 +147,31 @@ class SimulationWorker:
 
         # Phase 2: Process collisions
         for node_a, node_b in collision_pairs_list:
-            message_A_to_B = node_a.send_message(node_b)
-            if message_A_to_B is not None:
-                node_b.receive_message(message_A_to_B, node_a)
+            # Handle node_a sending to node_b
+            if node_a.target:
+                message_A_to_B = node_a.on_target_send(node_b)
+                if message_A_to_B is not None:
+                    node_b.on_target_received(message_A_to_B, node_a)
+            else:
+                message_A_to_B = node_a.send_message(node_b)
+                if message_A_to_B is not None:
+                    if node_b.target:
+                        node_b.on_target_received(message_A_to_B, node_a)
+                    else:
+                        node_b.receive_message(message_A_to_B, node_a)
 
-            message_B_to_A = node_b.send_message(node_a)
-            if message_B_to_A is not None:
-                node_a.receive_message(message_B_to_A, node_b)
+            # Handle node_b sending to node_a
+            if node_b.target:
+                message_B_to_A = node_b.on_target_send(node_a)
+                if message_B_to_A is not None:
+                    node_a.on_target_received(message_B_to_A, node_b)
+            else:
+                message_B_to_A = node_b.send_message(node_a)
+                if message_B_to_A is not None:
+                    if node_a.target:
+                        node_a.on_target_received(message_B_to_A, node_b)
+                    else:
+                        node_a.receive_message(message_B_to_A, node_b)
 
             node_a.on_collision_complete()
             node_b.on_collision_complete()

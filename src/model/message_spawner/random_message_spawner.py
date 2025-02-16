@@ -32,7 +32,10 @@ class BasicRandomMessageSpawner(BaseMessageSpawner):
         num_initial_spawns = min(num_initial_spawns, len(nodes))
 
         if num_initial_spawns > 0:
-            nodes_to_spawn_in = random.sample(nodes, num_initial_spawns)
+            valid_nodes = [node for node in nodes if not getattr(node, "target", False)]
+            nodes_to_spawn_in = random.sample(
+                valid_nodes, min(num_initial_spawns, len(valid_nodes))
+            )
             self._spawn_messages_in_nodes(
                 nodes_to_spawn_in, message_template=message_template
             )
@@ -52,9 +55,10 @@ class BasicRandomMessageSpawner(BaseMessageSpawner):
             target_spawn_count, spawn_rate_variance_percentage
         )
 
-        num_spawns = min(num_spawns, len(nodes))
+        valid_nodes = [node for node in nodes if not getattr(node, "target", False)]
+        num_spawns = min(num_spawns, len(valid_nodes))
         if num_spawns > 0:
-            nodes_to_spawn_in = random.sample(nodes, num_spawns)
+            nodes_to_spawn_in = random.sample(valid_nodes, num_spawns)
             self._spawn_messages_in_nodes(nodes_to_spawn_in, message_template, step)
 
     def _calculate_spawn_count(

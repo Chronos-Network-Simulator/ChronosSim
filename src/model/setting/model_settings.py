@@ -19,6 +19,7 @@ class SupportedEntity(Enum):
     NODE = "node"
     MESSAGE = "message"
     MESSAGE_SPAWNER = "message_spawner"
+    TARGET_SPAWNER = "target_spawner"
 
 
 class BaseModelSetting(ABC, Generic[T]):

@@ -92,3 +92,9 @@ class SprayAndWaitNode(BaseNode):
 
     def on_message_create(self, message: BaseMessage):
         self.messages[message] = 1  # only store one copy of each message
+
+    def on_target_received(self, messages: List[BaseMessage], sending_node: BaseNode):
+        return None
+
+    def on_target_send(self, receiving_node: BaseNode) -> Optional[BaseMessage]:
+        return None

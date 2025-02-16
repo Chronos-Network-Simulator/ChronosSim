@@ -14,7 +14,7 @@ from model.node import BaseNode
 
 class GridCell(ButtonBehavior, Widget):
     """
-    A single grid cell with a blue border that acts as a clickable button.
+    A grid cell widget that can be clicked and used to select a cell in the grid.
     """
 
     def __init__(self, cell_id, **kwargs):
@@ -26,7 +26,6 @@ class GridCell(ButtonBehavior, Widget):
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
-            # Store initial touch position
             self.touch_start_pos = touch.pos
             self.touch_moved = False
             return False
@@ -36,7 +35,6 @@ class GridCell(ButtonBehavior, Widget):
         if self.touch_start_pos:
             dx = touch.pos[0] - self.touch_start_pos[0]
             dy = touch.pos[1] - self.touch_start_pos[1]
-            # If moved more than 5 pixels, consider it a drag
             if (dx * dx + dy * dy) > 49:  # 5 pixels squared
                 self.touch_moved = True
         return super().on_touch_move(touch)
@@ -57,7 +55,6 @@ class CustomScatterLayout(ScatterLayout):
         self.last_touch_pos = None
 
     def _is_touch_in_sidebar(self, touch_pos):
-        # Get reference to sidebar through widget tree
         try:
             sidebar = self.parent.parent.ids.sidebar
             return sidebar.collide_point(*touch_pos)
@@ -65,14 +62,10 @@ class CustomScatterLayout(ScatterLayout):
             return False
 
     def on_touch_down(self, touch):
-        # First check if touch is in sidebar
         if self._is_touch_in_sidebar(touch.pos):
             return False
-
-        # If touch is outside scatter bounds, ignore it completely
         if not self.collide_point(*touch.pos):
             return False
-
         if touch.is_mouse_scrolling:
             current_scale = self.scale
             if touch.button == "scrolldown":
@@ -88,7 +81,6 @@ class CustomScatterLayout(ScatterLayout):
             else:
                 return super().on_touch_down(touch)
 
-            # Get touch pos relative to scatter
             touch_pos = self.to_widget(*touch.pos)
             cx = self.center_x
             cy = self.center_y
@@ -102,16 +94,13 @@ class CustomScatterLayout(ScatterLayout):
             )
             return True
 
-        # For regular touches, always allow panning
         self.touch_mode = "pan"
         self.last_touch_pos = touch.pos
         return False
 
     def on_touch_move(self, touch):
-        # Check if touch is in sidebar
         if self._is_touch_in_sidebar(touch.pos):
             return False
-
         if self.touch_mode == "pan" and self.last_touch_pos:
             dx = touch.pos[0] - self.last_touch_pos[0]
             dy = touch.pos[1] - self.last_touch_pos[1]
@@ -121,10 +110,8 @@ class CustomScatterLayout(ScatterLayout):
         return super().on_touch_move(touch)
 
     def on_touch_up(self, touch):
-        # Check if touch is in sidebar
         if self._is_touch_in_sidebar(touch.pos):
             return False
-
         if self.touch_mode == "pan":
             self.touch_mode = None
             self.last_touch_pos = None
@@ -133,37 +120,12 @@ class CustomScatterLayout(ScatterLayout):
 
 
 class GridView(FloatLayout):
-    """
-    A scatter view containing a grid layout. Each grid cell represents a region.
-    """
-
     grid_layout: GridLayout | None = None
-
     current_simulation_id = StringProperty()
-    """
-    The current Simulation ID we are viewing
-    """
-
     current_page = NumericProperty(1)
-    """
-    The current Simulation Page number we are on
-    """
-
     total_pages = NumericProperty(1)
-    """
-    The total number of Simulation Pages
-    """
-
     current_step = NumericProperty(0)
-    """
-    The current step of the simulation that the current visible simulation
-    is on
-    """
-
     total_steps = NumericProperty(0)
-    """"
-    The total number of steps in the simulation
-    """
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -176,23 +138,13 @@ class GridView(FloatLayout):
         region_size_km: float,
         scale_factor: float,
     ):
-        """
-        Draws the grid based on simulation parameters.
-        :param length_km: Length of the grid in km.
-        :param width_km: Width of the grid in km.
-        :param region_size_km: Size of each region in km.
-        :param scale_factor: Pixels per km for real-world rendering.
-        """
         self.clear()
-
         length = int(length_km * scale_factor)
         width = int(width_km * scale_factor)
         region_size = int(region_size_km * scale_factor)
-
         self.grid_layout.cols = width // region_size
         self.grid_layout.width = width
         self.grid_layout.height = length
-
         for row in range(length // region_size):
             for col in range(width // region_size):
                 cell_id = f"{row},{col}"
@@ -200,22 +152,18 @@ class GridView(FloatLayout):
                 self.grid_layout.add_widget(cell)
 
     def draw_grid_nodes(self, nodes: List[BaseNode], scale_factor: float):
-        """
-        Updates the grid by drawing nodes as circles.
-        """
-        # Clear previous node drawings
         self.grid_layout.canvas.after.clear()
-
         if nodes:
             for node in nodes:
                 x = node.position[0] * scale_factor + self.grid_layout.x
                 y = node.position[1] * scale_factor + self.grid_layout.y
                 size = 4
                 circle = Ellipse(pos=(x - size / 2, y - size / 2), size=(size, size))
-                color = Color(1, 0, 0)
+                color = (
+                    Color(0, 1, 0) if getattr(node, "target", True) else Color(1, 0, 0)
+                )
                 self.grid_layout.canvas.after.add(color)
                 self.grid_layout.canvas.after.add(circle)
-
         self.grid_layout.canvas.ask_update()
 
     def draw_grid_nodes_from_live_simulation(self, nodes: List, scale_factor: float):
@@ -256,6 +204,8 @@ class GridView(FloatLayout):
 
             # Get color based on message count
             r, g, b = get_color_for_message_count(node["message_count"])
+            if node["target"]:
+                r, g, b = 0, 1, 0  # Green color for target nodes
             color = Color(r, g, b)
 
             self.grid_layout.canvas.after.add(color)

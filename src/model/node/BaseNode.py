@@ -48,6 +48,12 @@ class BaseNode(ModelSettingMixin, ABC):
     https://pictogrammers.com/library/mdi/
     """
 
+    target: bool = False
+    """
+    Whether this node is a target node or not. If they are a targte node then the simulation invokes the 
+    on_target_received and on_target_send that allows target nodes to send data back into the network.
+    """
+
     settings: List[BaseModelSetting] = [
         NumericSetting(
             name="Detection Range:",
@@ -147,6 +153,20 @@ class BaseNode(ModelSettingMixin, ABC):
         Called when a message is created. Use this function to apply any initial processing to a message
         before it is stored in the internal nodes message array. MessageSpawners will call this function
         when they create a message.
+        """
+        pass
+
+    @abstractmethod
+    def on_target_received(self, messages: List[BaseMessage], sending_node: BaseNode):
+        """
+        Called when a target node receives a message
+        """
+        pass
+
+    @abstractmethod
+    def on_target_send(self, receiving_node: BaseNode) -> List[BaseMessage] | None:
+        """
+        Called when a target node sends a message
         """
         pass
 

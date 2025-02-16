@@ -10,6 +10,7 @@ from model.grid import AVAILABLE_GRIDS, BaseSimulationGrid
 from model.message.BaseMessage import BaseMessage
 from model.message_spawner import AVAILABLE_MESSAGE_SPAWNERS, BaseMessageSpawner
 from model.node import AVAILABLE_NODES, BaseNode
+from model.targets.BaseTargetSpawner import BaseTargetSpawner
 from view.components.base_component import BaseComponentView
 from view.components.settings_renderer.settings_renderer import SettingRenderer
 
@@ -78,6 +79,29 @@ class SideBarView(BaseComponentView, CommonElevationBehavior):
         cast(
             MessageSpawnerSettingsGroup, self.ids.message_spawner_settings_group
         ).render_settings(message_spawner.settings)
+
+    def render_target_spawner_settings(self, target_spawner: BaseTargetSpawner) -> None:
+        if target_spawner is None:
+            self.ids.target_spawner_settings_group.ids.target_spawner_type_selector.selected_option = (
+                "None"
+            )
+            self.ids.target_spawner_settings_group.ids.target_spawner_type_description.text = (
+                ""
+            )
+            cast(
+                TargetSpawnerSettingsGroup, self.ids.target_spawner_settings_group
+            ).clear_settings()
+            return
+        self.ids.target_spawner_settings_group.ids.target_spawner_type_selector.selected_option = (
+            target_spawner.name
+        )
+        self.ids.target_spawner_settings_group.ids.target_spawner_type_description.text = (
+            target_spawner.description
+        )
+        # Render the message spawner settings
+        cast(
+            TargetSpawnerSettingsGroup, self.ids.target_spawner_settings_group
+        ).render_settings(target_spawner.settings)
 
 
 class SimulationSettingsGroup(BoxLayout):
@@ -200,4 +224,32 @@ class MessageSpawnerSettingsGroup(BoxLayout, SettingRenderer):
         pub.sendMessage(
             topicName="ui.message_spawner_type_changed",
             message_spawner_type=message_spawner_type,
+        )
+
+
+class TargetSpawnerSettingsGroup(BoxLayout, SettingRenderer):
+    """
+    Settings related to how often messages are spawned in the simulation.
+    """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Clock.schedule_once(self.init_options)
+
+    def init_options(self, *args):
+        self.ids.target_spawner_type_selector.options = [
+            {"text": "None", "icon": "error"},
+        ] + [
+            {"text": message_spawner.name, "icon": message_spawner.icon}
+            for message_spawner in AVAILABLE_MESSAGE_SPAWNERS
+        ]
+        self.settings_view = self.ids.settings_view
+        self.ids.target_spawner_type_selector.on_select_callback = (
+            self.on_target_spawner_type_selected
+        )
+
+    def on_target_spawner_type_selected(self, target_spawner_type: str) -> None:
+        pub.sendMessage(
+            topicName="ui.target_spawner_type_changed",
+            target_spawner_type=target_spawner_type,
         )

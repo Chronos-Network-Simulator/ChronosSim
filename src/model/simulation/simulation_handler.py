@@ -18,6 +18,7 @@ from model.monitoring.SimulationDataHandler import SimulationDataHandler
 from model.monitoring.SimulationSession import SimulationProperties
 from model.node import BaseNode
 from model.simulation.simulation_worker import SimulationWorker
+from model.targets.BaseTargetSpawner import BaseTargetSpawner
 
 
 class SimulationState(Enum):
@@ -85,6 +86,11 @@ class SimulationManager:
     The configured message spawner to use for the simulation.
     """
 
+    target_spawner: BaseTargetSpawner | None = None
+    """
+    The configured target spawner to use for the simulation.
+    """
+
     data_handler: SimulationDataHandler = SimulationDataHandler()
     """
     The Data handler is the core of the simulations data tracking. It creates simulation sessions,
@@ -141,6 +147,7 @@ class SimulationManager:
         self.set_grid(None)
         self.set_node(None)
         self.set_message_spawner(None)
+        self.set_target_spawner(None)
         self.node_count = 1
         self.step_count = 1
 
@@ -156,8 +163,16 @@ class SimulationManager:
         if self.grid is not None and self.node:
             self.grid.clear_grid()
             self.grid.auto_place_nodes(self.node_count, self.node)
+            if self.target_spawner:
+                self.grid.nodes = self.target_spawner.mark_targets(self.grid.nodes)
             pub.sendMessage("simulation.grid_updated")
-        if self.grid and self.node and self.message_template and self.message_spawner:
+        if (
+            self.grid
+            and self.node
+            and self.message_template
+            and self.message_spawner
+            and self.target_spawner
+        ):
             self.message_spawner.init_spawn_messages(
                 self.grid.nodes, self.message_template
             )
@@ -185,6 +200,14 @@ class SimulationManager:
         self.message_spawner = message_spawner
         pub.sendMessage(
             "simulation.message_spawner_changed", message_spawner=message_spawner
+        )
+
+    def set_target_spawner(self, target_spawner: BaseTargetSpawner | None) -> None:
+        self._ensure_editable()
+        self.target_spawner = target_spawner
+        self._update_ui()
+        pub.sendMessage(
+            "simulation.target_spawner_changed", target_spawner=target_spawner
         )
 
     def create_simulations(self) -> None:

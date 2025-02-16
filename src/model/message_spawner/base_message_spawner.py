@@ -174,7 +174,8 @@ class BaseMessageSpawner(ModelSettingMixin, ABC):
         This method is called by the simulation framework at *each* simulation step, after advancing the simulation time.
         Implementations should define the logic for spawning new messages during each step, based on the spawner's
         configuration (e.g., spawn rate, frequency, message template). This method is responsible for the ongoing
-        injection of messages into the network throughout the simulation.
+        injection of messages into the network throughout the simulation. Remember that you need to handle whether the node
+        is a target node or not. It is considered that you will not spawn messages to target nodes.
 
         :param message_template: The message template to spawn
         :param nodes: The nodes in the simulation

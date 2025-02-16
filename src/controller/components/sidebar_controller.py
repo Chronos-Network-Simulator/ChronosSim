@@ -7,6 +7,7 @@ from controller.base_controller import BaseController
 from model.grid import get_grid_by_name
 from model.message_spawner import get_message_spawner_by_name
 from model.node import get_node_by_name
+from model.targets import get_target_spawner_by_name
 from view.components.sidebar.sidebar import SideBarView
 
 
@@ -24,12 +25,18 @@ class SideBarController(BaseController):
         pub.subscribe(
             view.render_message_spawner_settings, "simulation.message_spawner_changed"
         )
+        pub.subscribe(
+            view.render_target_spawner_settings, "simulation.target_spawner_changed"
+        )
 
         # UI updates
         pub.subscribe(self.grid_type_changed, "ui.grid_type_changed")
         pub.subscribe(self.node_type_changed, "ui.node_type_changed")
         pub.subscribe(
             self.message_spawner_type_changed, "ui.message_spawner_type_changed"
+        )
+        pub.subscribe(
+            self.target_spawner_type_changed, "ui.target_spawner_type_changed"
         )
         pub.subscribe(self.update_node_count, "ui.update_node_count")
         pub.subscribe(self.update_step_count, "ui.update_step_count")
@@ -62,6 +69,15 @@ class SideBarController(BaseController):
             return
         self.simulation.set_message_spawner(
             get_message_spawner_by_name(message_spawner_type)
+        )
+
+    def target_spawner_type_changed(self, target_spawner_type: str) -> None:
+        """Change the target spawner type of the simulation."""
+        if target_spawner_type == "None":
+            self.simulation.set_target_spawner(None)
+            return
+        self.simulation.set_target_spawner(
+            get_target_spawner_by_name(target_spawner_type)
         )
 
     def update_node_count(self, node_count: int) -> None:
