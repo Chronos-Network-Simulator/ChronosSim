@@ -74,7 +74,7 @@ class SideBarController(BaseController):
 
     def update_simulation_count(self, simulation_count: int) -> None:
         """Update the simulation count."""
-        self.simulation.simulation_count = simulation_count
+        self.simulation.num_simulations = simulation_count
 
     def update_simulation_delay(self, simulation_delay: int) -> None:
         """Update the simulation delay."""

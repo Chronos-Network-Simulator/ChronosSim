@@ -2,8 +2,8 @@ import multiprocessing as mp
 import pickle
 import random
 import uuid
-from pprint import pprint
 from queue import Empty
+from time import sleep
 from typing import List
 
 from model.grid import BaseSimulationGrid
@@ -63,6 +63,7 @@ class SimulationWorker:
         step_count: int,
         control_queue: mp.Queue,
         results_queue: mp.Queue,
+        step_delay: float = 0.0,
     ):
         self.node = pickle.loads(pickled_node_type)
         self.grid = pickle.loads(pickled_grid_type)
@@ -76,8 +77,7 @@ class SimulationWorker:
         self.results_queue = results_queue
         self.step = 0
         self.results = []
-        pprint(vars(self.message_spawner))
-        pprint(vars(self.message_template))
+        self.step_delay = step_delay
 
     def _get_current_state(self):
         """Get current simulation state."""
@@ -110,17 +110,19 @@ class SimulationWorker:
                 self.grid.nodes, self.step, self.message_template
             )
             self._simulate_step()
-            self.capture_state()
             self._send_current_state()
 
             for node in self.grid.nodes:
                 node.on_simulation_step_end()
                 node.move()
             self.step += 1
+            sleep(self.step_delay)
 
     def _send_current_state(self):
         """Send current state through queue."""
         current_state = self._get_current_state()
+        self.results.append(current_state)
+        print("capturing current satte")
         self.results_queue.put(current_state)
 
     def _simulate_step(self) -> None:
@@ -155,14 +157,3 @@ class SimulationWorker:
 
             node_a.on_collision_complete()
             node_b.on_collision_complete()
-
-    def capture_state(self) -> None:
-        """Capture state with additional metadata."""
-        step_results = {
-            "simulation_id": self.simulation_id,
-            "step": self.step,
-            "node_states": _capture_node_states(self.grid.nodes),
-            "messages": _capture_messages(self.grid.nodes),
-            "status": self.status,
-        }
-        self.results.append(step_results)
