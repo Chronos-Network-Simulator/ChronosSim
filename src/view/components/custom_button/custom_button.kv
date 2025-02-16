@@ -3,13 +3,13 @@
 <CustomButton>:
     size_hint: (None, None)
     height: "48dp"
-    width: self.minimum_width + dp(10)  # Add padding to the text width
+    width: self.minimum_width + dp(10)
     padding: "10dp"
     spacing: "10dp"
 
     canvas.before:
         Color:
-            rgba: app.theme_manager.bg_color if not self.hover else app.theme_manager.secondary_bg_color
+            rgba: app.theme_manager.secondary_bg_color
         RoundedRectangle:
             size: self.size
             pos: self.pos
@@ -17,7 +17,7 @@
 
     canvas.after:
         Color:
-            rgba: app.theme_manager.primary_color if self.state == 'down' else (app.theme_manager.bg_border_color if not self.hover else app.theme_manager.primary_color)
+            rgba: app.theme_manager.primary_color if self.state == 'down' else app.theme_manager.bg_border_color
         Line:
             width: dp(1.1)
             rounded_rectangle: (self.x, self.y, self.width, self.height, 15, 15, 15, 15)

@@ -210,31 +210,31 @@ class SimulationManager:
                     self.simulations[sim_id] = SimulationEntry(
                         worker=worker, current_step=0, process=process
                     )
-                    # create the simulation session in the data handler
-                    self.data_handler.create_session(
-                        simulation_properties=SimulationProperties(
-                            simulation_count=self.num_simulations,
-                            steps=self.step_count,
-                            workers=self.num_workers,
-                            simulation_delay=self.step_delay,
-                            grid_type=self.grid.__class__.__name__,
-                            grid_length=self.grid.length,
-                            grid_width=self.grid.width,
-                            region_size=self.grid.region_size,
-                            node_type=self.node.__class__.__name__,
-                            node_count=self.node_count,
-                            detection_range=self.node.detection_range,
-                            movement_range=self.node.movement_range,
-                            message_text=self.message_template.original_content,
-                            message_size=self.message_template.size,
-                            message_spawner_type=self.message_spawner.__class__.__name__,
-                            spawn_frequency=self.message_spawner.spawn_rate_frequency,
-                            spawn_frequency_variation=self.message_spawner.spawn_rate_frequency_variance,
-                            spawn_rate=self.message_spawner.spawn_rate,
-                            spawn_rate_variation=self.message_spawner.spawn_rate_variance,
-                            random_seed=self.message_spawner.random_seed,
-                        )
+                # create the simulation session in the data handler
+                self.data_handler.create_session(
+                    simulation_properties=SimulationProperties(
+                        simulation_count=self.num_simulations,
+                        steps=self.step_count,
+                        workers=self.num_workers,
+                        simulation_delay=self.step_delay,
+                        grid_type=self.grid.__class__.__name__,
+                        grid_length=self.grid.length,
+                        grid_width=self.grid.width,
+                        region_size=self.grid.region_size,
+                        node_type=self.node.__class__.__name__,
+                        node_count=self.node_count,
+                        detection_range=self.node.detection_range,
+                        movement_range=self.node.movement_range,
+                        message_text=self.message_template.original_content,
+                        message_size=self.message_template.size,
+                        message_spawner_type=self.message_spawner.__class__.__name__,
+                        spawn_frequency=self.message_spawner.spawn_rate_frequency,
+                        spawn_frequency_variation=self.message_spawner.spawn_rate_frequency_variance,
+                        spawn_rate=self.message_spawner.spawn_rate,
+                        spawn_rate_variation=self.message_spawner.spawn_rate_variance,
+                        random_seed=self.message_spawner.random_seed,
                     )
+                )
             elif self.status == SimulationState.PAUSED:
                 pass
             else:
@@ -244,7 +244,6 @@ class SimulationManager:
 
     def play(self):
         """Start or resume all simulations."""
-        print(self.status)
         if self.status in [SimulationState.PAUSED, SimulationState.Empty]:
             # Start each simulation process if not already running
             if self.status == SimulationState.Empty:

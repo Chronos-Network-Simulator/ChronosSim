@@ -18,6 +18,7 @@ class BottomBarController(BaseController):
         :param status:
         :return:
         """
+        print("I ran")
         if status == "play":
             self.simulation.create_simulations()
             self.simulation.play()

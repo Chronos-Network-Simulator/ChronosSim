@@ -1,11 +1,13 @@
 from typing import List
 
 from kivy.graphics import Ellipse, Color
+from kivy.properties import NumericProperty, StringProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scatterlayout import ScatterLayout
 from kivy.uix.widget import Widget
+from pubsub import pub
 
 from model.node import BaseNode
 
@@ -137,6 +139,32 @@ class GridView(FloatLayout):
 
     grid_layout: GridLayout | None = None
 
+    current_simulation_id = StringProperty()
+    """
+    The current Simulation ID we are viewing
+    """
+
+    current_page = NumericProperty(1)
+    """
+    The current Simulation Page number we are on
+    """
+
+    total_pages = NumericProperty(1)
+    """
+    The total number of Simulation Pages
+    """
+
+    current_step = NumericProperty(0)
+    """
+    The current step of the simulation that the current visible simulation
+    is on
+    """
+
+    total_steps = NumericProperty(0)
+    """"
+    The total number of steps in the simulation
+    """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.grid_layout = self.ids.grid
@@ -238,3 +266,10 @@ class GridView(FloatLayout):
     def clear(self):
         self.grid_layout.clear_widgets()
         self.grid_layout.canvas.after.clear()
+
+    def set_pagination_values(self, current_page: int, total_pages: int):
+        self.current_page = current_page
+        self.total_pages = total_pages
+
+    def navigate_page(self, direction: str):
+        pub.sendMessage("ui.simulation_selected", direction=direction)

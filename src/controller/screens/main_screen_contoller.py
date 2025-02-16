@@ -1,7 +1,6 @@
 from kivy.clock import Clock
 
 from controller.base_controller import BaseController
-from controller.components.bottombar_controller import BottomBarController
 from controller.components.grid_controller import GridController
 from controller.components.sidebar_controller import SideBarController
 
@@ -23,7 +22,6 @@ class MainScreenController(BaseController):
     def __init__(self, view, name, simulation):
         self.sidebar = SideBarController(simulation)
         self.grid = GridController(simulation)
-        self.bottom_bar = BottomBarController(simulation)
         self.add_child_controller(self.sidebar)
         self.add_child_controller(self.grid)
         super().__init__(view, name, simulation)

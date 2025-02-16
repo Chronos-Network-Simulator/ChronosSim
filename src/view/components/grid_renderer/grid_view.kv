@@ -49,10 +49,11 @@
 
             MDIconButton:
                 icon: "arrow-left"
+                on_release: root.navigate_page("previous")
 
             Label:
                 id: page_label
-                text: "Page 1 of 10"
+                text: str(root.current_page) + "/" + str(root.total_pages)
                 halign: "center"
                 valign: "middle"
                 size_hint: None, None
@@ -61,5 +62,11 @@
 
             MDIconButton:
                 icon: "arrow-right"
+                on_release: root.navigate_page("next")
+
+            CustomButton:
+                id: step_count
+                text: "Step: " + str(root.current_step) + "/" + str(root.total_steps)
+                
 
 
