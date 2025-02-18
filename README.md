@@ -23,7 +23,7 @@
     <a href="https://github.com/Chronos-Network-Simulator/ChronosSim"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Chronos-Network-Simulator/ChronosSim">View Demo</a>
+    <a href="https://youtu.be/Mx1R9b96hIo">View Demo</a>
     &middot;
     <a href="https://github.com/Chronos-Network-Simulator/ChronosSim/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
