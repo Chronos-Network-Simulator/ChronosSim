@@ -1,4 +1,3 @@
-from tkinter import Label
 from kivy.event import EventDispatcher
 from kivy.properties import OptionProperty, ColorProperty
 from utils import convert_hex_to_decimal

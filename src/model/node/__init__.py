@@ -2,9 +2,10 @@ from typing import List
 
 from model.node.BaseNode import BaseNode
 from model.node.SprayAndWaitNode import SprayAndWaitNode
+from model.node.SprayAndFocus import SprayAndFocusNode
 
 AVAILABLE_NODES: List[type[BaseNode]] = [
-    SprayAndWaitNode,
+    SprayAndWaitNode, SprayAndFocusNode,
 ]
 
 
