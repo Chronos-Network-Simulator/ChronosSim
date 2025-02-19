@@ -2,9 +2,10 @@ from typing import List
 
 from model.grid.BaseSimulationGrid import BaseSimulationGrid
 from model.grid.CitySimulationGrid import CityGrid
+from model.grid.PondyFrenchStreetGrid import PondicherryGrid
 from model.grid.SimpleRandomGrid import SimpleRandomGrid
 
-AVAILABLE_GRIDS: List[type[BaseSimulationGrid]] = [SimpleRandomGrid, CityGrid]
+AVAILABLE_GRIDS: List[type[BaseSimulationGrid]] = [SimpleRandomGrid, CityGrid, PondicherryGrid]
 
 
 def get_grid_by_name(name: str) -> BaseSimulationGrid:
