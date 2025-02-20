@@ -1,9 +1,10 @@
-from tkinter import Label
+from threading import Lock
+
+from kivy.core.text import LabelBase
 from kivy.event import EventDispatcher
 from kivy.properties import OptionProperty, ColorProperty
+
 from utils import convert_hex_to_decimal
-from kivy.core.text import LabelBase
-from threading import Lock
 
 
 class ThemeManager(EventDispatcher):

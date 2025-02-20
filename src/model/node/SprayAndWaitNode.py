@@ -9,9 +9,6 @@ from model.setting.model_settings import SupportedEntity, OptionSetting
 class SprayAndWaitNode(BaseNode):
     """
     A node that uses a spray and wait protocol to send messages.
-
-    This version uses the improved message storage (dictionary of messages to counts).
-    It also includes a `message_selection_strategy`.
     """
 
     name = "Spray N Wait"

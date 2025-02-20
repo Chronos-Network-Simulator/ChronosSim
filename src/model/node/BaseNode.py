@@ -74,6 +74,16 @@ class BaseNode(ModelSettingMixin, ABC):
             entity_type=SupportedEntity.NODE,
             attributes=["movement_range"],
         ),
+        NumericSetting(
+            name="Max Memory:",
+            description="The maximum amount of messages that this node can store in bytes. Beyond this point it is upto the node"
+            "to decide how to handle the message.",
+            min_value=1,
+            max_value=1000,
+            default_value=400,
+            entity_type=SupportedEntity.NODE,
+            attributes=["max_memory"],
+        ),
     ]
     """
     A list of settings that should be exposed to configure this model.
@@ -103,6 +113,21 @@ class BaseNode(ModelSettingMixin, ABC):
     where the first element is the message and the second element is the number of copies of
     that message that the node is holding.
     """
+
+    max_memory: int = 400
+    """
+    Tge maximum amount of messages that this node can store in bytes. Beyond this point it is upto the node
+    to decide how to handle the message. The base node class simply provides this value to the node. It is upto
+    your purview tot decide to handle this in the message receive or not.
+    """
+
+    node_full: bool = False
+    """
+    During any collision with a nearby node, the simulation will check if the node is full or not. If it is full then no transmission
+    of messages will be allowed. This is a flag that is set by the node when it reaches the max_memory limit. It is upto the node to decide
+    how to handle this flag. The base node class simply provides this value to the node.
+    """
+
     entity_type = SupportedEntity.NODE
 
     def __init__(self):
