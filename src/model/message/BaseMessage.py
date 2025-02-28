@@ -1,5 +1,5 @@
 import uuid
-from typing import List
+from typing import List, Dict, Any
 
 from model.setting.model_setting_mixin import ModelSettingMixin
 from model.setting.model_settings import (
@@ -21,8 +21,6 @@ class BaseMessage(ModelSettingMixin):
     """
     The unique identifier of this message instance
     """
-
-    _content: str  # Private attribute for content
 
     original_content: str
     """
@@ -49,6 +47,10 @@ class BaseMessage(ModelSettingMixin):
     The number of hops the message has taken in the network
     """
 
+    _props: Dict[str, Any] = {}
+
+    _content: str
+
     entity_type = SupportedEntity.MESSAGE
 
     settings: List[BaseModelSetting] = [
@@ -72,11 +74,29 @@ class BaseMessage(ModelSettingMixin):
 
     @property
     def content(self):
+        """
+        Stores the content of the message. The content stored here may not be the original message as each node may modify the content with stuff like encryption etc.
+        :return:
+        """
         return self._content
 
     @content.setter
     def content(self, value):
         self._content = value
+        self._update_size()
+
+    @property
+    def props(self):
+        """
+        Additional Properties that can be added to the message based on each implementation. Note that these properties are not saved in message content
+        however they will still count towards the size of the message. Only the values of the props are measured and not the keys. This is to simulate
+        a header in a message, as the header structure is already know by the nodes, only data is sent.
+        """
+        return self._props
+
+    @props.setter
+    def props(self, value):
+        self._props = value
         self._update_size()
 
     def duplicate(
@@ -98,8 +118,15 @@ class BaseMessage(ModelSettingMixin):
             new_message = BaseMessage(self.original_content, creator_id, step)
         return new_message
 
-    def _update_size(self):
-        self.size = len(self._content.encode())
+    def _update_size(self) -> None:
+        """
+        Internal Method used to update the size of the message based on the content and the props it contains
+
+        :return: None
+        """
+        self.size = len(self._content.encode()) + sum(
+            len(str(value).encode()) for value in self.props.values()
+        )
 
     def __repr__(self):
         return f"Message(id={self.id}, content={self.content}, original_content={self.original_content}, creator_id={self.creator_id}, size={self.size})"

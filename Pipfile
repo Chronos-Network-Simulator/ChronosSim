@@ -15,6 +15,7 @@ tk = "*"
 
 [dev-packages]
 black = "*"
+sphinx = "*"
 
 [requires]
 python_version = "3.13"
