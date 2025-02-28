@@ -1,6 +1,7 @@
 from threading import Lock
 from kivy.event import EventDispatcher
 from kivy.properties import OptionProperty, ColorProperty
+from kivy.core.text import LabelBase
 
 from utils import convert_hex_to_decimal
 
