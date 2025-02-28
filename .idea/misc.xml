@@ -5,7 +5,7 @@
     <option name="enabledOnSave" value="true" />
     <option name="sdkName" value="Python 3.13 (ChronosSim)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (ChronosSim)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Pipenv (ChronosSim)" project-jdk-type="Python SDK" />
   <component name="PythonCompatibilityInspectionAdvertiser">
     <option name="version" value="3" />
   </component>

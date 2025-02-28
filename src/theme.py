@@ -1,6 +1,4 @@
 from threading import Lock
-
-from kivy.core.text import LabelBase
 from kivy.event import EventDispatcher
 from kivy.properties import OptionProperty, ColorProperty
 

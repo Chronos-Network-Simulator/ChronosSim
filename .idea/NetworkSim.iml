@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/simulation_outputs" />
       <excludeFolder url="file://$MODULE_DIR$/src/outputs" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.13 (ChronosSim)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Pipenv (ChronosSim)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
