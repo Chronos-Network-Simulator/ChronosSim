@@ -130,3 +130,27 @@ class BaseMessage(ModelSettingMixin):
 
     def __repr__(self):
         return f"Message(id={self.id}, content={self.content}, original_content={self.original_content}, creator_id={self.creator_id}, size={self.size})"
+
+    def serialize(self) -> dict:
+        return {
+            "id": self.id,
+            "original_content": self.original_content,
+            "size": self.size,
+            "creator_id": self.creator_id,
+            "created_time": self.created_time,
+            "hops": self.hops,
+            "props": self.props,
+        }
+
+    @classmethod
+    def deserialize(cls, data: dict) -> "BaseMessage":
+        message = BaseMessage(
+            data["original_content"],
+            data["creator_id"],
+            data["created_time"],
+        )
+        message.id = data["id"]
+        message.size = data["size"]
+        message.hops = data["hops"]
+        message.props = data["props"]
+        return message

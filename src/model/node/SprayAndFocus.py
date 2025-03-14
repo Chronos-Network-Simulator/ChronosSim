@@ -4,12 +4,14 @@ from model.message.BaseMessage import BaseMessage
 from model.node import BaseNode
 from model.setting.model_settings import SupportedEntity, OptionSetting
 
+
 class SprayAndFocusNode(BaseNode):
     """
     A node that implements the Spray and Focus routing protocol.
     In the spray phase, it works similar to Spray and Wait.
     In the focus phase, it uses utility-based forwarding to make routing decisions.
     """
+
     name = "Spray N Focus"
     description = (
         "Implements the Spray and Focus protocol with utility-based forwarding. "
@@ -45,7 +47,7 @@ class SprayAndFocusNode(BaseNode):
                 {"text": "0.7", "icon": "high-priority"},
             ],
             default_value="0.5",
-        )
+        ),
     ]
 
     def __init__(self):
@@ -65,10 +67,12 @@ class SprayAndFocusNode(BaseNode):
             return 0.0
 
         encounter_frequency = self.encounter_counts[node_id]
-        time_since_last_encounter = self.current_time - self.last_encounter_times[node_id]
+        time_since_last_encounter = (
+            self.current_time - self.last_encounter_times[node_id]
+        )
 
         # Utility increases with encounter frequency and decreases with time since last encounter
-        utility = (encounter_frequency / (time_since_last_encounter + 1.0))
+        utility = encounter_frequency / (time_since_last_encounter + 1.0)
         return min(1.0, utility)
 
     def send_message(self, receiving_node: BaseNode) -> Optional[List[BaseMessage]]:
@@ -127,8 +131,8 @@ class SprayAndFocusNode(BaseNode):
     def on_message_create(self, message: BaseMessage):
         self.messages[message] = 1  # Start with one copy of new message
 
-    def on_target_received(self, messages: List[BaseMessage], sending_node: BaseNode):
+    def on_send_to_target(self, messages: List[BaseMessage], sending_node: BaseNode):
         return None
 
-    def on_target_send(self, receiving_node: BaseNode) -> Optional[BaseMessage]:
+    def on_receive_from_target(self, receiving_node: BaseNode) -> Optional[BaseMessage]:
         return None

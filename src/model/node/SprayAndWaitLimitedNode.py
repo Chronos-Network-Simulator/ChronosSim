@@ -138,8 +138,8 @@ class SprayAndWaitLimitedNode(BaseNode):
         if len(self.messages) < self.max_ttl:
             self.is_full = False
 
-    def on_target_received(self, messages: List[BaseMessage], sending_node: BaseNode):
+    def on_send_to_target(self, messages: List[BaseMessage], sending_node: BaseNode):
         return None
 
-    def on_target_send(self, receiving_node: BaseNode) -> Optional[BaseMessage]:
+    def on_receive_from_target(self, receiving_node: BaseNode) -> Optional[BaseMessage]:
         return None

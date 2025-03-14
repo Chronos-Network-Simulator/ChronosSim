@@ -134,7 +134,7 @@ class CityGrid(BaseSimulationGrid):
         placed_count = 0
 
         for _ in range(num_nodes):
-            new_node = node.duplicate()
+            new_node = type(node).deserialize(node.serialize())
             new_node.position = self._get_valid_building_position()
 
             if self.place_node(new_node):

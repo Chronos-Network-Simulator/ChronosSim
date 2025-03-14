@@ -1,7 +1,7 @@
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
-from typing import List
+from typing import Dict, List, Optional
 
 
 @dataclass
@@ -31,6 +31,7 @@ class NodeState:
 
 @dataclass
 class Message:
+    id: str
     content: str
     creator: str
     created_time: int
@@ -38,6 +39,7 @@ class Message:
 
     def __json_encode__(self) -> dict:
         return {
+            "id": self.id,
             "content": self.content,
             "creator": self.creator,
             "created_time": self.created_time,
@@ -47,10 +49,44 @@ class Message:
     @classmethod
     def __json_decode__(cls, data: dict) -> "Message":
         return cls(
+            id=data["id"],
             content=data["content"],
             creator=data["creator"],
             created_time=data["created_time"],
             hops=data["hops"],
+        )
+
+
+@dataclass
+class SimulationStepMetrics:
+    """Metrics collected during each simulation step"""
+
+    metadata_bytes_sent: int = 0
+    payload_bytes_sent: int = 0
+    messages_exchanged: int = 0
+    summaries_exchanged: int = 0
+    nodes_encountered: int = 0
+    phase_data: Dict = field(default_factory=dict)
+
+    def __json_encode__(self) -> dict:
+        return {
+            "metadata_bytes_sent": self.metadata_bytes_sent,
+            "payload_bytes_sent": self.payload_bytes_sent,
+            "messages_exchanged": self.messages_exchanged,
+            "summaries_exchanged": self.summaries_exchanged,
+            "nodes_encountered": self.nodes_encountered,
+            "phase_data": self.phase_data,
+        }
+
+    @classmethod
+    def __json_decode__(cls, data: dict) -> "SimulationStepMetrics":
+        return cls(
+            metadata_bytes_sent=data["metadata_bytes_sent"],
+            payload_bytes_sent=data["payload_bytes_sent"],
+            messages_exchanged=data["messages_exchanged"],
+            summaries_exchanged=data["summaries_exchanged"],
+            nodes_encountered=data["nodes_encountered"],
+            phase_data=data["phase_data"],
         )
 
 
@@ -62,6 +98,7 @@ class SimulationState:
     messages: List[Message]
     status: str
     success_messages: List[Message]
+    step_metrics: Optional[dict] = None  # Stores metric data about each step
 
     def __json_encode__(self) -> dict:
         return {
@@ -74,6 +111,7 @@ class SimulationState:
             "success_messages": [
                 msg.__json_encode__() for msg in self.success_messages
             ],
+            "step_metrics": self.step_metrics,
         }
 
     @classmethod
@@ -89,14 +127,15 @@ class SimulationState:
             success_messages=[
                 Message.__json_decode__(msg) for msg in data["success_messages"]
             ],
+            step_metrics=data["step_metrics"],
         )
 
 
 class DataclassJSONEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if hasattr(obj, "__json_encode__"):
-            return obj.__json_encode__()
-        return super().default(obj)
+    def default(self, o):
+        if hasattr(o, "__json_encode__"):
+            return o.__json_encode__()
+        return super().default(o)
 
 
 def dataclass_json_decode(cls, json_data):

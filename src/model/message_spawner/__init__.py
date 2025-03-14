@@ -1,9 +1,14 @@
 from typing import List
 
+
 from model.message_spawner.base_message_spawner import BaseMessageSpawner
+from model.message_spawner.disaster_message_spawner import NaturalDisasterMessageSpawner
 from model.message_spawner.random_message_spawner import BasicRandomMessageSpawner
 
-AVAILABLE_MESSAGE_SPAWNERS: List[type[BaseMessageSpawner]] = [BasicRandomMessageSpawner]
+AVAILABLE_MESSAGE_SPAWNERS: List[type[BaseMessageSpawner]] = [
+    BasicRandomMessageSpawner,
+    NaturalDisasterMessageSpawner,
+]
 
 
 def get_message_spawner_by_name(name: str) -> BaseMessageSpawner:

@@ -2,7 +2,6 @@ import multiprocessing as mp
 import pickle
 from dataclasses import dataclass
 from enum import Enum
-from pprint import pprint
 from queue import Empty
 from typing import Dict
 
@@ -212,12 +211,13 @@ class SimulationManager:
 
     def create_simulations(self) -> None:
         """Create multiple identical simulation instances."""
-        if self.grid and self.node and self.message_spawner:
+        if self.grid and self.node and self.message_spawner and self.message_template:
             if self.status == SimulationState.Empty:
                 for _ in range(self.num_simulations):
                     worker = SimulationWorker(
-                        pickled_node_type=pickle.dumps(self.node),
-                        pickled_grid_type=pickle.dumps(self.grid),
+                        node_type=self.node.__class__,
+                        grid_type=self.grid.__class__,
+                        sim_data=self.grid.serialize(),
                         pickled_message_spawner=pickle.dumps(self.message_spawner),
                         pickled_message_template=pickle.dumps(self.message_template),
                         node_count=self.node_count,
@@ -366,7 +366,7 @@ class SimulationManager:
                             simulation_id=sim_id,
                             result=result,
                         )
-                        state = self.data_handler.process_simulation_state(result)
+                        self.data_handler.process_simulation_state(state_data=result)
         except Empty:
             pass
         return True
@@ -384,7 +384,6 @@ class SimulationManager:
                             simulation_id=sim_id,
                             result=result,
                         )
-                        pprint(result)
             except Empty:
                 break
 

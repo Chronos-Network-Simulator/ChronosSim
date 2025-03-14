@@ -3,7 +3,6 @@ from __future__ import annotations
 import random
 import uuid
 from abc import ABC, abstractmethod
-from copy import deepcopy
 from typing import Tuple, List, Dict
 
 from model.message.BaseMessage import BaseMessage
@@ -91,7 +90,7 @@ class BaseNode(ModelSettingMixin, ABC):
     Initialize it as an empty list at the class level in BaseNode.
     """
 
-    position: Tuple[float, float]
+    position: Tuple[float, float] = (0, 0)
     """
     Position of the node in the simulation grid
     """
@@ -145,6 +144,19 @@ class BaseNode(ModelSettingMixin, ABC):
         """
 
     @abstractmethod
+    def send_requested_messages(
+        self, request: dict, receiving_node: BaseNode
+    ) -> List[BaseMessage] | None:
+        """
+        Send only the messages requested by the other node based on the pre-collision metadata exchange.
+
+        :param request: The request information from the other node
+        :param receiving_node: The node requesting the messages
+        :return: The requested messages to send
+        """
+        pass
+
+    @abstractmethod
     def receive_message(
         self, messages: List[BaseMessage], sending_node: BaseNode
     ) -> None:
@@ -157,6 +169,30 @@ class BaseNode(ModelSettingMixin, ABC):
         :param messages:  The message that was sent to this node from the sending node
         :return: None
         """
+
+    @abstractmethod
+    def pre_collision(self, potential_node: BaseNode) -> dict | None:
+        """
+        Called before actual message exchange to allow nodes to exchange metadata.
+        This enables protocols to exchange summaries or other control information.
+
+        :param potential_node: The node that this node is about to exchange messages with
+        :return: A dictionary containing protocol-specific metadata (e.g., message IDs)
+        """
+        pass
+
+    @abstractmethod
+    def process_pre_collision(
+        self, metadata: dict, sending_node: BaseNode
+    ) -> dict | None:
+        """
+        Process the metadata received during pre_collision and determine what to request.
+
+        :param metadata: The metadata sent by the other node during pre_collision
+        :param sending_node: The node that sent the metadata
+        :return: A dictionary containing request information (e.g., which message IDs to request)
+        """
+        pass
 
     @abstractmethod
     def on_collision_complete(self):
@@ -182,16 +218,36 @@ class BaseNode(ModelSettingMixin, ABC):
         pass
 
     @abstractmethod
-    def on_target_received(self, messages: List[BaseMessage], sending_node: BaseNode):
+    def on_send_to_target(self, target_node: BaseNode) -> List[BaseMessage] | None:
         """
-        Called when a target node receives a message
+        Called when a node needs to send a message to a target node.
         """
         pass
 
     @abstractmethod
-    def on_target_send(self, receiving_node: BaseNode) -> List[BaseMessage] | None:
+    def on_receive_from_target(
+        self, receiving_node: BaseNode, messages: List[BaseMessage]
+    ) -> None:
         """
-        Called when a target node sends a message
+        Called when a node receives a message from a target node
+        """
+        pass
+
+    @abstractmethod
+    def on_send_as_target(self, target_node: BaseNode) -> List[BaseMessage] | None:
+        """
+        Called when a target node needs to send a message to a node.
+        """
+        pass
+
+    @abstractmethod
+    def on_receive_as_target(
+        self,
+        messages: List[BaseMessage],
+        sending_node: BaseNode,
+    ) -> None:
+        """
+        Called when a target node receives a message from a node
         """
         pass
 
@@ -208,13 +264,18 @@ class BaseNode(ModelSettingMixin, ABC):
     def __repr__(self):
         return f"{self.name} - {self.id} at {self.position}"
 
-    def duplicate(self):
+    @abstractmethod
+    def serialize(self, new_id: bool) -> dict:
         """
-        Creates a deep copy of the node instance without copying the messages and assigning a new ID
-        :return:
+        Serialize the node to be able to be passed to parallel workers in the simulation.
+        All nodes must implement this method
         """
-        new_node = deepcopy(self)
-        new_node.id = f"{self.slug}-{uuid.uuid4().hex}"
-        new_node.messages = {}
+        ...
 
-        return new_node
+    @classmethod
+    def deserialize(cls, data: dict) -> BaseNode:
+        """
+        Deserialize the node to be able to be passed to parallel workers in the simulation.
+        All nodes must implement this method
+        """
+        ...

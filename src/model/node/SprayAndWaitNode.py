@@ -1,5 +1,6 @@
 from collections import defaultdict
 from typing import List, Optional, Literal, Dict
+import uuid
 
 from model.message.BaseMessage import BaseMessage
 from model.node import BaseNode
@@ -90,8 +91,68 @@ class SprayAndWaitNode(BaseNode):
     def on_message_create(self, message: BaseMessage):
         self.messages[message] = 1  # only store one copy of each message
 
-    def on_target_received(self, messages: List[BaseMessage], sending_node: BaseNode):
-        return None
+    def on_send_to_target(self, target_node: BaseNode) -> List[BaseMessage]:
+        # send all messages to the receiving node
+        messages_to_send: List[BaseMessage] = []
+        for message, count in self.messages.items():
+            messages_to_send.extend([message] * count)
+        return messages_to_send
 
-    def on_target_send(self, receiving_node: BaseNode) -> Optional[BaseMessage]:
-        return None
+    def on_receive_from_target(
+        self, receiving_node: BaseNode, messages: List[BaseMessage]
+    ) -> None:
+        pass
+
+    def on_receive_as_target(
+        self, messages: List[BaseMessage], sending_node: BaseNode
+    ) -> None:
+        pass
+
+    def on_send_as_target(self, target_node: BaseNode) -> List[BaseMessage] | None:
+        pass
+
+    def send_requested_messages(
+        self, request: Dict, receiving_node: BaseNode
+    ) -> List[BaseMessage] | None:
+        pass
+
+    def pre_collision(self, potential_node: BaseNode) -> Dict | None:
+        pass
+
+    def process_pre_collision(
+        self, metadata: Dict, sending_node: BaseNode
+    ) -> Dict | None:
+        pass
+
+    def serialize(self, new_id: bool) -> Dict:
+        data = {
+            "id": self.id,
+            "name": self.name,
+            "position": self.position,
+            "detection_range": self.detection_range,
+            "movement_range": self.movement_range,
+            "max_memory": self.max_memory,
+            "target": self.target,
+            "messages": {msg.id: msg.serialize() for msg in self.messages},
+            "message_selection_strategy": self.message_selection_strategy,
+        }
+        if new_id:
+            data["id"] = f"{self.slug}-{uuid.uuid4().hex}"
+
+        return data
+
+    @classmethod
+    def deserialize(cls, data: Dict) -> BaseNode:
+        node = cls()
+        node.id = data["id"]
+        node.position = data["position"]
+        node.detection_range = data["detection_range"]
+        node.movement_range = data["movement_range"]
+        node.max_memory = data["max_memory"]
+        node.target = data["target"]
+        node.messages = {}
+        for msg_id, msg_data in data["messages"].items():
+            message = BaseMessage.deserialize(msg_data)
+            node.messages[message] = 1
+        node.message_selection_strategy = data["message_selection_strategy"]
+        return node

@@ -8,11 +8,8 @@ from model.setting.model_settings import NumericSetting, SupportedEntity
 
 
 class SimpleRandomGrid(BaseSimulationGrid):
-
     name: str = "Simple Square Grid"
-    description: str = (
-        "A simple square grid that places nodes randomly within the grid. The grid is divided into a number of regions in order to reduce calculations required to detect collisions."
-    )
+    description: str = "A simple square grid that places nodes randomly within the grid. The grid is divided into a number of regions in order to reduce calculations required to detect collisions."
     icon: str = "dots-grid"
 
     settings = [
@@ -57,9 +54,8 @@ class SimpleRandomGrid(BaseSimulationGrid):
             x = random.uniform(0, self.width)
             y = random.uniform(0, self.length)
 
-            # Create a deep copy of the simulation's node prototype
-            new_node = node.duplicate()
-
+            # serialize the node and deserialize it to get a new node
+            new_node = type(node).deserialize(node.serialize(True))
             new_node.position = (x, y)
             if self.place_node(new_node):
                 placed_count += 1
@@ -82,3 +78,63 @@ class SimpleRandomGrid(BaseSimulationGrid):
                         colliding_nodes.append(other_node)
 
         return colliding_nodes
+
+    def serialize(self) -> dict:
+        """
+        Serialize the grid to be able to be passed to parallel workers in the simulation.
+        All grids must implement this method
+        """
+        serialized = {
+            "name": self.name,
+            "description": self.description,
+            "icon": self.icon,
+            "width": self.width,
+            "length": self.length,
+            "region_size": self.region_size,
+            # Serialize nodes using their own serialize methods
+            "nodes": [node.serialize(False) for node in self.nodes],
+            # Convert grid dictionary keys to strings for JSON serialization
+            "grid": {
+                str(region): [node.id for node in nodes]
+                for region, nodes in self.grid.items()
+            },
+        }
+        return serialized
+
+    @classmethod
+    def deserialize(cls, data: dict, node_type: type[BaseNode]) -> "BaseSimulationGrid":
+        grid = cls()
+
+        grid.name = data["name"]
+        grid.description = data["description"]
+        grid.icon = data["icon"]
+        grid.width = data["width"]
+        grid.length = data["length"]
+        grid.region_size = data["region_size"]
+
+        # Create a map to quickly look up nodes by ID
+        node_map = {}
+
+        # First, deserialize all the nodes
+        for node_data in data["nodes"]:
+            # Determine node class and deserialize
+            # This assumes BaseNode.deserialize is implemented correctly
+            node = node_type.deserialize(node_data)
+            grid.nodes.append(node)
+            node_map[node.id] = node
+
+        # Now rebuild the grid structure
+        # Convert string region keys back to tuples
+        for region_str, node_ids in data["grid"].items():
+            # Convert string representation of tuple back to actual tuple
+            # The format is expected to be something like "(x, y)"
+            region_tuple = eval(
+                region_str
+            )  # Be careful with eval, this assumes trusted input
+
+            # Add nodes to this region
+            grid.grid[region_tuple] = [
+                node_map[node_id] for node_id in node_ids if node_id in node_map
+            ]
+
+        return grid

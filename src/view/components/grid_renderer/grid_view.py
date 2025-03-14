@@ -143,6 +143,8 @@ class GridView(FloatLayout):
         length = int(length_km * scale_factor)
         width = int(width_km * scale_factor)
         region_size = int(region_size_km * scale_factor)
+        if not self.grid_layout:
+            return
         self.grid_layout.cols = width // region_size
         self.grid_layout.width = width
         self.grid_layout.height = length
@@ -153,6 +155,8 @@ class GridView(FloatLayout):
                 self.grid_layout.add_widget(cell)
 
     def draw_grid_nodes(self, nodes: List[BaseNode], scale_factor: float):
+        if not self.grid_layout:
+            return
         self.grid_layout.canvas.after.clear()
         if nodes:
             for node in nodes:
@@ -170,6 +174,8 @@ class GridView(FloatLayout):
     def draw_grid_nodes_from_live_simulation(
         self, nodes: List[NodeState], scale_factor: float
     ):
+        if not self.grid_layout:
+            return
         self.grid_layout.canvas.after.clear()
         if not nodes:
             return
@@ -217,6 +223,8 @@ class GridView(FloatLayout):
         self.grid_layout.canvas.ask_update()
 
     def clear(self):
+        if not self.grid_layout:
+            return
         self.grid_layout.clear_widgets()
         self.grid_layout.canvas.after.clear()
 

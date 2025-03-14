@@ -79,7 +79,7 @@ class BasicRandomMessageSpawner(BaseMessageSpawner):
         self,
         nodes: List[BaseNode],
         message_template: BaseMessage,
-        step: int = None,
+        step: int | None = None,
     ) -> None:
         """Helper method to spawn messages in the provided nodes."""
         for node in nodes:

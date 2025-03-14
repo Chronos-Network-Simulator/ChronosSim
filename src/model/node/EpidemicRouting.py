@@ -4,12 +4,14 @@ from model.message.BaseMessage import BaseMessage
 from model.node import BaseNode
 from model.setting.model_settings import SupportedEntity, OptionSetting
 
+
 class EpidemicRoutingNode(BaseNode):
     """
     A node that implements the Epidemic Routing protocol.
     Messages are flooded through the network by exchanging message summaries
     and transferring any messages that neighboring nodes haven't seen yet.
     """
+
     name = "Epidemic Router"
     description = (
         "Implements epidemic routing protocol where nodes exchange summaries of their "
@@ -39,7 +41,9 @@ class EpidemicRoutingNode(BaseNode):
         super().__init__()
         self._recent_senders = set()
         self.messages: Dict[BaseMessage, int] = defaultdict(int)
-        self.message_seen_times: Dict[str, float] = defaultdict(float)  # Track when messages were first seen
+        self.message_seen_times: Dict[str, float] = defaultdict(
+            float
+        )  # Track when messages were first seen
         self.current_time = 0.0
 
     def get_message_summary(self) -> Set[str]:
@@ -57,7 +61,7 @@ class EpidemicRoutingNode(BaseNode):
             # Find and remove oldest message
             oldest_message = min(
                 self.messages.keys(),
-                key=lambda msg: self.message_seen_times[str(msg.id)]
+                key=lambda msg: self.message_seen_times[str(msg.id)],
             )
             del self.messages[oldest_message]
             del self.message_seen_times[str(oldest_message.id)]
@@ -101,13 +105,17 @@ class EpidemicRoutingNode(BaseNode):
         self.message_seen_times[str(message.id)] = self.current_time
         self.manage_buffer()
 
-    def on_target_received(self, messages: List[BaseMessage], sending_node: BaseNode):
+    def on_send_to_target(self, messages: List[BaseMessage], sending_node: BaseNode):
         return None
 
-    def on_target_send(self, receiving_node: BaseNode) -> Optional[BaseMessage]:
+    def on_receive_from_target(
+        self, receiving_node: BaseNode
+    ) -> Optional[List[BaseMessage]]:
         return None
 
     def __repr__(self):
-        return (f"EpidemicRoutingNode(id={self.id}, "
-                f"num_messages={len(self.messages)}, "
-                f"buffer_usage={len(self.messages)}/{self.buffer_size})")
+        return (
+            f"EpidemicRoutingNode(id={self.id}, "
+            f"num_messages={len(self.messages)}, "
+            f"buffer_usage={len(self.messages)}/{self.buffer_size})"
+        )

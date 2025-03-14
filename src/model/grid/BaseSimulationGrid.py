@@ -8,7 +8,6 @@ from model.setting.model_settings import SupportedEntity
 
 
 class BaseSimulationGrid(ModelSettingMixin, ABC):
-
     name: str
     """
     The name of this simulation grid
@@ -137,7 +136,7 @@ class BaseSimulationGrid(ModelSettingMixin, ABC):
         """
 
     @abstractmethod
-    def auto_place_nodes(self, num_nodes: int, node: BaseNode) -> bool:
+    def auto_place_nodes(self, num_nodes: int, node: BaseNode) -> int:
         """
         Automatically places a number of nodes in the grid. The nodes are placed
         in random locations within the grid. Creates a deep copy of the passed in node.
@@ -162,3 +161,19 @@ class BaseSimulationGrid(ModelSettingMixin, ABC):
         :return: List of nodes that the node is colliding with
 
         """
+
+    @abstractmethod
+    def serialize(self) -> dict:
+        """
+        Serializes the grid to a dictionary.
+        :return: Serialized grid
+        """
+        pass
+
+    @classmethod
+    def deserialize(cls, data: dict, node_type: type[BaseNode]) -> "BaseSimulationGrid":
+        """
+        Deserializes the grid from a dictionary.
+        :param data: Serialized grid
+        """
+        ...

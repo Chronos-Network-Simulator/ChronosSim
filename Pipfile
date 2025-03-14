@@ -12,6 +12,7 @@ python-slugify = "*"
 numpy = "*"
 matplotlib = "*"
 tk = "*"
+cryptography = "*"
 
 [dev-packages]
 black = "*"

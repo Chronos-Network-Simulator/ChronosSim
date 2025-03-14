@@ -7,9 +7,11 @@ from model.node.SprayAndWaitNode import SprayAndWaitNode
 from model.node.SprayAndFocus import SprayAndFocusNode
 
 AVAILABLE_NODES: List[type[BaseNode]] = [
-    SprayAndWaitNode, SprayAndFocusNode, EpidemicRoutingNode, SprayAndWaitLimitedNode
+    SprayAndWaitNode,
+    SprayAndFocusNode,
+    EpidemicRoutingNode,
+    SprayAndWaitLimitedNode,
 ]
-
 
 
 def get_node_by_name(name: str) -> BaseNode:
